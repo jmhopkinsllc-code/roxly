@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>ROXLY — Proximity Social</title>
+
+<!-- PWA Stuff — makes it installable on phones -->
+<link rel="manifest" href="manifest.json">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:  #000000;
+  --blue:   #00F5FF;
+  --green:  #39FF14;
+  --pink:   #FF10F0;
+  --purple: #BF00FF;
+  --white:  #FFFFFF;
+  --grey:   #1A1A1A;
+  --grey2:  #333333;
+}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+}
+.screen.active { display: flex; }
+
+/* ══════════════════════════════════
+   LANDING SCREEN
+══════════════════════════════════ */
+#screen-landing {
+  justify-content: center;
+  padding: 40px 24px;
+  gap: 0;
+}
+.landing-logo {
+  font-size: 52px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--purple), var(--pink), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.landing-tagline {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--grey2);
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+/* Animated dots preview */
+.dots-preview {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  margin-bottom: 48px;
+}
+.dots-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed var(--grey2);
+}
+.preview-dot {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: float 3s ease-in-out infinite;
+}
+.pd-you {
+  width: 16px; height: 16px;
+  background: var(--purple);
+  box-shadow: 0 0 20px var(--purple);
+  top: 50%; left: 50%;
+}
+.pd-1 {
+  width: 10px; height: 10px;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  top: 25%; left: 70%;
+  animation-delay: 0.5s;
+}
+.pd-2 {
+  width: 12px; height: 12px;
+  background: var(--pink);
+  box-shadow: 0 0 14px var(--pink);
+  top: 65%; left: 30%;
+  animation-delay: 1s;
+  animation: talk-float 0.6s ease-in-out infinite alternate;
+}
+.pd-3 {
+  width: 10px; height: 10px;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  top: 75%; left: 65%;
+  animation-delay: 1.5s;
+}
+.pd-4 {
+  width: 10px; height: 10px;
+  background: var(--blue);
+  box-shadow: 0 0 10px var(--blue);
+  top: 30%; left: 25%;
+  animation-delay: 2s;
+}
+@keyframes float {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-50%, -55%) scale(1.1); }
+}
+@keyframes talk-float {
+  from { box-shadow: 0 0 10px var(--pink); }
+  to   { box-shadow: 0 0 30px var(--pink), 0 0 60px rgba(255,16,240,0.4); }
+}
+
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(191,0,255,0.35);
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--grey2);
+  background: transparent;
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.btn-secondary:hover { border-color: var(--purple); }
+
+/* ══════════════════════════════════
+   AUTH SCREENS (Login / Signup)
+══════════════════════════════════ */
+#screen-login, #screen-signup {
+  padding: 40px 24px;
+  justify-content: flex-start;
+  gap: 0;
+}
+.auth-back {
+  align-self: flex-start;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--grey2);
+  cursor: pointer;
+  margin-bottom: 32px;
+  letter-spacing: 0.06em;
+}
+.auth-back:hover { color: var(--purple); }
+.auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.auth-title span {
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.auth-sub {
+  font-size: 13px;
+  color: var(--grey2);
+  margin-bottom: 36px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
+}
+
+/* Form fields */
+.field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-size: 10px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--grey2);
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--grey);
+  border: 1px solid var(--grey2);
+  border-radius: 10px;
+  color: var(--white);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.field input:focus { border-color: var(--purple); }
+.field input::placeholder { color: #444; }
+
+.auth-error {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255,16,240,0.1);
+  border: 1px solid rgba(255,16,240,0.3);
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--pink);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+  display: none;
+}
+.auth-switch {
+  text-align: center;
+  font-size: 12px;
+  color: var(--grey2);
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+  cursor: pointer;
+}
+.auth-switch span { color: var(--purple); text-decoration: underline; }
+
+/* ══════════════════════════════════
+   MAP / MAIN APP SCREEN
+══════════════════════════════════ */
+#screen-app {
+  padding-bottom: 100px;
+}
+
+/* Status bar */
+.status-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px 6px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--grey2);
+  letter-spacing: 0.06em;
+}
+.status-live { color: var(--green); display: flex; align-items: center; gap: 5px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* Header */
+.app-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 20px 10px;
+}
+.app-logo {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.app-logo-sub {
+  font-size: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--grey2);
+  letter-spacing: 0.18em;
+  margin-top: -2px;
+}
+.header-icons { display: flex; gap: 10px; }
+.hicon {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--grey2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; cursor: pointer;
+}
+
+/* Range pills */
+.range-bar {
+  width: 100%;
+  padding: 0 20px 10px;
+  display: flex; gap: 8px;
+  overflow-x: auto;
+}
+.range-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--grey2);
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--grey2);
+  background: transparent;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.range-pill.active {
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: 0 0 10px rgba(57,255,20,0.2);
+  background: rgba(57,255,20,0.06);
+}
+
+/* Map */
+.map-wrap { width: 100%; padding: 0 20px; }
+.map {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #050510;
+  border-radius: 16px;
+  border: 1px solid #111;
+  position: relative;
+  overflow: hidden;
+}
+.map::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.sweep {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 50%; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(57,255,20,0.5));
+  transform-origin: left center;
+  animation: sweep 4s linear infinite;
+  opacity: 0.4;
+}
+@keyframes sweep { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+.pulse-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(0,245,255,0.12);
+  transform: translate(-50%,-50%);
+  animation: expand 4s ease-out infinite;
+}
+.pulse-ring:nth-child(2){animation-delay:1.3s}
+.pulse-ring:nth-child(3){animation-delay:2.6s}
+@keyframes expand {
+  0%{width:20px;height:20px;opacity:0.5}
+  100%{width:380px;height:380px;opacity:0}
+}
+
+/* Map dots */
+.map-dot {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.map-dot:hover { transform: translate(-50%,-50%) scale(1.5); }
+.dot-you-map {
+  width: 14px; height: 14px;
+  background: var(--purple);
+  box-shadow: 0 0 16px var(--purple);
+  top: 50%; left: 50%; z-index: 10;
+}
+.dot-near-map {
+  width: 10px; height: 10px;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+.dot-active-map {
+  width: 12px; height: 12px;
+  background: var(--pink);
+  box-shadow: 0 0 14px var(--pink);
+  animation: atalk 0.6s ease-in-out infinite alternate;
+}
+@keyframes atalk {
+  from{box-shadow:0 0 10px var(--pink)}
+  to{box-shadow:0 0 30px var(--pink),0 0 60px rgba(255,16,240,0.4)}
+}
+.you-map-label {
+  position: absolute;
+  top: calc(50% + 12px); left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px; color: var(--purple);
+  white-space: nowrap; letter-spacing: 0.1em;
+}
+.map-legend {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.legend-row {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--grey2);
+}
+.l-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* Nearby count */
+.nearby-row {
+  width: 100%;
+  padding: 12px 20px 8px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.nearby-count-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px; color: var(--grey2); letter-spacing: 0.06em;
+}
+.nearby-count-label strong { color: var(--green); font-size: 15px; }
+
+/* Channel cards */
+.channels-list {
+  width: 100%;
+  padding: 0 20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.channel-card {
+  background: var(--grey);
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1px solid #222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.channel-card:hover { border-color: var(--green); }
+.channel-card.live { border-color: rgba(255,16,240,0.3); }
+.ch-left { display: flex; flex-direction: column; gap: 3px; }
+.ch-name { font-size: 13px; font-weight: 600; }
+.ch-meta {
+  font-size: 10px; color: var(--grey2);
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.ch-right { display: flex; align-items: center; gap: 8px; }
+.live-badge {
+  font-size: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  padding: 3px 8px; border-radius: 20px;
+  background: rgba(255,16,240,0.15);
+  color: var(--pink);
+  border: 1px solid rgba(255,16,240,0.4);
+  animation: blink 1.4s infinite;
+  letter-spacing: 0.1em;
+}
+.ch-count { font-size: 12px; font-family: 'Share Tech Mono', monospace; color: var(--green); }
+.ch-arrow { font-size: 16px; color: var(--grey2); }
+
+/* No channels state */
+.empty-state {
+  width: 100%;
+  padding: 30px 20px;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--grey2);
+  letter-spacing: 0.06em;
+  line-height: 1.8;
+}
+
+/* PTT Button */
+.ptt-wrap {
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100%; max-width: 420px;
+  padding: 10px 20px 28px;
+  background: linear-gradient(to top, #000 60%, transparent);
+  display: flex; justify-content: center;
+}
+.ptt-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  background: rgba(57,255,20,0.08);
+  box-shadow: 0 0 20px rgba(57,255,20,0.3);
+  cursor: pointer;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px; transition: all 0.15s;
+}
+.ptt-btn.talking {
+  background: rgba(57,255,20,0.3);
+  box-shadow: 0 0 50px rgba(57,255,20,0.6);
+  transform: scale(0.95);
+}
+.ptt-icon { font-size: 24px; }
+.ptt-label {
+  font-size: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--green); letter-spacing: 0.12em;
+}
+
+/* ── LOADING ── */
+.loading {
+  position: fixed; inset: 0;
+  background: var(--black);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px; z-index: 999;
+}
+.loading-logo {
+  font-size: 36px; font-weight: 700;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.loading-bar-wrap {
+  width: 120px; height: 2px;
+  background: var(--grey2);
+  border-radius: 2px; overflow: hidden;
+}
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  animation: load 1.5s ease-in-out forwards;
+}
+@keyframes load { from{width:0} to{width:100%} }
+.loading-text {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; color: var(--grey2); letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading" id="loading">
+  <div class="loading-logo">ROXLY</div>
+  <div class="loading-bar-wrap">
+    <div class="loading-bar"></div>
+  </div>
+  <div class="loading-text">PROXIMITY SOCIAL</div>
+</div>
+
+<!-- ══ LANDING SCREEN ══ -->
+<div class="screen" id="screen-landing">
+  <div class="landing-logo">ROXLY</div>
+  <div class="landing-tagline">proximity social</div>
+
+  <div class="dots-preview">
+    <div class="preview-dot pd-you"></div>
+    <div class="preview-dot pd-1"></div>
+    <div class="preview-dot pd-2"></div>
+    <div class="preview-dot pd-3"></div>
+    <div class="preview-dot pd-4"></div>
+  </div>
+
+  <button class="btn-primary" onclick="showScreen('signup')">Create Account</button>
+  <button class="btn-secondary" onclick="showScreen('login')">I already have an account</button>
+</div>
+
+<!-- ══ SIGNUP SCREEN ══ -->
+<div class="screen" id="screen-signup">
+  <div class="auth-back" onclick="showScreen('landing')">← Back</div>
+  <div class="auth-title">Join <span>ROXLY</span></div>
+  <div class="auth-sub">CREATE YOUR ACCOUNT</div>
+
+  <div class="auth-error" id="signup-error"></div>
+
+  <div class="field">
+    <label>USERNAME</label>
+    <input type="text" id="signup-username" placeholder="your_username">
+  </div>
+  <div class="field">
+    <label>EMAIL</label>
+    <input type="email" id="signup-email" placeholder="you@email.com">
+  </div>
+  <div class="field">
+    <label>PASSWORD</label>
+    <input type="password" id="signup-password" placeholder="••••••••">
+  </div>
+
+  <button class="btn-primary" onclick="handleSignup()">Create Account</button>
+  <div class="auth-switch">Already have an account? <span onclick="showScreen('login')">Log in</span></div>
+</div>
+
+<!-- ══ LOGIN SCREEN ══ -->
+<div class="screen" id="screen-login">
+  <div class="auth-back" onclick="showScreen('landing')">← Back</div>
+  <div class="auth-title">Welcome to <span>ROXLY</span></div>
+  <div class="auth-sub">SIGN IN TO CONTINUE</div>
+
+  <div class="auth-error" id="login-error"></div>
+
+  <div class="field">
+    <label>USERNAME</label>
+    <input type="text" id="login-username" placeholder="your_username">
+  </div>
+  <div class="field">
+    <label>PASSWORD</label>
+    <input type="password" id="login-password" placeholder="••••••••">
+  </div>
+
+  <button class="btn-primary" onclick="handleLogin()">Sign In</button>
+  <div class="auth-switch">Don't have an account? <span onclick="showScreen('signup')">Sign up</span></div>
+</div>
+
+<!-- ══ MAIN APP SCREEN ══ -->
+<div class="screen" id="screen-app">
+
+  <!-- Status bar -->
+  <div class="status-bar">
+    <div class="status-live">
+      <div class="status-dot"></div>
+      LIVE
+    </div>
+    <span id="status-username">—</span>
+    <span id="status-time">—</span>
+  </div>
+
+  <!-- Header -->
+  <div class="app-header">
+    <div>
+      <div class="app-logo">ROXLY</div>
+      <div class="app-logo-sub">proximity social</div>
+    </div>
+    <div class="header-icons">
+      <div class="hicon">🔔</div>
+      <div class="hicon" onclick="handleLogout()">👤</div>
+    </div>
+  </div>
+
+  <!-- Range pills -->
+  <div class="range-bar">
+    <div class="range-pill active" onclick="setRange(0.25, this)">0.25 mi</div>
+    <div class="range-pill" onclick="setRange(0.5, this)">0.5 mi</div>
+    <div class="range-pill" onclick="setRange(1, this)">1 mi</div>
+    <div class="range-pill" onclick="setRange(5, this)">5 mi ✦</div>
+  </div>
+
+  <!-- Map -->
+  <div class="map-wrap">
+    <div class="map" id="main-map">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="sweep"></div>
+
+      <!-- You -->
+      <div class="map-dot dot-you-map"></div>
+      <div class="you-map-label">YOU</div>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <div class="legend-row"><div class="l-dot" style="background:var(--purple)"></div>YOU</div>
+        <div class="legend-row"><div class="l-dot" style="background:var(--green)"></div>NEARBY</div>
+        <div class="legend-row"><div class="l-dot" style="background:var(--pink)"></div>LIVE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nearby count -->
+  <div class="nearby-row">
+    <div class="nearby-count-label">
+      <strong id="nearby-count">0</strong> &nbsp;PEOPLE NEARBY
+    </div>
+  </div>
+
+  <!-- Channels list -->
+  <div class="channels-list" id="channels-list">
+    <div class="empty-state">
+      SCANNING FOR NEARBY CHANNELS...<br>
+      MOVE AROUND TO FIND PEOPLE
+    </div>
+  </div>
+
+</div>
+
+<!-- PTT -->
+<div class="ptt-wrap" id="ptt-wrap" style="display:none">
+  <button class="ptt-btn" id="ptt-btn"
+    onmousedown="startTalking()"
+    onmouseup="stopTalking()"
+    ontouchstart="startTalking()"
+    ontouchend="stopTalking()">
+    <div class="ptt-icon">🎙️</div>
+    <div class="ptt-label" id="ptt-label">HOLD</div>
+  </button>
+</div>
+
+<script>
+// ══════════════════════════════════
+// ROXLY APP LOGIC
+// ══════════════════════════════════
+
+const API = 'http://127.0.0.1:8000'
+let currentUser = null
+let currentRange = 0.25
+let userLat = null
+let userLon = null
+let locationInterval = null
+
+// ── LOADING ──────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loading').style.display = 'none'
+    // Check if already logged in
+    const saved = localStorage.getItem('roxly_user')
+    if (saved) {
+      currentUser = JSON.parse(saved)
+      showScreen('app')
+      initApp()
+    } else {
+      showScreen('landing')
+    }
+  }, 1800)
+})
+
+// ── SCREEN NAVIGATION ────────────
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
+  document.getElementById('screen-' + name).classList.add('active')
+  if (name === 'app') {
+    document.getElementById('ptt-wrap').style.display = 'flex'
+  } else {
+    document.getElementById('ptt-wrap').style.display = 'none'
+  }
+}
+
+// ── SIGNUP ───────────────────────
+async function handleSignup() {
+  const username = document.getElementById('signup-username').value.trim()
+  const email    = document.getElementById('signup-email').value.trim()
+  const password = document.getElementById('signup-password').value
+
+  const errBox = document.getElementById('signup-error')
+  errBox.style.display = 'none'
+
+  if (!username || !email || !password) {
+    errBox.innerText = 'PLEASE FILL IN ALL FIELDS'
+    errBox.style.display = 'block'
+    return
+  }
+
+  try {
+    const res = await fetch(`${API}/users/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    })
+    const data = await res.json()
+
+    if (!res.ok) {
+      errBox.innerText = data.detail.toUpperCase()
+      errBox.style.display = 'block'
+      return
+    }
+
+    // Auto login after signup
+    currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14' }
+    localStorage.setItem('roxly_user', JSON.stringify(currentUser))
+    showScreen('app')
+    initApp()
+
+  } catch (e) {
+    errBox.innerText = 'CONNECTION ERROR — IS SERVER RUNNING?'
+    errBox.style.display = 'block'
+  }
+}
+
+// ── LOGIN ────────────────────────
+async function handleLogin() {
+  const username = document.getElementById('login-username').value.trim()
+  const password = document.getElementById('login-password').value
+
+  const errBox = document.getElementById('login-error')
+  errBox.style.display = 'none'
+
+  try {
+    const res = await fetch(`${API}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+    const data = await res.json()
+
+    if (!res.ok) {
+      errBox.innerText = data.detail.toUpperCase()
+      errBox.style.display = 'block'
+      return
+    }
+
+    currentUser = { username: data.username, is_pro: data.is_pro, dot_color: data.dot_color }
+    localStorage.setItem('roxly_user', JSON.stringify(currentUser))
+    showScreen('app')
+    initApp()
+
+  } catch (e) {
+    errBox.innerText = 'CONNECTION ERROR — IS SERVER RUNNING?'
+    errBox.style.display = 'block'
+  }
+}
+
+// ── LOGOUT ───────────────────────
+function handleLogout() {
+  localStorage.removeItem('roxly_user')
+  currentUser = null
+  if (locationInterval) clearInterval(locationInterval)
+  showScreen('landing')
+}
+
+// ── INIT APP ─────────────────────
+function initApp() {
+  document.getElementById('status-username').innerText = currentUser.username.toUpperCase()
+  updateClock()
+  setInterval(updateClock, 1000)
+  getLocation()
+}
+
+// ── CLOCK ────────────────────────
+function updateClock() {
+  const now = new Date()
+  const h = now.getHours().toString().padStart(2,'0')
+  const m = now.getMinutes().toString().padStart(2,'0')
+  document.getElementById('status-time').innerText = `${h}:${m}`
+}
+
+// ── LOCATION ─────────────────────
+function getLocation() {
+  if (!navigator.geolocation) return
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    userLat = pos.coords.latitude
+    userLon = pos.coords.longitude
+    updateLocation()
+    scanNearby()
+    // Refresh every 30 seconds
+    locationInterval = setInterval(() => {
+      updateLocation()
+      scanNearby()
+    }, 30000)
+  }, () => {
+    // Location denied — use Schenectady coords for demo
+    userLat = 42.8142
+    userLon = -73.9396
+    updateLocation()
+    scanNearby()
+  })
+}
+
+// ── UPDATE LOCATION ON SERVER ────
+async function updateLocation() {
+  if (!currentUser || !userLat) return
+  try {
+    await fetch(`${API}/proximity/update-location`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser.username,
+        latitude: userLat,
+        longitude: userLon,
+        range_miles: currentRange
+      })
+    })
+  } catch(e) {}
+}
+
+// ── SCAN NEARBY ──────────────────
+async function scanNearby() {
+  if (!currentUser || !userLat) return
+  try {
+    const res = await fetch(`${API}/proximity/nearby`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser.username,
+        latitude: userLat,
+        longitude: userLon,
+        range_miles: currentRange
+      })
+    })
+    const data = await res.json()
+    document.getElementById('nearby-count').innerText = data.nearby_count
+    updateMapDots(data.nearby_users)
+    loadChannels()
+  } catch(e) {}
+}
+
+// ── MAP DOTS ─────────────────────
+function updateMapDots(users) {
+  // Remove old dots
+  document.querySelectorAll('.nearby-dot').forEach(d => d.remove())
+
+  const map = document.getElementById('main-map')
+  const positions = [
+    {top:'25%',left:'70%'}, {top:'65%',left:'30%'},
+    {top:'75%',left:'65%'}, {top:'30%',left:'25%'},
+    {top:'20%',left:'50%'}, {top:'70%',left:'50%'},
+    {top:'50%',left:'80%'}, {top:'50%',left:'20%'},
+  ]
+
+  users.forEach((user, i) => {
+    if (i >= positions.length) return
+    const dot = document.createElement('div')
+    dot.className = 'map-dot nearby-dot dot-near-map'
+    dot.style.top = positions[i].top
+    dot.style.left = positions[i].left
+    dot.title = user.username
+    map.appendChild(dot)
+  })
+}
+
+// ── LOAD CHANNELS ────────────────
+async function loadChannels() {
+  try {
+    const res = await fetch(`${API}/channels/list`)
+    const data = await res.json()
+    const list = document.getElementById('channels-list')
+
+    if (data.channels.length === 0) {
+      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET<br>UPGRADE TO PRO TO CREATE ONE</div>`
+      return
+    }
+
+    list.innerHTML = data.channels.map(ch => `
+      <div class="channel-card ${ch.is_live ? 'live' : ''}">
+        <div class="ch-left">
+          <div class="ch-name">${ch.name}</div>
+          <div class="ch-meta">CREATED BY ${ch.created_by.toUpperCase()}</div>
+        </div>
+        <div class="ch-right">
+          <div class="ch-count" style="color:var(--green)">—</div>
+          <div class="ch-arrow">›</div>
+        </div>
+      </div>
+    `).join('')
+  } catch(e) {}
+}
+
+// ── RANGE ────────────────────────
+function setRange(miles, el) {
+  document.querySelectorAll('.range-pill').forEach(p => p.classList.remove('active'))
+  el.classList.add('active')
+
+  // Pro check for ranges over 0.25
+  if (miles > 0.25 && (!currentUser || !currentUser.is_pro)) {
+    alert('✦ ROXLY PRO\n\nExtended range is a Pro feature.\nUpgrade for $2.99/month to unlock 5 mile range.')
+    document.querySelectorAll('.range-pill')[0].classList.add('active')
+    return
+  }
+  currentRange = miles
+  scanNearby()
+}
+
+// ── PUSH TO TALK ─────────────────
+let talkTimer = null
+let talkSeconds = 0
+
+function startTalking() {
+  const btn = document.getElementById('ptt-btn')
+  btn.classList.add('talking')
+  document.getElementById('ptt-label').innerText = 'LIVE'
+
+  if (!currentUser.is_pro) {
+    talkSeconds = 0
+    talkTimer = setInterval(() => {
+      talkSeconds++
+      if (talkSeconds >= 60) {
+        stopTalking()
+        showCooldown()
+      }
+    }, 1000)
+  }
+}
+
+function stopTalking() {
+  const btn = document.getElementById('ptt-btn')
+  btn.classList.remove('talking')
+  document.getElementById('ptt-label').innerText = 'HOLD'
+  if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
+}
+
+function showCooldown() {
+  let countdown = 120
+  const label = document.getElementById('ptt-label')
+  const btn = document.getElementById('ptt-btn')
+  btn.disabled = true
+  btn.style.borderColor = 'var(--grey2)'
+  btn.style.boxShadow = 'none'
+
+  const t = setInterval(() => {
+    const m = Math.floor(countdown/60)
+    const s = countdown % 60
+    label.innerText = `${m}:${s.toString().padStart(2,'0')}`
+    countdown--
+    if (countdown < 0) {
+      clearInterval(t)
+      label.innerText = 'HOLD'
+      btn.disabled = false
+      btn.style.borderColor = 'var(--green)'
+      btn.style.boxShadow = '0 0 20px rgba(57,255,20,0.3)'
+    }
+  }, 1000)
+}
+</script>
+</body>
+</html>
