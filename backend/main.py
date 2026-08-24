@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base
 from routes import users
+from routes import proximity
 
 # Create all database tables automatically
 Base.metadata.create_all(bind=engine)
@@ -24,6 +25,7 @@ app.add_middleware(
 
 # Connect the user routes
 app.include_router(users.router)
+app.include_router(proximity.router)
 
 # Home route
 @app.get("/")
