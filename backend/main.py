@@ -9,6 +9,7 @@ from database import engine, Base
 from routes import users
 from routes import proximity
 from routes import channels
+from routes import voice
 
 # Create all database tables automatically
 from routes.channels import Channel
@@ -29,6 +30,7 @@ app.add_middleware(
 app.include_router(users.router)
 app.include_router(proximity.router)
 app.include_router(channels.router)
+app.include_router(voice.router)
 # Home route
 @app.get("/")
 def home():

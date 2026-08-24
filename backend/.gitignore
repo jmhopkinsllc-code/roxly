@@ -1,0 +1,6 @@
+# Never push these to GitHub
+.env
+venv/
+__pycache__/
+*.pyc
+roxly.db
