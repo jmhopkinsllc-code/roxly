@@ -181,7 +181,10 @@ body {
 
 /* PTT */
 .ptt-wrap { position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px 28px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center; }
-.ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s; }
+.ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select: none;
+user-select: none;
+-webkit-touch-callout: none;
+touch-action: none; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
 .ptt-btn:disabled { opacity:0.4;cursor:not-allowed; }
 .ptt-icon { font-size:26px; }
