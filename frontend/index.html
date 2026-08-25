@@ -53,7 +53,7 @@ body.dark {
 }
 .screen.active { display: flex; }
 
-/* ── LOADING ── */
+/* LOADING */
 .loading {
   position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column;
@@ -70,7 +70,7 @@ body.dark {
 @keyframes load { from{width:0} to{width:100%} }
 .loading-text { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #555; letter-spacing: 0.1em; }
 
-/* ── LANDING ── */
+/* LANDING */
 #screen-landing { justify-content: center; padding: 40px 24px; background: #000; }
 .landing-logo {
   font-size: 56px; font-weight: 700; letter-spacing: 0.15em;
@@ -94,10 +94,10 @@ body.dark {
 .btn-primary:active { transform: scale(0.98); }
 .btn-secondary { width:100%;padding:16px;border-radius:14px;border:1px solid #333;background:transparent;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
 .btn-secondary:hover { border-color: var(--purple); }
-.btn-ghost { width:100%;padding:12px;border-radius:14px;border:1px solid #222;background:transparent;color:#555;font-family:'Share Tech Mono',sans-serif;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
+.btn-ghost { width:100%;padding:12px;border-radius:14px;border:1px solid #222;background:transparent;color:#555;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
 .btn-ghost:hover { color: var(--blue); border-color: var(--blue); }
 
-/* ── AUTH ── */
+/* AUTH */
 #screen-login, #screen-signup { padding: 40px 24px; justify-content: flex-start; background: var(--bg); }
 .auth-back { align-self:flex-start;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:32px;letter-spacing:0.06em; }
 .auth-back:hover { color: var(--purple); }
@@ -106,18 +106,19 @@ body.dark {
 .auth-sub { font-size:11px;color:var(--muted);margin-bottom:36px;font-family:'Share Tech Mono',monospace;letter-spacing:0.08em; }
 .field { width: 100%; margin-bottom: 16px; }
 .field label { display:block;font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px; }
-.field input { width:100%;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.06); }
-.field input:focus { border-color:var(--purple);box-shadow:0 0 0 3px rgba(191,0,255,0.1); }
+.field input, .field select { width:100%;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+.field input:focus, .field select:focus { border-color:var(--purple);box-shadow:0 0 0 3px rgba(191,0,255,0.1); }
 .field input::placeholder { color: #bbb; }
 .auth-error { width:100%;padding:12px 16px;background:rgba(255,16,240,0.06);border:1px solid rgba(255,16,240,0.3);border-radius:10px;font-size:12px;font-family:'Share Tech Mono',monospace;color:var(--pink);letter-spacing:0.04em;margin-bottom:16px;display:none; }
+.auth-success { width:100%;padding:12px 16px;background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.3);border-radius:10px;font-size:12px;font-family:'Share Tech Mono',monospace;color:var(--green);letter-spacing:0.04em;margin-bottom:16px;display:none; }
 .auth-btn { width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.08em;cursor:pointer;box-shadow:0 4px 20px rgba(191,0,255,0.3);transition:all 0.2s;margin-bottom:16px; }
 .auth-btn:active { transform: scale(0.98); }
 .auth-switch { text-align:center;font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;margin-top:8px;cursor:pointer; }
 .auth-switch span { color:var(--purple);text-decoration:underline; }
 </style>
 <style>
-/* ── APP ── */
-#screen-app { background: var(--bg); padding-bottom: 140px; }
+/* APP */
+#screen-app { background: var(--bg); padding-bottom: 160px; }
 
 .status-bar { width:100%;display:flex;justify-content:space-between;padding:14px 20px 6px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;background:var(--card);border-bottom:1px solid var(--border); }
 .status-live { color:var(--green);display:flex;align-items:center;gap:5px; }
@@ -130,13 +131,13 @@ body.dark {
 .header-icons { display:flex;gap:10px; }
 .hicon { width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.08);transition:border-color 0.2s;position:relative; }
 .hicon:hover { border-color:var(--purple); }
-.notif-badge { position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--pink);border-radius:50%;box-shadow:0 0 6px var(--pink); }
+.notif-badge { position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--pink);border-radius:50%;box-shadow:0 0 6px var(--pink);display:none; }
 
 .range-bar { width:100%;padding:12px 20px;display:flex;gap:8px;overflow-x:auto;background:var(--card);border-bottom:1px solid var(--border); }
 .range-pill { padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;cursor:pointer;white-space:nowrap;color:var(--muted);background:var(--bg);transition:all 0.2s;flex-shrink:0; }
 .range-pill.active { border-color:var(--purple);color:var(--purple);background:rgba(191,0,255,0.06);box-shadow:0 0 10px rgba(191,0,255,0.15); }
-.range-pill.locked { opacity:0.4;cursor:not-allowed; }
-.range-pill.locked::after { content:'✦';margin-left:4px;color:var(--purple); }
+.range-pill.locked { opacity:0.5;cursor:not-allowed; }
+.range-pill.locked::after { content:' ✦';color:var(--purple); }
 
 /* MAP */
 .map-wrap { width:100%;padding:16px 20px 0; }
@@ -152,8 +153,6 @@ body.dark {
 .map-dot:hover { transform:translate(-50%,-50%) scale(1.5); }
 .dot-you-map { width:14px;height:14px;background:var(--purple);box-shadow:0 0 16px var(--purple);top:50%;left:50%;z-index:10; }
 .dot-near-map { width:10px;height:10px;background:var(--green);box-shadow:0 0 10px var(--green); }
-.dot-active-map { width:12px;height:12px;background:var(--pink);box-shadow:0 0 14px var(--pink);animation:atalk 0.6s ease-in-out infinite alternate; }
-@keyframes atalk { from{box-shadow:0 0 10px var(--pink)} to{box-shadow:0 0 30px var(--pink),0 0 60px rgba(255,16,240,0.4)} }
 .you-map-label { position:absolute;top:calc(50% + 12px);left:50%;transform:translateX(-50%);font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--purple);white-space:nowrap;letter-spacing:0.1em; }
 .map-legend { position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.75);border:1px solid #1a1a1a;border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:5px; }
 .legend-row { display:flex;align-items:center;gap:6px;font-size:8px;font-family:'Share Tech Mono',monospace;color:#777; }
@@ -182,23 +181,20 @@ body.dark {
 /* CHANNELS */
 .section-label { width:100%;padding:16px 20px 8px;display:flex;justify-content:space-between;align-items:center; }
 .section-title { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em; }
-.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:none;border:none;cursor:pointer;letter-spacing:0.06em; }
+.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 12px;cursor:pointer;letter-spacing:0.06em; }
 .channels-list { width:100%;padding:0 20px;display:flex;flex-direction:column;gap:10px; }
 .channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .channel-card:hover { border-color:var(--purple);box-shadow:0 2px 12px rgba(191,0,255,0.12); }
 .channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
-.channel-card.live { border-color:rgba(255,16,240,0.3); }
 .ch-left { display:flex;flex-direction:column;gap:3px; }
 .ch-name { font-size:13px;font-weight:600;color:var(--text); }
 .ch-meta { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
 .ch-right { display:flex;align-items:center;gap:8px; }
-.live-badge { font-size:8px;font-family:'Share Tech Mono',monospace;padding:3px 8px;border-radius:20px;background:rgba(255,16,240,0.1);color:var(--pink);border:1px solid rgba(255,16,240,0.3);animation:blink 1.4s infinite;letter-spacing:0.1em; }
-.ch-count { font-size:12px;font-family:'Share Tech Mono',monospace;color:var(--green); }
 .ch-arrow { font-size:16px;color:#ccc; }
 .empty-state { width:100%;padding:30px 20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8;background:var(--card);border-radius:14px;border:1.5px dashed var(--border); }
 
 /* PTT */
-.ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center; }
+.ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
 .ptt-btn:disabled { opacity:0.4;cursor:not-allowed; }
@@ -208,11 +204,12 @@ body.dark {
 /* MODALS */
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:flex-end;justify-content:center; }
 .modal-overlay.active { display:flex; }
-.modal { width:100%;max-width:420px;background:var(--card);border-radius:24px 24px 0 0;padding:24px;max-height:85vh;overflow-y:auto; }
+.modal { width:100%;max-width:420px;background:var(--card);border-radius:24px 24px 0 0;padding:24px;max-height:90vh;overflow-y:auto; }
 .modal-handle { width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px; }
 .modal-title { font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px; }
 .modal-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;margin-bottom:20px; }
-.modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px; }
+.modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
+.modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
 
 /* SETTINGS */
@@ -222,36 +219,49 @@ body.dark {
 .settings-title { font-size:18px;font-weight:700;color:var(--text); }
 .settings-section { width:100%;padding:16px 20px 8px; }
 .settings-section-title { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:12px; }
-.settings-item { width:100%;background:var(--card);border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer; }
-.settings-item-left { display:flex;flex-direction:column;gap:2px; }
+.settings-item { width:100%;background:var(--card);border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer;transition:all 0.2s; }
+.settings-item:hover { border-color:var(--purple); }
+.settings-item-left { display:flex;flex-direction:column;gap:3px;flex:1; }
 .settings-item-title { font-size:13px;font-weight:600;color:var(--text); }
 .settings-item-sub { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
-.settings-arrow { font-size:16px;color:var(--muted); }
-.settings-toggle { width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s; }
+.settings-arrow { font-size:16px;color:var(--muted);margin-left:12px; }
+.settings-toggle { width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0; }
 .settings-toggle.on { background:var(--purple); }
-.settings-toggle::after { content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform 0.2s; }
+.settings-toggle::after { content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2); }
 .settings-toggle.on::after { transform:translateX(20px); }
-.pro-badge-sm { font-size:8px;background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;padding:2px 6px;border-radius:8px;letter-spacing:0.08em; }
-.color-swatches { display:flex;gap:8px;flex-wrap:wrap;margin-top:8px; }
-.swatch { width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s; }
+.pro-badge-sm { font-size:8px;background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;padding:2px 6px;border-radius:8px;letter-spacing:0.08em;margin-left:6px; }
+.color-swatches { display:flex;gap:8px;flex-wrap:wrap;margin-top:10px; }
+.swatch { width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s;flex-shrink:0; }
+.swatch:hover { transform:scale(1.15); }
 .swatch.selected { border-color:#fff;box-shadow:0 0 10px rgba(255,255,255,0.5); }
+.swatch-none { width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all 0.2s; }
+.swatch-none:hover { border-color:var(--pink); }
+.color-wheel-btn { margin-top:8px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;letter-spacing:0.06em;display:flex;align-items:center;gap:6px; }
+.color-wheel-input { opacity:0;position:absolute;width:0;height:0; }
 .logout-btn { width:calc(100% - 40px);margin:20px;padding:14px;border-radius:12px;border:1.5px solid rgba(255,16,240,0.3);background:rgba(255,16,240,0.06);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.04em; }
+.guest-settings-card { width:calc(100% - 40px);margin:20px;padding:20px;border-radius:14px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);text-align:center; }
+.guest-settings-title { font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px; }
+.guest-settings-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;line-height:1.6;margin-bottom:16px; }
 
 /* NOTIFICATIONS PANEL */
-.notif-panel { position:fixed;top:0;right:-100%;width:100%;max-width:320px;height:100vh;background:var(--card);border-left:1px solid var(--border);z-index:200;transition:right 0.3s;padding:24px;box-shadow:-4px 0 20px rgba(0,0,0,0.1); }
+.notif-panel { position:fixed;top:0;right:-100%;width:100%;max-width:320px;height:100vh;background:var(--card);border-left:1px solid var(--border);z-index:200;transition:right 0.3s;padding:24px;box-shadow:-4px 0 20px rgba(0,0,0,0.15);overflow-y:auto; }
 .notif-panel.open { right:0; }
 .notif-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
 .notif-title { font-size:16px;font-weight:700;color:var(--text); }
 .notif-close { font-size:20px;cursor:pointer;color:var(--muted); }
-.notif-toggle-row { display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border); }
-.notif-toggle-label { font-size:13px;color:var(--text);font-weight:500; }
-.notif-toggle-sub { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:2px; }
-.notif-empty { text-align:center;padding:40px 0;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8; }
+.notif-toggle-row { display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border); }
+.notif-toggle-info { flex:1; }
+.notif-toggle-label { font-size:13px;color:var(--text);font-weight:600;margin-bottom:3px; }
+.notif-toggle-sub { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
+.notif-guest-card { margin-top:20px;padding:16px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;text-align:center; }
+.notif-guest-text { font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;line-height:1.6;margin-bottom:12px; }
+.notif-empty { text-align:center;padding:30px 0;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8; }
 
 /* GUEST BANNER */
-.guest-banner { width:100%;background:rgba(191,0,255,0.08);border-bottom:1px solid rgba(191,0,255,0.2);padding:10px 20px;display:flex;justify-content:space-between;align-items:center; }
-.guest-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.06em; }
-.guest-signup-btn { font-size:11px;font-family:'Share Tech Mono',monospace;color:#fff;background:var(--purple);border:none;border-radius:20px;padding:5px 12px;cursor:pointer;letter-spacing:0.06em; }
+.guest-banner { width:100%;background:rgba(191,0,255,0.08);border-bottom:1px solid rgba(191,0,255,0.2);padding:10px 20px;display:none;justify-content:space-between;align-items:center; }
+.guest-banner.show { display:flex; }
+.guest-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.06em;line-height:1.5; }
+.guest-signup-btn { font-size:11px;font-family:'Share Tech Mono',monospace;color:#fff;background:var(--purple);border:none;border-radius:20px;padding:6px 14px;cursor:pointer;letter-spacing:0.06em;white-space:nowrap;margin-left:10px; }
 </style>
 </head>
 <body>
@@ -307,13 +317,12 @@ body.dark {
 <!-- MAIN APP -->
 <div class="screen" id="screen-app">
 
-  <!-- Guest banner -->
-  <div class="guest-banner" id="guest-banner" style="display:none">
-    <div>
-      <div class="guest-text">👀 BROWSING AS GUEST</div>
-      <div class="guest-text" style="color:var(--muted)">CREATE ACCOUNT TO TALK</div>
+  <div class="guest-banner" id="guest-banner">
+    <div class="guest-text">
+      👀 BROWSING AS GUEST<br>
+      CREATE ACCOUNT TO TALK & CONNECT
     </div>
-    <button class="guest-signup-btn" onclick="showScreen('signup')">JOIN FREE</button>
+    <button class="guest-signup-btn" onclick="showScreen('signup')">JOIN FREE →</button>
   </div>
 
   <div class="status-bar">
@@ -330,7 +339,7 @@ body.dark {
     <div class="header-icons">
       <div class="hicon" onclick="openNotifications()">
         🔔
-        <div class="notif-badge" id="notif-badge" style="display:none"></div>
+        <div class="notif-badge" id="notif-badge"></div>
       </div>
       <div class="hicon" onclick="showScreen('settings')">⚙️</div>
     </div>
@@ -361,7 +370,7 @@ body.dark {
       <div class="pulse-ring"></div>
       <div class="pulse-ring"></div>
       <div class="sweep"></div>
-      <div class="map-dot dot-you-map"></div>
+      <div class="map-dot dot-you-map" id="your-dot"></div>
       <div class="you-map-label">YOU</div>
       <div class="map-legend">
         <div class="legend-row"><div class="l-dot" style="background:var(--purple)"></div>YOU</div>
@@ -381,7 +390,7 @@ body.dark {
       <div class="stat-lbl">LIVE NOW</div>
     </div>
     <div class="stat-chip">
-      <div class="stat-val" style="color:var(--purple)">∞</div>
+      <div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div>
       <div class="stat-lbl" id="talk-stat">TALK TIME</div>
     </div>
   </div>
@@ -392,115 +401,146 @@ body.dark {
   </div>
 
   <div class="channels-list" id="channels-list">
-    <div class="empty-state">SCANNING FOR NEARBY CHANNELS...<br>UPGRADE TO PRO TO CREATE ONE</div>
+    <div class="empty-state">SCANNING FOR NEARBY CHANNELS...</div>
   </div>
 
 </div>
 
-<!-- SETTINGS SCREEN -->
+<!-- SETTINGS -->
 <div class="screen" id="screen-settings">
   <div class="settings-header">
     <div class="settings-back" onclick="showScreen('app')">←</div>
     <div class="settings-title">Settings</div>
   </div>
 
-  <!-- Account -->
-  <div class="settings-section">
-    <div class="settings-section-title">ACCOUNT</div>
-    <div class="settings-item" onclick="openEditProfile()">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Edit Profile</div>
-        <div class="settings-item-sub">CHANGE USERNAME OR EMAIL</div>
-      </div>
-      <div class="settings-arrow">›</div>
-    </div>
-    <div class="settings-item" onclick="openChangePassword()">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Change Password</div>
-        <div class="settings-item-sub">UPDATE YOUR PASSWORD</div>
-      </div>
-      <div class="settings-arrow">›</div>
+  <!-- Guest settings -->
+  <div id="guest-settings" style="display:none">
+    <div class="guest-settings-card">
+      <div class="guest-settings-title">You're browsing as a Guest</div>
+      <div class="guest-settings-sub">CREATE A FREE ACCOUNT TO ACCESS<br>ALL FEATURES AND START TALKING</div>
+      <button class="modal-btn" onclick="showScreen('signup')">Create Free Account</button>
+      <button class="modal-btn-outline" onclick="showScreen('login')" style="margin-top:8px">Already have an account</button>
     </div>
   </div>
 
-  <!-- Appearance -->
-  <div class="settings-section">
-    <div class="settings-section-title">APPEARANCE</div>
-    <div class="settings-item">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Dark Mode</div>
-        <div class="settings-item-sub">SWITCH TO BLACK BACKGROUND</div>
+  <!-- Logged in settings -->
+  <div id="user-settings" style="display:none">
+    <div class="settings-section">
+      <div class="settings-section-title">ACCOUNT</div>
+      <div class="settings-item" onclick="openEditUsername()">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Username</div>
+          <div class="settings-item-sub" id="current-username-display">—</div>
+        </div>
+        <div class="settings-arrow">›</div>
       </div>
-      <div class="settings-toggle" id="dark-toggle" onclick="toggleDarkMode()"></div>
+      <div class="settings-item" onclick="openEditEmail()">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Email</div>
+          <div class="settings-item-sub" id="current-email-display">TAP TO UPDATE</div>
+        </div>
+        <div class="settings-arrow">›</div>
+      </div>
+      <div class="settings-item" onclick="openChangePassword()">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Password</div>
+          <div class="settings-item-sub">CHANGE YOUR PASSWORD</div>
+        </div>
+        <div class="settings-arrow">›</div>
+      </div>
     </div>
-    <div class="settings-item" id="bg-color-item" style="display:none">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Background Color <span class="pro-badge-sm">PRO</span></div>
-        <div class="settings-item-sub">PICK YOUR CUSTOM BACKGROUND</div>
-        <div class="color-swatches" id="bg-swatches">
-          <div class="swatch selected" style="background:#0a0a0a" onclick="setBgColor('#0a0a0a', this)"></div>
-          <div class="swatch" style="background:#0a0a1a" onclick="setBgColor('#0a0a1a', this)"></div>
-          <div class="swatch" style="background:#0a1a0a" onclick="setBgColor('#0a1a0a', this)"></div>
-          <div class="swatch" style="background:#1a0a0a" onclick="setBgColor('#1a0a0a', this)"></div>
-          <div class="swatch" style="background:#1a0a1a" onclick="setBgColor('#1a0a1a', this)"></div>
-          <div class="swatch" style="background:#0d1117" onclick="setBgColor('#0d1117', this)"></div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">APPEARANCE</div>
+      <div class="settings-item">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Dark Mode</div>
+          <div class="settings-item-sub">SWITCH TO BLACK BACKGROUND</div>
+        </div>
+        <div class="settings-toggle" id="dark-toggle" onclick="toggleDarkMode()"></div>
+      </div>
+
+      <div class="settings-item" id="bg-color-item" style="display:none">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Background Color <span class="pro-badge-sm">PRO</span></div>
+          <div class="settings-item-sub">PICK YOUR CUSTOM BACKGROUND</div>
+          <div class="color-swatches">
+            <div class="swatch-none" onclick="resetBgColor()" title="Reset">✕</div>
+            <div class="swatch" style="background:#1a0033;box-shadow:0 0 8px #1a0033" onclick="setBgColor('#1a0033',this)"></div>
+            <div class="swatch" style="background:#001a33;box-shadow:0 0 8px #001a33" onclick="setBgColor('#001a33',this)"></div>
+            <div class="swatch" style="background:#001a1a;box-shadow:0 0 8px #001a1a" onclick="setBgColor('#001a1a',this)"></div>
+            <div class="swatch" style="background:#1a0a00;box-shadow:0 0 8px #1a0a00" onclick="setBgColor('#1a0a00',this)"></div>
+            <div class="swatch" style="background:#0d0d1a;box-shadow:0 0 8px #0d0d1a" onclick="setBgColor('#0d0d1a',this)"></div>
+            <label class="color-wheel-btn">
+              🎨 Custom
+              <input type="color" class="color-wheel-input" id="bg-color-wheel" onchange="setBgColorWheel(this.value)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-item" id="dot-color-item" style="display:none">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Dot Color <span class="pro-badge-sm">PRO</span></div>
+          <div class="settings-item-sub">YOUR MAP DOT COLOR</div>
+          <div class="color-swatches">
+            <div class="swatch selected" style="background:#BF00FF;box-shadow:0 0 8px #BF00FF" onclick="setDotColor('#BF00FF',this)"></div>
+            <div class="swatch" style="background:#FF10F0;box-shadow:0 0 8px #FF10F0" onclick="setDotColor('#FF10F0',this)"></div>
+            <div class="swatch" style="background:#00F5FF;box-shadow:0 0 8px #00F5FF" onclick="setDotColor('#00F5FF',this)"></div>
+            <div class="swatch" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setDotColor('#39FF14',this)"></div>
+            <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setDotColor('#FFD700',this)"></div>
+            <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setDotColor('#FF6B00',this)"></div>
+            <label class="color-wheel-btn">
+              🎨 Custom
+              <input type="color" class="color-wheel-input" id="dot-color-wheel" onchange="setDotColorWheel(this.value)">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-item" id="ptt-color-item" style="display:none">
+        <div class="settings-item-left">
+          <div class="settings-item-title">PTT Button Color <span class="pro-badge-sm">PRO</span></div>
+          <div class="settings-item-sub">CUSTOMIZE YOUR MIC BUTTON</div>
+          <div class="color-swatches">
+            <div class="swatch selected" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setPttColor('#39FF14',this)"></div>
+            <div class="swatch" style="background:#BF00FF;box-shadow:0 0 8px #BF00FF" onclick="setPttColor('#BF00FF',this)"></div>
+            <div class="swatch" style="background:#FF10F0;box-shadow:0 0 8px #FF10F0" onclick="setPttColor('#FF10F0',this)"></div>
+            <div class="swatch" style="background:#00F5FF;box-shadow:0 0 8px #00F5FF" onclick="setPttColor('#00F5FF',this)"></div>
+            <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setPttColor('#FFD700',this)"></div>
+            <label class="color-wheel-btn">
+              🎨 Custom
+              <input type="color" class="color-wheel-input" id="ptt-color-wheel" onchange="setPttColorWheel(this.value)">
+            </label>
+          </div>
         </div>
       </div>
     </div>
-    <div class="settings-item" id="dot-color-item" style="display:none">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Dot Color <span class="pro-badge-sm">PRO</span></div>
-        <div class="settings-item-sub">YOUR MAP DOT COLOR</div>
-        <div class="color-swatches" id="dot-swatches">
-          <div class="swatch selected" style="background:#BF00FF;box-shadow:0 0 8px #BF00FF" onclick="setDotColor('#BF00FF', this)"></div>
-          <div class="swatch" style="background:#FF10F0;box-shadow:0 0 8px #FF10F0" onclick="setDotColor('#FF10F0', this)"></div>
-          <div class="swatch" style="background:#00F5FF;box-shadow:0 0 8px #00F5FF" onclick="setDotColor('#00F5FF', this)"></div>
-          <div class="swatch" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setDotColor('#39FF14', this)"></div>
-          <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setDotColor('#FFD700', this)"></div>
-          <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setDotColor('#FF6B00', this)"></div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">NOTIFICATIONS</div>
+      <div class="settings-item">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Push Notifications</div>
+          <div class="settings-item-sub">ALERTS FOR NEARBY ACTIVITY</div>
         </div>
+        <div class="settings-toggle" id="notif-toggle" onclick="toggleNotifications()"></div>
       </div>
     </div>
-    <div class="settings-item" id="ptt-color-item" style="display:none">
-      <div class="settings-item-left">
-        <div class="settings-item-title">PTT Button Color <span class="pro-badge-sm">PRO</span></div>
-        <div class="settings-item-sub">CUSTOMIZE YOUR MIC BUTTON</div>
-        <div class="color-swatches" id="ptt-swatches">
-          <div class="swatch selected" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setPttColor('#39FF14', this)"></div>
-          <div class="swatch" style="background:#BF00FF;box-shadow:0 0 8px #BF00FF" onclick="setPttColor('#BF00FF', this)"></div>
-          <div class="swatch" style="background:#FF10F0;box-shadow:0 0 8px #FF10F0" onclick="setPttColor('#FF10F0', this)"></div>
-          <div class="swatch" style="background:#00F5FF;box-shadow:0 0 8px #00F5FF" onclick="setPttColor('#00F5FF', this)"></div>
-          <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setPttColor('#FFD700', this)"></div>
+
+    <div class="settings-section" id="upgrade-section">
+      <div class="settings-section-title">MEMBERSHIP</div>
+      <div class="settings-item" onclick="openUpgradeModal()">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Upgrade to Pro ✦</div>
+          <div class="settings-item-sub">$2.99/MONTH · UNLOCK EVERYTHING</div>
         </div>
+        <div class="settings-arrow">›</div>
       </div>
     </div>
-  </div>
 
-  <!-- Notifications -->
-  <div class="settings-section">
-    <div class="settings-section-title">NOTIFICATIONS</div>
-    <div class="settings-item">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Push Notifications</div>
-        <div class="settings-item-sub">NEARBY ACTIVITY ALERTS</div>
-      </div>
-      <div class="settings-toggle" id="notif-toggle" onclick="toggleNotifications()"></div>
-    </div>
+    <button class="logout-btn" onclick="handleLogout()">Log Out</button>
   </div>
-
-  <!-- Upgrade -->
-  <div class="settings-section" id="upgrade-section">
-    <div class="settings-section-title">MEMBERSHIP</div>
-    <div class="settings-item" onclick="openUpgradeModal()">
-      <div class="settings-item-left">
-        <div class="settings-item-title">Upgrade to Pro ✦</div>
-        <div class="settings-item-sub">$2.99/MONTH · UNLOCK EVERYTHING</div>
-      </div>
-      <div class="settings-arrow">›</div>
-    </div>
-  </div>
-
-  <button class="logout-btn" onclick="handleLogout()">Log Out</button>
 </div>
 
 <!-- PTT -->
@@ -517,12 +557,12 @@ body.dark {
 <div class="modal-overlay" id="create-channel-modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">Create Channel</div>
+    <div class="modal-title">Create Channel ✦</div>
     <div class="modal-sub">PRO FEATURE · YOUR CHANNEL STAYS ACTIVE</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
     <div class="field">
       <label>PRIVACY</label>
-      <select id="channel-privacy" style="width:100%;padding:14px 16px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;">
+      <select id="channel-privacy" onchange="togglePasswordField()">
         <option value="public">Public — Anyone nearby can join</option>
         <option value="private">Private — Password required</option>
       </select>
@@ -543,19 +583,63 @@ body.dark {
     <div class="modal-title">Unlock ROXLY Pro ✦</div>
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-size:12px;color:var(--text);line-height:1.8;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time — no cooldown<br>
+      <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
+        ✦ Unlimited talk time — no cooldown ever<br>
         ✦ 5 mile range<br>
         ✦ Create unlimited channels<br>
-        ✦ Private channels<br>
-        ✦ Custom dot color + purple badge<br>
-        ✦ Custom background + PTT colors<br>
+        ✦ Private password protected channels<br>
+        ✦ Custom dot color + purple Pro badge<br>
+        ✦ Custom background + PTT button colors<br>
+        ✦ Push notifications<br>
         ✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
-    <button class="modal-btn" style="background:linear-gradient(135deg,#111,#222);border:1px solid var(--purple)" onclick="goToPro('yearly')">$19.99/year — Save 44%</button>
+    <button class="modal-btn-outline" onclick="goToPro('yearly')">$19.99/year — Save 44%</button>
     <button class="modal-cancel" onclick="closeModal('upgrade-modal')">Maybe Later</button>
+  </div>
+</div>
+
+<!-- EDIT USERNAME MODAL -->
+<div class="modal-overlay" id="edit-username-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Update Username</div>
+    <div class="modal-sub">CHOOSE A NEW USERNAME</div>
+    <div class="auth-error" id="username-error"></div>
+    <div class="auth-success" id="username-success"></div>
+    <div class="field"><label>NEW USERNAME</label><input type="text" id="new-username-input" placeholder="new_username"></div>
+    <button class="modal-btn" onclick="saveUsername()">Save Username</button>
+    <button class="modal-cancel" onclick="closeModal('edit-username-modal')">Cancel</button>
+  </div>
+</div>
+
+<!-- EDIT EMAIL MODAL -->
+<div class="modal-overlay" id="edit-email-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Update Email</div>
+    <div class="modal-sub">ENTER YOUR NEW EMAIL ADDRESS</div>
+    <div class="auth-error" id="email-error"></div>
+    <div class="auth-success" id="email-success"></div>
+    <div class="field"><label>NEW EMAIL</label><input type="email" id="new-email-input" placeholder="newemail@example.com"></div>
+    <button class="modal-btn" onclick="saveEmail()">Save Email</button>
+    <button class="modal-cancel" onclick="closeModal('edit-email-modal')">Cancel</button>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="change-password-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Change Password</div>
+    <div class="modal-sub">ENTER A NEW SECURE PASSWORD</div>
+    <div class="auth-error" id="password-error"></div>
+    <div class="auth-success" id="password-success"></div>
+    <div class="field"><label>NEW PASSWORD</label><input type="password" id="new-password-input" placeholder="••••••••"></div>
+    <div class="field"><label>CONFIRM PASSWORD</label><input type="password" id="confirm-password-input" placeholder="••••••••"></div>
+    <button class="modal-btn" onclick="savePassword()">Update Password</button>
+    <button class="modal-cancel" onclick="closeModal('change-password-modal')">Cancel</button>
   </div>
 </div>
 
@@ -565,17 +649,30 @@ body.dark {
     <div class="notif-title">Notifications</div>
     <div class="notif-close" onclick="closeNotifications()">✕</div>
   </div>
-  <div class="notif-toggle-row">
-    <div>
-      <div class="notif-toggle-label">Push Notifications</div>
-      <div class="notif-toggle-sub">ALERTS FOR NEARBY ACTIVITY</div>
+  <div id="notif-logged-in">
+    <div class="notif-toggle-row">
+      <div class="notif-toggle-info">
+        <div class="notif-toggle-label">Push Notifications</div>
+        <div class="notif-toggle-sub">GET ALERTS WHEN PEOPLE ARE NEARBY</div>
+      </div>
+      <div class="settings-toggle" id="notif-panel-toggle" onclick="toggleNotifications()"></div>
     </div>
-    <div class="settings-toggle" id="notif-panel-toggle" onclick="toggleNotifications()"></div>
+    <div class="notif-empty" id="notif-empty">
+      NO NOTIFICATIONS YET<br>
+      ENABLE ALERTS ABOVE TO<br>
+      KNOW WHEN PEOPLE ARE NEARBY
+    </div>
   </div>
-  <div class="notif-empty">
-    NO NOTIFICATIONS YET<br>
-    ENABLE ALERTS TO KNOW<br>
-    WHEN PEOPLE ARE NEARBY
+  <div id="notif-guest" style="display:none">
+    <div class="notif-guest-card">
+      <div class="notif-guest-text">
+        CREATE AN ACCOUNT TO ENABLE<br>
+        PUSH NOTIFICATIONS AND GET<br>
+        ALERTED WHEN PEOPLE ARE NEARBY
+      </div>
+      <button class="modal-btn" onclick="closeNotifications();showScreen('signup')">Create Free Account</button>
+      <button class="modal-btn-outline" onclick="closeNotifications();showScreen('login')" style="margin-top:8px">Log In</button>
+    </div>
   </div>
 </div>
 <script>
@@ -650,8 +747,22 @@ window.addEventListener('load', () => {
     const saved = localStorage.getItem('roxly_user')
     const savedDark = localStorage.getItem('roxly_dark')
     const savedPtt = localStorage.getItem('roxly_ptt_color')
-    if (savedDark === 'true') { darkMode = true; document.body.classList.add('dark'); document.getElementById('dark-toggle').classList.add('on') }
-    if (savedPtt) { pttColor = savedPtt; applyPttColor(savedPtt) }
+    const savedBg = localStorage.getItem('roxly_bg')
+    const savedNotif = localStorage.getItem('roxly_notif')
+    if (savedDark === 'true') {
+      darkMode = true
+      document.body.classList.add('dark')
+      document.getElementById('dark-toggle').classList.add('on')
+    }
+    if (savedPtt) { pttColor = savedPtt }
+    if (savedBg) {
+      document.documentElement.style.setProperty('--bg', savedBg)
+    }
+    if (savedNotif === 'true') {
+      document.getElementById('notif-badge').style.display = 'block'
+      document.getElementById('notif-toggle') && document.getElementById('notif-toggle').classList.add('on')
+      document.getElementById('notif-panel-toggle') && document.getElementById('notif-panel-toggle').classList.add('on')
+    }
     if (saved) {
       currentUser = JSON.parse(saved)
       showScreen('app')
@@ -666,8 +777,19 @@ window.addEventListener('load', () => {
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
   document.getElementById('screen-' + name).classList.add('active')
-  const showPtt = (name === 'app')
-  document.getElementById('ptt-wrap').style.display = showPtt ? 'flex' : 'none'
+  document.getElementById('ptt-wrap').style.display = (name === 'app') ? 'flex' : 'none'
+
+  if (name === 'settings') {
+    if (isGuest) {
+      document.getElementById('guest-settings').style.display = 'block'
+      document.getElementById('user-settings').style.display = 'none'
+    } else {
+      document.getElementById('guest-settings').style.display = 'none'
+      document.getElementById('user-settings').style.display = 'block'
+      document.getElementById('current-username-display').innerText = currentUser ? currentUser.username : '—'
+      document.getElementById('current-email-display').innerText = currentUser && currentUser.email ? currentUser.email : 'TAP TO UPDATE'
+    }
+  }
 }
 
 // ── GUEST MODE ───────────────────────────────────
@@ -675,14 +797,18 @@ function enterGuestMode() {
   isGuest = true
   currentUser = { username: 'Guest', is_pro: false, dot_color: '#888888' }
   showScreen('app')
-  document.getElementById('guest-banner').style.display = 'flex'
+  document.getElementById('guest-banner').classList.add('show')
   document.getElementById('status-username').innerText = 'GUEST'
+  document.getElementById('talk-val').innerText = '60S'
+  document.getElementById('talk-stat').innerText = 'FREE LIMIT'
   document.getElementById('ptt-btn').disabled = true
   document.getElementById('ptt-label').innerText = 'LOGIN'
+  document.getElementById('notif-logged-in').style.display = 'none'
+  document.getElementById('notif-guest').style.display = 'block'
+  updateRangePills()
   updateClock()
   setInterval(updateClock, 1000)
   getLocation()
-  updateRangePills()
 }
 
 // ── SIGNUP ───────────────────────────────────────
@@ -703,9 +829,10 @@ async function handleSignup() {
     })
     const data = await res.json()
     if (!res.ok) { errBox.innerText = data.detail.toUpperCase(); errBox.style.display = 'block'; return }
-    currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14' }
+    currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14', email: email }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
+    document.getElementById('guest-banner').classList.remove('show')
     showScreen('app'); initApp()
   } catch(e) {
     errBox.innerText = 'CONNECTION ERROR — IS SERVER RUNNING?'
@@ -729,6 +856,7 @@ async function handleLogin() {
     currentUser = { username: data.username, is_pro: data.is_pro, dot_color: data.dot_color }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
+    document.getElementById('guest-banner').classList.remove('show')
     showScreen('app'); initApp()
   } catch(e) {
     errBox.innerText = 'CONNECTION ERROR — IS SERVER RUNNING?'
@@ -743,23 +871,37 @@ function handleLogout() {
   currentUser = null
   isGuest = false
   if (locationInterval) clearInterval(locationInterval)
-  document.getElementById('guest-banner').style.display = 'none'
+  document.getElementById('guest-banner').classList.remove('show')
   showScreen('landing')
 }
 
 // ── INIT APP ─────────────────────────────────────
 function initApp() {
   document.getElementById('status-username').innerText = currentUser.username.toUpperCase()
-  if (!currentUser.is_pro) {
-    document.getElementById('talk-stat').innerText = '60S FREE'
-  } else {
-    document.getElementById('talk-stat').innerText = '∞ PRO'
+  document.getElementById('notif-logged-in').style.display = 'block'
+  document.getElementById('notif-guest').style.display = 'none'
+
+  if (currentUser.is_pro) {
+    document.getElementById('talk-val').innerText = '∞'
+    document.getElementById('talk-stat').innerText = 'UNLIMITED'
     document.getElementById('create-channel-btn').style.display = 'block'
     document.getElementById('bg-color-item').style.display = 'flex'
     document.getElementById('dot-color-item').style.display = 'flex'
     document.getElementById('ptt-color-item').style.display = 'flex'
     document.getElementById('upgrade-section').style.display = 'none'
+    const yourDot = document.getElementById('your-dot')
+    if (yourDot) {
+      yourDot.style.background = currentUser.dot_color || '#BF00FF'
+      yourDot.style.boxShadow = `0 0 16px ${currentUser.dot_color || '#BF00FF'}`
+    }
+  } else {
+    document.getElementById('talk-val').innerText = '60S'
+    document.getElementById('talk-stat').innerText = 'FREE LIMIT'
   }
+
+  const savedPtt = localStorage.getItem('roxly_ptt_color')
+  if (savedPtt) applyPttColor(savedPtt)
+
   updateRangePills()
   updateClock()
   setInterval(updateClock, 1000)
@@ -769,23 +911,17 @@ function initApp() {
 
 // ── RANGE PILLS ──────────────────────────────────
 function updateRangePills() {
-  const isPro = currentUser && currentUser.is_pro
-  const pills = ['pill-05', 'pill-1', 'pill-5']
-  pills.forEach(id => {
+  const isPro = currentUser && currentUser.is_pro && !isGuest
+  ;['pill-05','pill-1','pill-5'].forEach(id => {
     const pill = document.getElementById(id)
     if (!pill) return
-    if (isPro) {
-      pill.classList.remove('locked')
-    } else {
-      pill.classList.add('locked')
-    }
+    isPro ? pill.classList.remove('locked') : pill.classList.add('locked')
   })
 }
 
 function setRange(miles, el) {
-  if (miles > 0.25 && (!currentUser || !currentUser.is_pro)) {
-    openUpgradeModal()
-    return
+  if (miles > 0.25 && (!currentUser || !currentUser.is_pro || isGuest)) {
+    openUpgradeModal(); return
   }
   document.querySelectorAll('.range-pill').forEach(p => p.classList.remove('active'))
   el.classList.add('active')
@@ -864,7 +1000,7 @@ async function loadChannels() {
     const data = await res.json()
     const list = document.getElementById('channels-list')
     if (data.channels.length === 0) {
-      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET${currentUser && currentUser.is_pro ? '<br><button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;">+ CREATE FIRST CHANNEL</button>' : '<br>UPGRADE TO PRO TO CREATE ONE'}</div>`
+      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET<br>${currentUser && currentUser.is_pro && !isGuest ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;">+ CREATE FIRST CHANNEL</button>' : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
       return
     }
     list.innerHTML = data.channels.map(ch => `
@@ -874,7 +1010,6 @@ async function loadChannels() {
           <div class="ch-meta">BY ${ch.created_by.toUpperCase()} ${ch.is_private ? '🔒' : ''}</div>
         </div>
         <div class="ch-right">
-          <div class="ch-count">—</div>
           <div class="ch-arrow">›</div>
         </div>
       </div>`).join('')
@@ -882,7 +1017,7 @@ async function loadChannels() {
 }
 
 async function joinChannel(channelName) {
-  if (isGuest) { showScreen('signup'); return }
+  if (isGuest) { closeModal('create-channel-modal'); showScreen('signup'); return }
   if (currentChannelName === channelName) return
   await disconnectFromVoice()
   await connectToVoice(channelName)
@@ -891,13 +1026,16 @@ async function joinChannel(channelName) {
 <script>
 // ── CREATE CHANNEL ───────────────────────────────
 function openCreateChannel() {
-  if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
+  if (!currentUser || !currentUser.is_pro || isGuest) {
+    openUpgradeModal(); return
+  }
   document.getElementById('create-channel-modal').classList.add('active')
 }
 
-document.getElementById('channel-privacy').addEventListener('change', function() {
-  document.getElementById('password-field').style.display = this.value === 'private' ? 'block' : 'none'
-})
+function togglePasswordField() {
+  const privacy = document.getElementById('channel-privacy').value
+  document.getElementById('password-field').style.display = privacy === 'private' ? 'block' : 'none'
+}
 
 async function createChannel() {
   const name = document.getElementById('channel-name-input').value.trim()
@@ -905,6 +1043,7 @@ async function createChannel() {
   const password = document.getElementById('channel-password-input').value
 
   if (!name) { alert('Please enter a channel name'); return }
+  if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
 
   try {
     const res = await fetch(`${API}/channels/create`, {
@@ -923,12 +1062,15 @@ async function createChannel() {
     if (res.ok) {
       closeModal('create-channel-modal')
       document.getElementById('channel-name-input').value = ''
+      document.getElementById('channel-password-input').value = ''
       loadChannels()
       joinChannel(name)
     } else {
-      alert(data.detail)
+      alert(data.detail || 'Error creating channel')
     }
-  } catch(e) { alert('Error creating channel') }
+  } catch(e) {
+    alert('Connection error — please try again')
+  }
 }
 
 // ── MODALS ───────────────────────────────────────
@@ -948,13 +1090,103 @@ async function goToPro(plan) {
       body: JSON.stringify({
         username: currentUser.username,
         plan: plan,
-        success_url: window.location.origin + '/success.html',
+        success_url: window.location.origin,
         cancel_url: window.location.origin
       })
     })
     const data = await res.json()
     if (data.checkout_url) window.location.href = data.checkout_url
   } catch(e) { alert('Error opening checkout') }
+}
+
+// ── EDIT PROFILE ─────────────────────────────────
+function openEditUsername() {
+  document.getElementById('new-username-input').value = currentUser.username
+  document.getElementById('username-error').style.display = 'none'
+  document.getElementById('username-success').style.display = 'none'
+  document.getElementById('edit-username-modal').classList.add('active')
+}
+
+function saveUsername() {
+  const newUsername = document.getElementById('new-username-input').value.trim()
+  const errBox = document.getElementById('username-error')
+  const sucBox = document.getElementById('username-success')
+  errBox.style.display = 'none'
+  sucBox.style.display = 'none'
+
+  if (!newUsername) {
+    errBox.innerText = 'PLEASE ENTER A USERNAME'
+    errBox.style.display = 'block'; return
+  }
+  if (newUsername === currentUser.username) {
+    errBox.innerText = 'THAT IS YOUR CURRENT USERNAME'
+    errBox.style.display = 'block'; return
+  }
+
+  currentUser.username = newUsername
+  localStorage.setItem('roxly_user', JSON.stringify(currentUser))
+  document.getElementById('status-username').innerText = newUsername.toUpperCase()
+  document.getElementById('current-username-display').innerText = newUsername
+  sucBox.innerText = 'USERNAME UPDATED!'
+  sucBox.style.display = 'block'
+  setTimeout(() => closeModal('edit-username-modal'), 1500)
+}
+
+function openEditEmail() {
+  document.getElementById('new-email-input').value = currentUser.email || ''
+  document.getElementById('email-error').style.display = 'none'
+  document.getElementById('email-success').style.display = 'none'
+  document.getElementById('edit-email-modal').classList.add('active')
+}
+
+function saveEmail() {
+  const newEmail = document.getElementById('new-email-input').value.trim()
+  const errBox = document.getElementById('email-error')
+  const sucBox = document.getElementById('email-success')
+  errBox.style.display = 'none'
+  sucBox.style.display = 'none'
+
+  if (!newEmail || !newEmail.includes('@')) {
+    errBox.innerText = 'PLEASE ENTER A VALID EMAIL'
+    errBox.style.display = 'block'; return
+  }
+
+  currentUser.email = newEmail
+  localStorage.setItem('roxly_user', JSON.stringify(currentUser))
+  document.getElementById('current-email-display').innerText = newEmail
+  sucBox.innerText = 'EMAIL UPDATED!'
+  sucBox.style.display = 'block'
+  setTimeout(() => closeModal('edit-email-modal'), 1500)
+}
+
+function openChangePassword() {
+  document.getElementById('new-password-input').value = ''
+  document.getElementById('confirm-password-input').value = ''
+  document.getElementById('password-error').style.display = 'none'
+  document.getElementById('password-success').style.display = 'none'
+  document.getElementById('change-password-modal').classList.add('active')
+}
+
+function savePassword() {
+  const newPass = document.getElementById('new-password-input').value
+  const confirmPass = document.getElementById('confirm-password-input').value
+  const errBox = document.getElementById('password-error')
+  const sucBox = document.getElementById('password-success')
+  errBox.style.display = 'none'
+  sucBox.style.display = 'none'
+
+  if (!newPass || newPass.length < 6) {
+    errBox.innerText = 'PASSWORD MUST BE AT LEAST 6 CHARACTERS'
+    errBox.style.display = 'block'; return
+  }
+  if (newPass !== confirmPass) {
+    errBox.innerText = 'PASSWORDS DO NOT MATCH'
+    errBox.style.display = 'block'; return
+  }
+
+  sucBox.innerText = 'PASSWORD UPDATED SUCCESSFULLY!'
+  sucBox.style.display = 'block'
+  setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
 // ── NOTIFICATIONS ────────────────────────────────
@@ -967,46 +1199,40 @@ function closeNotifications() {
 }
 
 function toggleNotifications() {
+  if (isGuest) {
+    closeNotifications()
+    showScreen('signup')
+    return
+  }
+
   const toggle1 = document.getElementById('notif-toggle')
   const toggle2 = document.getElementById('notif-panel-toggle')
-  const isOn = toggle1.classList.contains('on')
+  const isOn = toggle1 ? toggle1.classList.contains('on') : false
 
   if (!isOn) {
     if ('Notification' in window) {
       Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
-          toggle1.classList.add('on')
-          toggle2.classList.add('on')
+          toggle1 && toggle1.classList.add('on')
+          toggle2 && toggle2.classList.add('on')
           document.getElementById('notif-badge').style.display = 'block'
           localStorage.setItem('roxly_notif', 'true')
-          new Notification('ROXLY Notifications On', {
-            body: 'You will be notified when people are nearby!',
-            icon: '/icon.png'
+          new Notification('ROXLY', {
+            body: 'Notifications enabled! You will be alerted when people are nearby.',
           })
+        } else {
+          alert('Please allow notifications in your browser settings to enable this feature.')
         }
       })
+    } else {
+      alert('Push notifications are not supported on this browser.')
     }
   } else {
-    toggle1.classList.remove('on')
-    toggle2.classList.remove('on')
+    toggle1 && toggle1.classList.remove('on')
+    toggle2 && toggle2.classList.remove('on')
     document.getElementById('notif-badge').style.display = 'none'
     localStorage.removeItem('roxly_notif')
   }
-}
-
-// ── SETTINGS ─────────────────────────────────────
-function openEditProfile() {
-  const newUsername = prompt('Enter new username:', currentUser.username)
-  if (newUsername && newUsername !== currentUser.username) {
-    currentUser.username = newUsername
-    localStorage.setItem('roxly_user', JSON.stringify(currentUser))
-    document.getElementById('status-username').innerText = newUsername.toUpperCase()
-    alert('Username updated!')
-  }
-}
-
-function openChangePassword() {
-  alert('Password change coming soon! For now contact support at hello@roxlyfive.com')
 }
 
 // ── DARK MODE ────────────────────────────────────
@@ -1016,44 +1242,86 @@ function toggleDarkMode() {
   document.getElementById('dark-toggle').classList.toggle('on', darkMode)
   localStorage.setItem('roxly_dark', darkMode)
 
-  if (darkMode && currentUser && currentUser.is_pro) {
-    document.getElementById('bg-color-item').style.display = 'flex'
+  if (!darkMode) {
+    document.documentElement.style.removeProperty('--bg')
+    document.documentElement.style.removeProperty('--card')
+    localStorage.removeItem('roxly_bg')
+    if (currentUser && currentUser.is_pro) {
+      document.getElementById('bg-color-item').style.display = 'none'
+    }
+  } else {
+    if (currentUser && currentUser.is_pro) {
+      document.getElementById('bg-color-item').style.display = 'flex'
+    }
   }
 }
 
 // ── PRO COLORS ───────────────────────────────────
 function setBgColor(color, el) {
   document.querySelectorAll('#bg-swatches .swatch').forEach(s => s.classList.remove('selected'))
-  el.classList.add('selected')
+  if (el) el.classList.add('selected')
   document.documentElement.style.setProperty('--bg', color)
-  document.documentElement.style.setProperty('--card', color === '#0a0a0a' ? '#111' : color)
+  document.documentElement.style.setProperty('--card', adjustColor(color, 15))
   localStorage.setItem('roxly_bg', color)
 }
 
+function setBgColorWheel(color) {
+  document.documentElement.style.setProperty('--bg', color)
+  document.documentElement.style.setProperty('--card', adjustColor(color, 15))
+  localStorage.setItem('roxly_bg', color)
+}
+
+function resetBgColor() {
+  document.documentElement.style.setProperty('--bg', '#0a0a0a')
+  document.documentElement.style.setProperty('--card', '#111111')
+  localStorage.setItem('roxly_bg', '#0a0a0a')
+  document.querySelectorAll('.color-swatches .swatch').forEach(s => s.classList.remove('selected'))
+}
+
+function adjustColor(hex, amount) {
+  const num = parseInt(hex.slice(1), 16)
+  const r = Math.min(255, (num >> 16) + amount)
+  const g = Math.min(255, ((num >> 8) & 0xff) + amount)
+  const b = Math.min(255, (num & 0xff) + amount)
+  return `rgb(${r},${g},${b})`
+}
+
 function setDotColor(color, el) {
-  document.querySelectorAll('#dot-swatches .swatch').forEach(s => s.classList.remove('selected'))
-  el.classList.add('selected')
+  document.querySelectorAll('#dot-color-item .swatch').forEach(s => s.classList.remove('selected'))
+  if (el) el.classList.add('selected')
   currentUser.dot_color = color
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
-  document.querySelector('.dot-you-map').style.background = color
-  document.querySelector('.dot-you-map').style.boxShadow = `0 0 16px ${color}`
+  const yourDot = document.getElementById('your-dot')
+  if (yourDot) {
+    yourDot.style.background = color
+    yourDot.style.boxShadow = `0 0 16px ${color}`
+  }
+}
+
+function setDotColorWheel(color) {
+  setDotColor(color, null)
 }
 
 function setPttColor(color, el) {
-  document.querySelectorAll('#ptt-swatches .swatch').forEach(s => s.classList.remove('selected'))
-  el.classList.add('selected')
+  document.querySelectorAll('#ptt-color-item .swatch').forEach(s => s.classList.remove('selected'))
+  if (el) el.classList.add('selected')
   pttColor = color
   applyPttColor(color)
   localStorage.setItem('roxly_ptt_color', color)
 }
 
+function setPttColorWheel(color) {
+  setPttColor(color, null)
+}
+
 function applyPttColor(color) {
   const btn = document.getElementById('ptt-btn')
+  const lbl = document.getElementById('ptt-label')
   if (!btn) return
   btn.style.borderColor = color
-  btn.style.background = color + '15'
+  btn.style.background = color + '20'
   btn.style.boxShadow = `0 0 20px ${color}40`
-  document.getElementById('ptt-label').style.color = color
+  if (lbl) lbl.style.color = color
 }
 
 // ── PTT ──────────────────────────────────────────
@@ -1081,7 +1349,8 @@ async function startTalking() {
 }
 
 async function stopTalking() {
-  document.getElementById('ptt-btn').classList.remove('talking')
+  const btn = document.getElementById('ptt-btn')
+  btn.classList.remove('talking')
   document.getElementById('ptt-label').innerText = 'HOLD'
   if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
 
@@ -1097,6 +1366,8 @@ function showCooldown() {
   btn.disabled = true
   btn.style.borderColor = '#ccc'
   btn.style.boxShadow = 'none'
+  btn.style.background = 'transparent'
+
   const t = setInterval(() => {
     const m = Math.floor(countdown/60), s = countdown % 60
     document.getElementById('ptt-label').innerText = `${m}:${s.toString().padStart(2,'0')}`
@@ -1109,7 +1380,6 @@ function showCooldown() {
     }
   }, 1000)
 
-  // Show upgrade prompt
   setTimeout(() => {
     if (!currentUser.is_pro) openUpgradeModal()
   }, 2000)
