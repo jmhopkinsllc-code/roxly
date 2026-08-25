@@ -1,36 +1,27 @@
-# ================================
-# ROXLY Database Setup
-# This creates and connects to
-# your database (like setting up
-# a filing cabinet for your app)
-# ================================
-
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
-# This creates a simple database file on your computer
-# called roxly.db — it stores all your users
-DATABASE_URL = "sqlite:///./roxly.db"
+load_dotenv()
 
-# Create the connection to the database
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False}
-)
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./roxly.db")
 
-# This is like a "session" — a conversation with the database
+# Fix for Railway PostgreSQL URL format
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(DATABASE_URL)
+
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine
 )
 
-# Base class that all our data models will inherit from
 Base = declarative_base()
 
-# This function hands out database sessions to our routes
-# Think of it like opening a drawer, using it, then closing it
 def get_db():
     db = SessionLocal()
     try:
