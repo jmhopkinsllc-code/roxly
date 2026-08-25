@@ -26,6 +26,7 @@ app.add_middleware(
         "https://roxly.vercel.app",
         "https://roxlyfive.com",
         "https://www.roxlyfive.com",
+        "https://roaring-kangaroo-aee155.netlify.app",
         "http://127.0.0.1:5500",
         "http://localhost:5500",
         "*"
