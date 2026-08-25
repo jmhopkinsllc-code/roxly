@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
 <title>ROXLY — Proximity Social</title>
+<script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
@@ -45,8 +46,7 @@ body {
 
 /* LOADING */
 .loading {
-  position: fixed; inset: 0;
-  background: #000;
+  position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 16px; z-index: 999;
@@ -103,28 +103,25 @@ body {
 .auth-btn:active { transform: scale(0.98); }
 .auth-switch { text-align:center;font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;margin-top:8px;cursor:pointer; }
 .auth-switch span { color:var(--purple);text-decoration:underline; }
-</style>
-<style>
-/* APP SCREEN */
-#screen-app { background: var(--bg); padding-bottom: 110px; }
 
+/* APP */
+#screen-app { background: var(--bg); padding-bottom: 110px; }
 .status-bar { width:100%;display:flex;justify-content:space-between;padding:14px 20px 6px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;background:var(--card);border-bottom:1px solid var(--border); }
 .status-live { color:var(--green);display:flex;align-items:center;gap:5px; }
 .status-dot { width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 1.4s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
 .app-header { width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 20px 12px;background:var(--card);border-bottom:1px solid var(--border);margin-bottom:2px; }
 .app-logo { font-size:24px;font-weight:700;letter-spacing:0.15em;background:linear-gradient(90deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
 .app-logo-sub { font-size:8px;font-family:'Share Tech Mono',monospace;color:var(--muted);letter-spacing:0.18em;margin-top:-2px; }
 .header-icons { display:flex;gap:10px; }
 .hicon { width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,0.08);transition:border-color 0.2s; }
 .hicon:hover { border-color:var(--purple); }
-
 .range-bar { width:100%;padding:12px 20px;display:flex;gap:8px;overflow-x:auto;background:var(--card);border-bottom:1px solid var(--border); }
 .range-pill { padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:11px;font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;cursor:pointer;white-space:nowrap;color:var(--muted);background:var(--bg);transition:all 0.2s;flex-shrink:0; }
 .range-pill.active { border-color:var(--purple);color:var(--purple);background:rgba(191,0,255,0.06);box-shadow:0 0 10px rgba(191,0,255,0.15); }
-
-/* MAP STAYS DARK */
+</style>
+<style>
+/* MAP */
 .map-wrap { width:100%;padding:16px 20px 0; }
 .map { width:100%;aspect-ratio:1/1;background:#050510;border-radius:18px;border:1px solid #1a1a2e;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.18); }
 .map::before { content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.04) 1px,transparent 1px);background-size:40px 40px; }
@@ -145,6 +142,20 @@ body {
 .legend-row { display:flex;align-items:center;gap:6px;font-size:8px;font-family:'Share Tech Mono',monospace;color:#777; }
 .l-dot { width:6px;height:6px;border-radius:50%; }
 
+/* VOICE STATUS BAR */
+.voice-status { width:100%;padding:8px 20px;background:rgba(57,255,20,0.06);border-bottom:1px solid rgba(57,255,20,0.15);display:none;align-items:center;gap:10px; }
+.voice-status.active { display:flex; }
+.voice-waves { display:flex;gap:3px;align-items:center; }
+.voice-wave { width:3px;border-radius:2px;background:var(--green);animation:wave 0.6s ease-in-out infinite alternate; }
+.voice-wave:nth-child(1){height:8px;animation-delay:0s}
+.voice-wave:nth-child(2){height:14px;animation-delay:0.1s}
+.voice-wave:nth-child(3){height:10px;animation-delay:0.2s}
+.voice-wave:nth-child(4){height:18px;animation-delay:0.3s}
+.voice-wave:nth-child(5){height:8px;animation-delay:0.4s}
+@keyframes wave { from{transform:scaleY(0.4)} to{transform:scaleY(1)} }
+.voice-status-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.06em; }
+.voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto; }
+
 /* STATS */
 .stats-row { width:100%;padding:14px 20px 0;display:flex;gap:10px; }
 .stat-chip { flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
@@ -157,6 +168,7 @@ body {
 .channels-list { width:100%;padding:0 20px;display:flex;flex-direction:column;gap:10px; }
 .channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .channel-card:hover { border-color:var(--purple);box-shadow:0 2px 12px rgba(191,0,255,0.12); }
+.channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
 .channel-card.live { border-color:rgba(255,16,240,0.3); }
 .ch-left { display:flex;flex-direction:column;gap:3px; }
 .ch-name { font-size:13px;font-weight:600;color:var(--text); }
@@ -171,11 +183,13 @@ body {
 .ptt-wrap { position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px 28px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
+.ptt-btn:disabled { opacity:0.4;cursor:not-allowed; }
 .ptt-icon { font-size:26px; }
 .ptt-label { font-size:8px;font-family:'Share Tech Mono',monospace;color:var(--green);letter-spacing:0.12em; }
 </style>
 </head>
 <body>
+
 <!-- Loading -->
 <div class="loading" id="loading">
   <div class="loading-logo">ROXLY</div>
@@ -246,6 +260,21 @@ body {
     <div class="range-pill" onclick="setRange(1, this)">1 mi</div>
     <div class="range-pill" onclick="setRange(5, this)">5 mi ✦</div>
   </div>
+
+  <!-- Voice status bar -->
+  <div class="voice-status" id="voice-status">
+    <div class="voice-waves">
+      <div class="voice-wave"></div>
+      <div class="voice-wave"></div>
+      <div class="voice-wave"></div>
+      <div class="voice-wave"></div>
+      <div class="voice-wave"></div>
+    </div>
+    <div class="voice-status-text">CONNECTED</div>
+    <div class="voice-channel-name" id="voice-channel-display">—</div>
+  </div>
+
+  <!-- Map -->
   <div class="map-wrap">
     <div class="map" id="main-map">
       <div class="pulse-ring"></div>
@@ -261,6 +290,8 @@ body {
       </div>
     </div>
   </div>
+
+  <!-- Stats -->
   <div class="stats-row">
     <div class="stat-chip">
       <div class="stat-val" style="color:var(--green)" id="nearby-count">0</div>
@@ -275,14 +306,13 @@ body {
       <div class="stat-lbl" id="talk-stat">TALK TIME</div>
     </div>
   </div>
+
+  <!-- Channels -->
   <div class="section-label">
     <div class="section-title">NEARBY CHANNELS</div>
   </div>
   <div class="channels-list" id="channels-list">
-    <div class="empty-state">
-      SCANNING FOR NEARBY CHANNELS...<br>
-      UPGRADE TO PRO TO CREATE ONE
-    </div>
+    <div class="empty-state">SCANNING FOR NEARBY CHANNELS...<br>UPGRADE TO PRO TO CREATE ONE</div>
   </div>
 </div>
 
@@ -295,7 +325,6 @@ body {
     <div class="ptt-label" id="ptt-label">HOLD</div>
   </button>
 </div>
-
 <script>
 const API = 'http://127.0.0.1:8000'
 let currentUser = null
@@ -304,6 +333,80 @@ let userLat = null
 let userLon = null
 let locationInterval = null
 
+// ── LIVEKIT VOICE ────────────────────────────────
+let livekitRoom = null
+let localAudioTrack = null
+let isConnectedToVoice = false
+let currentChannelName = null
+
+async function connectToVoice(channelName) {
+  try {
+    const res = await fetch(`${API}/voice/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser.username,
+        channel_name: channelName
+      })
+    })
+    const data = await res.json()
+
+    livekitRoom = new LivekitClient.Room({
+      adaptiveStream: true,
+      dynacast: true,
+    })
+
+    await livekitRoom.connect(data.livekit_url, data.token)
+    localAudioTrack = await LivekitClient.createLocalAudioTrack()
+
+    isConnectedToVoice = true
+    currentChannelName = channelName
+
+    // Show voice status bar
+    document.getElementById('voice-status').classList.add('active')
+    document.getElementById('voice-channel-display').innerText = channelName.toUpperCase()
+
+    // Highlight active channel card
+    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active-channel'))
+    document.querySelectorAll('.ch-name').forEach(c => {
+      if (c.innerText === channelName) c.closest('.channel-card').classList.add('active-channel')
+    })
+
+    // Play incoming audio from others
+    livekitRoom.on(LivekitClient.RoomEvent.TrackSubscribed, (track, publication, participant) => {
+      if (track.kind === 'audio') {
+        const audioEl = track.attach()
+        audioEl.id = `audio-${participant.identity}`
+        document.body.appendChild(audioEl)
+        audioEl.play()
+      }
+    })
+
+    // Remove audio when someone leaves
+    livekitRoom.on(LivekitClient.RoomEvent.TrackUnsubscribed, (track, publication, participant) => {
+      const el = document.getElementById(`audio-${participant.identity}`)
+      if (el) el.remove()
+    })
+
+  } catch(e) {
+    console.error('Voice connection error:', e)
+  }
+}
+
+async function disconnectFromVoice() {
+  if (livekitRoom) {
+    await livekitRoom.disconnect()
+    livekitRoom = null
+    localAudioTrack = null
+    isConnectedToVoice = false
+    currentChannelName = null
+    document.getElementById('voice-status').classList.remove('active')
+    document.getElementById('voice-channel-display').innerText = '—'
+    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active-channel'))
+  }
+}
+
+// ── LOADING ──────────────────────────────────────
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loading').style.display = 'none'
@@ -372,6 +475,7 @@ async function handleLogin() {
 }
 
 function handleLogout() {
+  disconnectFromVoice()
   localStorage.removeItem('roxly_user')
   currentUser = null
   if (locationInterval) clearInterval(locationInterval)
@@ -383,6 +487,7 @@ function initApp() {
   if (!currentUser.is_pro) document.getElementById('talk-stat').innerText = '60S FREE'
   updateClock(); setInterval(updateClock, 1000)
   getLocation()
+  connectToVoice('general')
 }
 
 function updateClock() {
@@ -422,7 +527,7 @@ async function updateLocation() {
 async function scanNearby() {
   if (!currentUser || !userLat) return
   try {
-    const res  = await fetch(`${API}/proximity/nearby`, {
+    const res = await fetch(`${API}/proximity/nearby`, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         username: currentUser.username,
@@ -468,7 +573,8 @@ async function loadChannels() {
       return
     }
     list.innerHTML = data.channels.map(ch => `
-      <div class="channel-card">
+      <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}"
+           onclick="joinChannel('${ch.name}')">
         <div class="ch-left">
           <div class="ch-name">${ch.name}</div>
           <div class="ch-meta">BY ${ch.created_by.toUpperCase()}</div>
@@ -481,6 +587,12 @@ async function loadChannels() {
   } catch(e) {}
 }
 
+async function joinChannel(channelName) {
+  if (currentChannelName === channelName) return
+  await disconnectFromVoice()
+  await connectToVoice(channelName)
+}
+
 function setRange(miles, el) {
   document.querySelectorAll('.range-pill').forEach(p => p.classList.remove('active'))
   el.classList.add('active')
@@ -491,12 +603,24 @@ function setRange(miles, el) {
   currentRange = miles; scanNearby()
 }
 
-let talkTimer = null, talkSeconds = 0
+// ── PUSH TO TALK ─────────────────────────────────
+let talkTimer = null
+let talkSeconds = 0
 
-function startTalking() {
+async function startTalking() {
+  if (!isConnectedToVoice) {
+    await connectToVoice('general')
+  }
   const btn = document.getElementById('ptt-btn')
   btn.classList.add('talking')
   document.getElementById('ptt-label').innerText = 'LIVE'
+
+  if (isConnectedToVoice && localAudioTrack && livekitRoom) {
+    try {
+      await livekitRoom.localParticipant.publishTrack(localAudioTrack)
+    } catch(e) { console.error('PTT error:', e) }
+  }
+
   if (!currentUser.is_pro) {
     talkSeconds = 0
     talkTimer = setInterval(() => {
@@ -506,10 +630,16 @@ function startTalking() {
   }
 }
 
-function stopTalking() {
+async function stopTalking() {
   document.getElementById('ptt-btn').classList.remove('talking')
   document.getElementById('ptt-label').innerText = 'HOLD'
   if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
+
+  if (isConnectedToVoice && localAudioTrack && livekitRoom) {
+    try {
+      await livekitRoom.localParticipant.unpublishTrack(localAudioTrack)
+    } catch(e) { console.error('PTT stop error:', e) }
+  }
 }
 
 function showCooldown() {
