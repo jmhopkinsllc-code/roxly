@@ -22,11 +22,18 @@ app = FastAPI(title="ROXLY API", version="1.1.0")
 # Allow frontend to talk to backend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://roxly.vercel.app",
+        "https://roxlyfive.com",
+        "https://www.roxlyfive.com",
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "*"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Connect the user routes
 app.include_router(users.router)
 app.include_router(proximity.router)
