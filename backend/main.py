@@ -10,6 +10,7 @@ from routes import users
 from routes import proximity
 from routes import channels
 from routes import voice
+from routes import payments
 
 # Create all database tables automatically
 from routes.channels import Channel
@@ -31,6 +32,7 @@ app.include_router(users.router)
 app.include_router(proximity.router)
 app.include_router(channels.router)
 app.include_router(voice.router)
+app.include_router(payments.router)
 # Home route
 @app.get("/")
 def home():
