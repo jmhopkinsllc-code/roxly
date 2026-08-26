@@ -164,7 +164,7 @@ body.dark {
 .voice-wave:nth-child(5){height:8px;animation-delay:0.4s}
 @keyframes wave { from{transform:scaleY(0.4)} to{transform:scaleY(1)} }
 .voice-status-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.06em; }
-.voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto;cursor:pointer;text-decoration:underline; }
+.voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto; }
 
 .stats-row { width:100%;padding:14px 20px 0;display:flex;gap:10px; }
 .stat-chip { flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
@@ -173,22 +173,33 @@ body.dark {
 
 .section-label { width:100%;padding:16px 20px 8px;display:flex;justify-content:space-between;align-items:center; }
 .section-title { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em; }
-.create-btns { display:flex;gap:6px; }
-.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 10px;cursor:pointer;letter-spacing:0.04em;white-space:nowrap; }
-.create-btn.private { color:var(--pink);background:rgba(255,16,240,0.1);border-color:rgba(255,16,240,0.3); }
+.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:4px 12px;cursor:pointer;letter-spacing:0.04em;white-space:nowrap; }
 
 .channels-list { width:100%;padding:0 20px;display:flex;flex-direction:column;gap:10px; }
-.channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
+.channel-card:hover { border-color:var(--purple); }
 .channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
 .channel-card.general-card { border-color:rgba(0,245,255,0.3); }
-.ch-left { display:flex;flex-direction:column;gap:3px;flex:1;cursor:pointer; }
-.ch-left:hover .ch-name { color:var(--purple); }
-.ch-name { font-size:13px;font-weight:600;color:var(--text);transition:color 0.2s; }
+.ch-name { font-size:13px;font-weight:600;color:var(--text); }
 .ch-meta { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
-.ch-menu-btn { background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:8px;transition:background 0.2s;flex-shrink:0; }
-.ch-menu-btn:hover { background:var(--border);color:var(--text); }
+.ch-toggle-hint { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--purple);letter-spacing:0.04em; }
 
 .empty-state { width:100%;padding:30px 20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8;background:var(--card);border-radius:14px;border:1.5px dashed var(--border); }
+
+/* CHAT HUB */
+.chat-hub { width:100%;padding:0 20px;margin-top:16px; }
+.chat-box { background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden; }
+.chat-messages { height:220px;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px; }
+.chat-msg { display:flex;flex-direction:column;gap:1px;max-width:85%; }
+.chat-msg.own { align-self:flex-end;align-items:flex-end; }
+.chat-msg-user { font-size:9px;font-family:'Share Tech Mono',monospace;color:var(--purple);letter-spacing:0.04em; }
+.chat-msg-bubble { background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:12px;color:var(--text);word-break:break-word; }
+.chat-msg.own .chat-msg-bubble { background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border:none; }
+.chat-input-row { display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border); }
+.chat-input { flex:1;padding:10px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;outline:none; }
+.chat-input:focus { border-color:var(--purple); }
+.chat-send-btn { width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.chat-guest-lock { padding:20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.04em;line-height:1.8; }
 
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none; }
@@ -205,14 +216,7 @@ body.dark {
 .modal-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;margin-bottom:20px; }
 .modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
-.modal-btn-danger { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,rgba(255,16,240,0.8),rgba(200,0,0,0.8));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
-.modal-btn-dark { width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
-
-.member-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border); }
-.member-name { font-size:13px;font-weight:600;color:var(--text); }
-.member-badges { display:flex;align-items:center;gap:6px; }
-.kick-btn { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:3px 10px;cursor:pointer;letter-spacing:0.06em; }
 
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
@@ -246,6 +250,10 @@ body.dark {
 .color-apply-btn { padding:8px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 .color-reset-btn { padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 
+.my-channel-row { display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border); }
+.my-channel-name { font-size:12px;font-weight:600;color:var(--text); }
+.my-channel-del { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:4px 10px;cursor:pointer;letter-spacing:0.06em; }
+
 .logout-btn { width:calc(100% - 40px);margin:20px;padding:14px;border-radius:12px;border:1.5px solid rgba(255,16,240,0.3);background:rgba(255,16,240,0.06);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.04em; }
 .guest-settings-card { width:calc(100% - 40px);margin:20px;padding:20px;border-radius:14px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);text-align:center; }
 .guest-settings-title { font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px; }
@@ -271,7 +279,6 @@ body.dark {
 </style>
 </head>
 <body>
-
 <div class="loading" id="loading">
   <div class="loading-logo">ROXLY</div>
   <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
@@ -348,7 +355,7 @@ body.dark {
       <div class="voice-wave"></div><div class="voice-wave"></div><div class="voice-wave"></div>
     </div>
     <div class="voice-status-text">CONNECTED</div>
-    <div class="voice-channel-name" id="voice-channel-display" onclick="openCurrentChannelMenu()">—</div>
+    <div class="voice-channel-name" id="voice-channel-display">—</div>
   </div>
   <div class="map-wrap">
     <div class="map" id="main-map">
@@ -369,16 +376,30 @@ body.dark {
     <div class="stat-chip"><div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div><div class="stat-lbl" id="talk-stat">TALK TIME</div></div>
   </div>
   <div class="section-label">
-    <div class="section-title">CHANNELS</div>
-    <div class="create-btns" id="create-btns" style="display:none">
-      <button class="create-btn" onclick="openCreateChannel(false)">+ PUBLIC</button>
-      <button class="create-btn private" onclick="openCreateChannel(true)">+ PRIVATE 🔒</button>
-    </div>
+    <div class="section-title">VOICE CHANNEL</div>
+    <button class="create-btn" id="create-private-btn" onclick="openCreatePrivate()" style="display:none">+ PRIVATE 🔒</button>
   </div>
   <div class="channels-list" id="channels-list">
-    <div class="empty-state">LOADING CHANNELS...</div>
+    <div class="empty-state">LOADING...</div>
+  </div>
+
+  <!-- CHAT HUB -->
+  <div class="section-label" style="margin-top:8px;">
+    <div class="section-title">💬 GENERAL CHAT HUB</div>
+  </div>
+  <div class="chat-hub">
+    <div class="chat-box">
+      <div class="chat-messages" id="chat-messages"></div>
+      <div id="chat-input-area">
+        <div class="chat-input-row">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Say something..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+          <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
 <div class="screen" id="screen-settings">
   <div class="settings-header">
     <div class="settings-back" onclick="showScreen('app')">←</div>
@@ -417,6 +438,16 @@ body.dark {
         <div class="settings-arrow">›</div>
       </div>
     </div>
+
+    <div class="settings-section" id="my-channels-section" style="display:none">
+      <div class="settings-section-title">MY PRIVATE CHANNELS</div>
+      <div class="settings-item" style="cursor:default;">
+        <div class="settings-item-left" style="width:100%">
+          <div id="my-channels-list"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="settings-section">
       <div class="settings-section-title">APPEARANCE</div>
       <div class="settings-item">
@@ -509,32 +540,13 @@ body.dark {
   </button>
 </div>
 
-<div class="modal-overlay" id="channel-menu-modal">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="channel-menu-title">Channel</div>
-    <div class="modal-sub" id="channel-menu-sub"></div>
-    <div style="margin-bottom:16px;">
-      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">MEMBERS IN CHANNEL</div>
-      <div id="channel-members-list"></div>
-    </div>
-    <button class="modal-btn" id="channel-join-btn" onclick="joinFromMenu()">Join Channel</button>
-    <button class="modal-btn-dark" id="channel-leave-btn" onclick="leaveChannel()" style="display:none">Leave Channel</button>
-    <button class="modal-btn-danger" id="channel-delete-btn" onclick="deleteChannel()" style="display:none">🗑️ Delete Channel</button>
-    <button class="modal-cancel" onclick="closeModal('channel-menu-modal')">Close</button>
-  </div>
-</div>
-
 <div class="modal-overlay" id="create-channel-modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title" id="create-modal-title">Create Channel ✦</div>
-    <div class="modal-sub" id="create-modal-sub">NAME YOUR CHANNEL</div>
+    <div class="modal-title">Create Private Channel 🔒</div>
+    <div class="modal-sub">ONLY PEOPLE WITH THE PASSWORD CAN JOIN</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
-    <div class="field" id="password-field" style="display:none">
-      <label>CHANNEL PASSWORD</label>
-      <input type="text" id="channel-password-input" placeholder="set a password">
-    </div>
+    <div class="field"><label>CHANNEL PASSWORD</label><input type="text" id="channel-password-input" placeholder="set a password"></div>
     <button class="modal-btn" onclick="createChannel()">Create Channel</button>
     <button class="modal-cancel" onclick="closeModal('create-channel-modal')">Cancel</button>
   </div>
@@ -547,7 +559,7 @@ body.dark {
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create public + private channels<br>✦ Kick members from private channels<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
+        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create private channels<br>✦ Kick members<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
@@ -630,20 +642,14 @@ let isGuest = false
 let darkMode = false
 let pttColor = '#39FF14'
 let pendingBgColor = null
-let creatingPrivate = false
-
-let activeChannelId = null
-let activeChannelName = null
-let activeChannelOwner = null
-let activeChannelPrivate = false
-let activeChannelMembers = []
-let allChannelsCache = []
+let chatPollInterval = null
 
 let livekitRoom = null
 let localAudioTrack = null
 let isConnectedToVoice = false
 let currentChannelName = null
 let currentChannelId = null
+let myPrivateChannel = null // {id, name}
 
 async function connectToVoice(channelName) {
   if (isGuest) return
@@ -683,10 +689,8 @@ async function disconnectFromVoice() {
     localAudioTrack = null
     isConnectedToVoice = false
     currentChannelName = null
-    currentChannelId = null
     document.getElementById('voice-status').classList.remove('active')
     document.getElementById('voice-channel-display').innerText = '—'
-    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active-channel'))
   }
 }
 
@@ -741,6 +745,7 @@ function showScreen(name) {
         document.getElementById('current-username-display').innerText = currentUser.username
         document.getElementById('current-email-display').innerText = currentUser.email || 'TAP TO UPDATE'
       }
+      loadMyChannels()
     }
   }
 }
@@ -757,10 +762,13 @@ function enterGuestMode() {
   document.getElementById('ptt-label').innerText = 'LOGIN'
   document.getElementById('notif-logged-in').style.display = 'none'
   document.getElementById('notif-guest').style.display = 'block'
+  document.getElementById('chat-input-area').innerHTML = '<div class="chat-guest-lock">CREATE AN ACCOUNT TO JOIN THE CHAT</div>'
   updateRangePills()
   updateClock()
   setInterval(updateClock, 1000)
   getLocation()
+  loadChatMessages()
+  chatPollInterval = setInterval(loadChatMessages, 5000)
 }
 
 async function handleSignup() {
@@ -822,6 +830,7 @@ function handleLogout() {
   currentUser = null
   isGuest = false
   if (locationInterval) clearInterval(locationInterval)
+  if (chatPollInterval) clearInterval(chatPollInterval)
   document.getElementById('guest-banner').classList.remove('show')
   showScreen('landing')
 }
@@ -830,14 +839,20 @@ function initApp() {
   document.getElementById('status-username').innerText = currentUser.username.toUpperCase()
   document.getElementById('notif-logged-in').style.display = 'block'
   document.getElementById('notif-guest').style.display = 'none'
+  document.getElementById('chat-input-area').innerHTML = `
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Say something..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+      <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+    </div>`
   if (currentUser.is_pro) {
     document.getElementById('talk-val').innerText = '∞'
     document.getElementById('talk-stat').innerText = 'UNLIMITED'
-    document.getElementById('create-btns').style.display = 'flex'
+    document.getElementById('create-private-btn').style.display = 'block'
     document.getElementById('bg-color-item').style.display = 'flex'
     document.getElementById('dot-color-item').style.display = 'flex'
     document.getElementById('ptt-color-item').style.display = 'flex'
     document.getElementById('upgrade-section').style.display = 'none'
+    document.getElementById('my-channels-section').style.display = 'block'
     const yourDot = document.getElementById('your-dot')
     if (yourDot && currentUser.dot_color) {
       yourDot.style.background = currentUser.dot_color
@@ -846,11 +861,12 @@ function initApp() {
   } else {
     document.getElementById('talk-val').innerText = '60S'
     document.getElementById('talk-stat').innerText = 'FREE LIMIT'
-    document.getElementById('create-btns').style.display = 'none'
+    document.getElementById('create-private-btn').style.display = 'none'
     document.getElementById('bg-color-item').style.display = 'none'
     document.getElementById('dot-color-item').style.display = 'none'
     document.getElementById('ptt-color-item').style.display = 'none'
     document.getElementById('upgrade-section').style.display = 'block'
+    document.getElementById('my-channels-section').style.display = 'none'
   }
   const savedPtt = localStorage.getItem('roxly_ptt_color')
   if (savedPtt) { pttColor = savedPtt; applyPttColor(savedPtt) }
@@ -859,6 +875,8 @@ function initApp() {
   setInterval(updateClock, 1000)
   getLocation()
   if (!isGuest) connectToVoice('General')
+  loadChatMessages()
+  chatPollInterval = setInterval(loadChatMessages, 5000)
 }
 
 function updateRangePills() {
@@ -944,178 +962,81 @@ function updateMapDots(users) {
     map.appendChild(dot)
   })
 }
-
+</script>
+<script>
+// ── CHANNELS (General <-> Private toggle) ────────
 async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
     const data = await res.json()
-    allChannelsCache = data.channels || []
     const list = document.getElementById('channels-list')
+    const channels = data.channels || []
 
-    if (allChannelsCache.length === 0) {
-      list.innerHTML = `<div class="empty-state">NO CHANNELS AVAILABLE</div>`
-      return
+    const general = channels.find(c => c.name === 'General')
+    // find a private channel this user belongs to
+    let myChan = null
+    if (currentUser && !isGuest) {
+      myChan = channels.find(c => c.is_private && (c.members || []).includes(currentUser.username))
     }
-
-    // General always first
-    const general = allChannelsCache.find(c => c.name === 'General')
-    const others = allChannelsCache.filter(c => c.name !== 'General')
+    myPrivateChannel = myChan ? { id: myChan.id, name: myChan.name } : null
 
     let html = ''
     if (general) {
+      const isActive = currentChannelName === general.name
       html += `
-        <div class="channel-card general-card ${currentChannelName === general.name ? 'active-channel' : ''}">
-          <div class="ch-left" onclick="joinChannel('${general.name}', ${general.id})">
-            <div class="ch-name">🌐 ${general.name} ${currentChannelName === general.name ? '🔊' : ''}</div>
-            <div class="ch-meta">DEFAULT CHANNEL · ${general.member_count || 0} MEMBER${general.member_count !== 1 ? 'S' : ''}</div>
+        <div class="channel-card general-card ${isActive ? 'active-channel' : ''}" onclick="switchToGeneral(${general.id})">
+          <div>
+            <div class="ch-name">🌐 General ${isActive ? '🔊' : ''}</div>
+            <div class="ch-meta">DEFAULT CHANNEL · ${general.member_count || 0} HERE</div>
           </div>
-          <button class="ch-menu-btn" onclick="openChannelMenu(${general.id}, '${general.name}', '${general.created_by}', false, ${JSON.stringify(general.members || [])})">⋯</button>
+          ${!isActive ? '<div class="ch-toggle-hint">TAP TO JOIN</div>' : ''}
         </div>`
     }
 
-    html += others.map(ch => `
-      <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}">
-        <div class="ch-left" onclick="joinChannel('${ch.name}', ${ch.id})">
-          <div class="ch-name">${ch.name} ${currentChannelName === ch.name ? '🔊' : ''}</div>
-          <div class="ch-meta">${ch.is_private ? '🔒 PRIVATE' : '🌐 PUBLIC'} · BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
-        </div>
-        <button class="ch-menu-btn" onclick="openChannelMenu(${ch.id}, '${ch.name}', '${ch.created_by}', ${ch.is_private}, ${JSON.stringify(ch.members || [])})">⋯</button>
-      </div>`).join('')
+    if (myPrivateChannel) {
+      const isActive = currentChannelName === myPrivateChannel.name
+      html += `
+        <div class="channel-card ${isActive ? 'active-channel' : ''}" onclick="switchToPrivate(${myPrivateChannel.id}, '${myPrivateChannel.name}')">
+          <div>
+            <div class="ch-name">🔒 ${myPrivateChannel.name} ${isActive ? '🔊' : ''}</div>
+            <div class="ch-meta">YOUR PRIVATE CHANNEL</div>
+          </div>
+          ${!isActive ? '<div class="ch-toggle-hint">TAP TO JOIN</div>' : ''}
+        </div>`
+    }
 
-    list.innerHTML = html
+    list.innerHTML = html || '<div class="empty-state">LOADING CHANNELS...</div>'
   } catch(e) {}
 }
 
-async function joinChannel(channelName, channelId) {
+async function switchToGeneral(channelId) {
   if (isGuest) { showScreen('signup'); return }
-  if (currentChannelName === channelName) return
+  if (currentChannelName === 'General') return
   await disconnectFromVoice()
-  await connectToVoice(channelName)
+  await connectToVoice('General')
   currentChannelId = channelId
-  if (channelId && currentUser) {
-    try {
-      await fetch(`${API}/channels/join`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ channel_id: channelId, username: currentUser.username })
-      })
-    } catch(e) {}
-  }
+  try {
+    await fetch(`${API}/channels/join`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channel_id: channelId, username: currentUser.username })
+    })
+  } catch(e) {}
   loadChannels()
 }
 
-function openCurrentChannelMenu() {
-  if (!currentChannelName || !currentChannelId) return
-  const ch = allChannelsCache.find(c => c.id === currentChannelId)
-  if (ch) openChannelMenu(ch.id, ch.name, ch.created_by, ch.is_private, ch.members || [])
-}
-</script>
-<script>
-function openChannelMenu(id, name, owner, isPrivate, members) {
-  activeChannelId = id
-  activeChannelName = name
-  activeChannelOwner = owner
-  activeChannelPrivate = isPrivate
-  activeChannelMembers = Array.isArray(members) ? members : []
-
-  const isOwner = currentUser && currentUser.username === owner
-  const isInChannel = currentChannelName === name
-  const isGeneral = name === 'General'
-
-  document.getElementById('channel-menu-title').innerText = (isPrivate ? '🔒 ' : '🌐 ') + name
-  document.getElementById('channel-menu-sub').innerText =
-    `${activeChannelMembers.length} MEMBER${activeChannelMembers.length !== 1 ? 'S' : ''} · ${isGeneral ? 'DEFAULT CHANNEL' : 'BY ' + owner.toUpperCase()}`
-
-  const membersList = document.getElementById('channel-members-list')
-  if (activeChannelMembers.length === 0) {
-    membersList.innerHTML = '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);padding:12px 0;">NO MEMBERS YET</div>'
-  } else {
-    membersList.innerHTML = activeChannelMembers.map(m => `
-      <div class="member-row">
-        <div class="member-badges">
-          <div class="member-name">${m}</div>
-          ${m === owner && !isGeneral ? '<span style="font-size:12px;">👑</span>' : ''}
-          ${m === (currentUser ? currentUser.username : '') ? '<span style="font-size:10px;font-family:Share Tech Mono,monospace;color:var(--muted);">(you)</span>' : ''}
-        </div>
-        ${isPrivate && isOwner && m !== owner ? `<button class="kick-btn" onclick="kickMember('${m}')">KICK</button>` : ''}
-      </div>`).join('')
-  }
-
-  const joinBtn = document.getElementById('channel-join-btn')
-  const leaveBtn = document.getElementById('channel-leave-btn')
-  const deleteBtn = document.getElementById('channel-delete-btn')
-
-  joinBtn.style.display = isInChannel ? 'none' : 'block'
-  leaveBtn.style.display = (isInChannel && !isGeneral) ? 'block' : 'none'
-  deleteBtn.style.display = (isOwner && !isGeneral) ? 'block' : 'none'
-
-  document.getElementById('channel-menu-modal').classList.add('active')
+async function switchToPrivate(channelId, name) {
+  if (isGuest) { showScreen('signup'); return }
+  if (currentChannelName === name) return
+  await disconnectFromVoice()
+  await connectToVoice(name)
+  currentChannelId = channelId
+  loadChannels()
 }
 
-async function joinFromMenu() {
-  closeModal('channel-menu-modal')
-  await joinChannel(activeChannelName, activeChannelId)
-}
-
-async function leaveChannel() {
-  if (!activeChannelId || !currentUser) return
-  try {
-    await fetch(`${API}/channels/leave`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ channel_id: activeChannelId, username: currentUser.username })
-    })
-    await disconnectFromVoice()
-    closeModal('channel-menu-modal')
-    await connectToVoice('General')
-    loadChannels()
-  } catch(e) { alert('Error leaving channel') }
-}
-
-async function deleteChannel() {
-  if (!activeChannelId || !currentUser) return
-  if (!confirm(`Delete "${activeChannelName}"?\nThis removes the channel for everyone.`)) return
-  try {
-    const res = await fetch(`${API}/channels/delete/${activeChannelId}?username=${currentUser.username}`, {
-      method: 'DELETE'
-    })
-    if (res.ok) {
-      await disconnectFromVoice()
-      closeModal('channel-menu-modal')
-      await connectToVoice('General')
-      loadChannels()
-    } else {
-      const data = await res.json()
-      alert(typeof data.detail === 'string' ? data.detail : 'Error deleting channel')
-    }
-  } catch(e) { alert('Error deleting channel') }
-}
-
-async function kickMember(username) {
-  if (!activeChannelId || !currentUser) return
-  if (!confirm(`Kick ${username} from "${activeChannelName}"?`)) return
-  try {
-    await fetch(`${API}/channels/kick`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        channel_id: activeChannelId,
-        owner_username: currentUser.username,
-        kick_username: username
-      })
-    })
-    activeChannelMembers = activeChannelMembers.filter(m => m !== username)
-    openChannelMenu(activeChannelId, activeChannelName, activeChannelOwner, activeChannelPrivate, activeChannelMembers)
-    loadChannels()
-  } catch(e) { alert('Error kicking member') }
-}
-
-function openCreateChannel(isPrivate) {
+// ── CREATE PRIVATE CHANNEL ───────────────────────
+function openCreatePrivate() {
   if (!currentUser || !currentUser.is_pro || isGuest) { openUpgradeModal(); return }
-  creatingPrivate = isPrivate
-  document.getElementById('create-modal-title').innerText = isPrivate ? 'Create Private Channel 🔒' : 'Create Public Channel 🌐'
-  document.getElementById('create-modal-sub').innerText = isPrivate ? 'ONLY PEOPLE WITH THE PASSWORD CAN JOIN' : 'ANYONE NEARBY CAN JOIN'
-  document.getElementById('password-field').style.display = isPrivate ? 'block' : 'none'
   document.getElementById('channel-name-input').value = ''
   document.getElementById('channel-password-input').value = ''
   document.getElementById('create-channel-modal').classList.add('active')
@@ -1126,7 +1047,7 @@ async function createChannel() {
   const password = document.getElementById('channel-password-input').value
 
   if (!name) { alert('Please enter a channel name'); return }
-  if (creatingPrivate && !password) { alert('Please set a password for the private channel'); return }
+  if (!password) { alert('Please set a password'); return }
   if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
 
   try {
@@ -1138,31 +1059,100 @@ async function createChannel() {
         username: currentUser.username,
         latitude: userLat || 42.8142,
         longitude: userLon || -73.9396,
-        is_private: creatingPrivate,
-        password: creatingPrivate ? password : null
+        is_private: true,
+        password
       })
     })
     const data = await res.json()
     if (res.ok) {
       closeModal('create-channel-modal')
       await loadChannels()
-      await joinChannel(name, data.channel_id)
+      await switchToPrivate(data.channel_id, name)
     } else {
-      const msg = typeof data.detail === 'string' ? data.detail : 'Error creating channel'
-      alert(msg)
+      alert(typeof data.detail === 'string' ? data.detail : 'Error creating channel')
     }
-  } catch(e) {
-    alert('Connection error — please try again')
-  }
+  } catch(e) { alert('Connection error — please try again') }
 }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove('active')
+// ── MY CHANNELS IN SETTINGS ───────────────────────
+async function loadMyChannels() {
+  if (!currentUser || !currentUser.is_pro || isGuest) return
+  try {
+    const res = await fetch(`${API}/channels/list`)
+    const data = await res.json()
+    const mine = (data.channels || []).filter(c => c.created_by === currentUser.username && c.name !== 'General')
+    const list = document.getElementById('my-channels-list')
+    if (mine.length === 0) {
+      list.innerHTML = '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);padding:8px 0;">NO PRIVATE CHANNELS YET</div>'
+      return
+    }
+    list.innerHTML = mine.map(c => `
+      <div class="my-channel-row">
+        <div class="my-channel-name">🔒 ${c.name}</div>
+        <button class="my-channel-del" onclick="deleteMyChannel(${c.id}, '${c.name}')">DELETE</button>
+      </div>`).join('')
+  } catch(e) {}
 }
 
-function openUpgradeModal() {
-  document.getElementById('upgrade-modal').classList.add('active')
+async function deleteMyChannel(id, name) {
+  if (!confirm(`Delete "${name}"? This removes it for everyone.`)) return
+  try {
+    const res = await fetch(`${API}/channels/delete/${id}?username=${currentUser.username}`, { method: 'DELETE' })
+    if (res.ok) {
+      if (currentChannelName === name) {
+        await disconnectFromVoice()
+        await connectToVoice('General')
+      }
+      loadMyChannels()
+      loadChannels()
+    } else {
+      const data = await res.json()
+      alert(typeof data.detail === 'string' ? data.detail : 'Error deleting channel')
+    }
+  } catch(e) { alert('Error deleting channel') }
 }
+
+// ── CHAT HUB ──────────────────────────────────────
+async function loadChatMessages() {
+  try {
+    const res = await fetch(`${API}/chat/messages`)
+    const data = await res.json()
+    const box = document.getElementById('chat-messages')
+    const wasAtBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 30
+    box.innerHTML = (data.messages || []).map(m => `
+      <div class="chat-msg ${currentUser && m.username === currentUser.username ? 'own' : ''}">
+        <div class="chat-msg-user">${m.username}</div>
+        <div class="chat-msg-bubble">${escapeHtml(m.message)}</div>
+      </div>`).join('')
+    if (wasAtBottom) box.scrollTop = box.scrollHeight
+  } catch(e) {}
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div')
+  div.innerText = str
+  return div.innerHTML
+}
+
+async function sendChatMessage() {
+  if (isGuest) { showScreen('signup'); return }
+  const input = document.getElementById('chat-input')
+  const message = input.value.trim()
+  if (!message) return
+  input.value = ''
+  try {
+    await fetch(`${API}/chat/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser.username, message })
+    })
+    loadChatMessages()
+  } catch(e) {}
+}
+
+// ── MODALS ───────────────────────────────────────
+function closeModal(id) { document.getElementById(id).classList.remove('active') }
+function openUpgradeModal() { document.getElementById('upgrade-modal').classList.add('active') }
 
 async function goToPro(plan) {
   try {
@@ -1176,13 +1166,13 @@ async function goToPro(plan) {
   } catch(e) { alert('Error opening checkout') }
 }
 
+// ── EDIT PROFILE ──────────────────────────────────
 function openEditUsername() {
   document.getElementById('new-username-input').value = currentUser.username
   document.getElementById('username-error').style.display = 'none'
   document.getElementById('username-success').style.display = 'none'
   document.getElementById('edit-username-modal').classList.add('active')
 }
-
 function saveUsername() {
   const newUsername = document.getElementById('new-username-input').value.trim()
   const errBox = document.getElementById('username-error')
@@ -1204,7 +1194,6 @@ function openEditEmail() {
   document.getElementById('email-success').style.display = 'none'
   document.getElementById('edit-email-modal').classList.add('active')
 }
-
 function saveEmail() {
   const newEmail = document.getElementById('new-email-input').value.trim()
   const errBox = document.getElementById('email-error')
@@ -1225,7 +1214,6 @@ function openChangePassword() {
   document.getElementById('password-success').style.display = 'none'
   document.getElementById('change-password-modal').classList.add('active')
 }
-
 function savePassword() {
   const newPass     = document.getElementById('new-password-input').value
   const confirmPass = document.getElementById('confirm-password-input').value
@@ -1238,51 +1226,41 @@ function savePassword() {
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
-function openNotifications() {
-  document.getElementById('notif-panel').classList.add('open')
-}
-function closeNotifications() {
-  document.getElementById('notif-panel').classList.remove('open')
-}
-
+// ── NOTIFICATIONS ──────────────────────────────────
+function openNotifications() { document.getElementById('notif-panel').classList.add('open') }
+function closeNotifications() { document.getElementById('notif-panel').classList.remove('open') }
 function toggleNotifications() {
   if (isGuest) { closeNotifications(); showScreen('signup'); return }
   const toggle1 = document.getElementById('notif-toggle')
   const toggle2 = document.getElementById('notif-panel-toggle')
   const isOn = toggle1 ? toggle1.classList.contains('on') : false
   if (!isOn) {
-    if (!('Notification' in window)) {
-      alert('Push notifications not supported. Try adding ROXLY to your home screen first!'); return
-    }
+    if (!('Notification' in window)) { alert('Push notifications not supported. Try adding ROXLY to your home screen first!'); return }
     if (Notification.permission === 'granted') {
-      toggle1 && toggle1.classList.add('on')
-      toggle2 && toggle2.classList.add('on')
+      toggle1 && toggle1.classList.add('on'); toggle2 && toggle2.classList.add('on')
       document.getElementById('notif-badge').style.display = 'block'
       localStorage.setItem('roxly_notif', 'true')
       new Notification('ROXLY', { body: 'You will be alerted when people are nearby!' })
     } else if (Notification.permission === 'denied') {
-      alert('Notifications are blocked.\n\niPhone: Settings → Safari → Advanced → Website Data\nOr try opening ROXLY in Chrome instead of Safari.')
+      alert('Notifications are blocked.\n\niPhone: Settings → Safari → Advanced → Website Data\nOr try opening ROXLY in Chrome instead.')
     } else {
       Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
-          toggle1 && toggle1.classList.add('on')
-          toggle2 && toggle2.classList.add('on')
+          toggle1 && toggle1.classList.add('on'); toggle2 && toggle2.classList.add('on')
           document.getElementById('notif-badge').style.display = 'block'
           localStorage.setItem('roxly_notif', 'true')
           new Notification('ROXLY', { body: 'Notifications enabled!' })
-        } else {
-          alert('Notifications denied. Enable in browser settings to use this feature.')
-        }
+        } else { alert('Notifications denied.') }
       })
     }
   } else {
-    toggle1 && toggle1.classList.remove('on')
-    toggle2 && toggle2.classList.remove('on')
+    toggle1 && toggle1.classList.remove('on'); toggle2 && toggle2.classList.remove('on')
     document.getElementById('notif-badge').style.display = 'none'
     localStorage.removeItem('roxly_notif')
   }
 }
 
+// ── DARK MODE + COLORS ─────────────────────────────
 function toggleDarkMode() {
   darkMode = !darkMode
   document.body.classList.toggle('dark', darkMode)
@@ -1355,6 +1333,7 @@ function applyPttColor(color) {
   if (lbl) lbl.style.color = color
 }
 
+// ── PTT ────────────────────────────────────────────
 let talkTimer = null
 let talkSeconds = 0
 
