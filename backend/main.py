@@ -6,24 +6,18 @@ from routes import proximity
 from routes import channels
 from routes import voice
 from routes import payments
+from routes import chat
 from routes.channels import Channel
+from routes.chat import ChatMessage
 from models import User
 
 Base.metadata.create_all(bind=engine)
 
-# Seed the default General channel if it doesn't exist
 db = SessionLocal()
 try:
     general = db.query(Channel).filter(Channel.name == "General").first()
     if not general:
-        general = Channel(
-            name="General",
-            created_by="ROXLY",
-            latitude=42.8142,
-            longitude=-73.9396,
-            is_private=False,
-            is_active=True
-        )
+        general = Channel(name="General", created_by="ROXLY", latitude=42.8142, longitude=-73.9396, is_private=False, is_active=True)
         db.add(general)
         db.commit()
 finally:
@@ -51,6 +45,7 @@ app.include_router(proximity.router)
 app.include_router(channels.router)
 app.include_router(voice.router)
 app.include_router(payments.router)
+app.include_router(chat.router)
 
 @app.get("/")
 def home():
