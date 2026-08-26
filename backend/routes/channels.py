@@ -99,8 +99,7 @@ def nearby_channels(data: NearbyChannelsRequest, db: Session = Depends(get_db)):
 @router.get("/list")
 def list_channels(db: Session = Depends(get_db)):
     channels = db.query(Channel).filter(
-        Channel.is_active == True,
-        Channel.is_private == False
+        Channel.is_active == True
     ).all()
     return {
         "total": len(channels),

@@ -139,7 +139,6 @@ body.dark {
 .range-pill.locked { opacity:0.5;cursor:not-allowed; }
 .range-pill.locked::after { content:' ✦';color:var(--purple); }
 
-/* MAP */
 .map-wrap { width:100%;padding:16px 20px 0; }
 .map { width:100%;aspect-ratio:1/1;background:#050510;border-radius:18px;border:1px solid #1a1a2e;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.18); }
 .map::before { content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.04) 1px,transparent 1px);background-size:40px 40px; }
@@ -158,7 +157,6 @@ body.dark {
 .legend-row { display:flex;align-items:center;gap:6px;font-size:8px;font-family:'Share Tech Mono',monospace;color:#777; }
 .l-dot { width:6px;height:6px;border-radius:50%; }
 
-/* VOICE STATUS */
 .voice-status { width:100%;padding:8px 20px;background:rgba(57,255,20,0.06);border-bottom:1px solid rgba(57,255,20,0.15);display:none;align-items:center;gap:10px; }
 .voice-status.active { display:flex; }
 .voice-waves { display:flex;gap:3px;align-items:center; }
@@ -172,13 +170,11 @@ body.dark {
 .voice-status-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.06em; }
 .voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto; }
 
-/* STATS */
 .stats-row { width:100%;padding:14px 20px 0;display:flex;gap:10px; }
 .stat-chip { flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .stat-val { font-size:20px;font-weight:700;font-family:'Share Tech Mono',monospace; }
 .stat-lbl { font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.06em; }
 
-/* CHANNELS */
 .section-label { width:100%;padding:16px 20px 8px;display:flex;justify-content:space-between;align-items:center; }
 .section-title { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em; }
 .create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 12px;cursor:pointer;letter-spacing:0.06em; }
@@ -193,7 +189,6 @@ body.dark {
 .ch-arrow { font-size:16px;color:#ccc; }
 .empty-state { width:100%;padding:30px 20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8;background:var(--card);border-radius:14px;border:1.5px dashed var(--border); }
 
-/* PTT */
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
@@ -201,7 +196,6 @@ body.dark {
 .ptt-icon { font-size:26px; }
 .ptt-label { font-size:8px;font-family:'Share Tech Mono',monospace;color:var(--green);letter-spacing:0.12em; }
 
-/* MODALS */
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:flex-end;justify-content:center; }
 .modal-overlay.active { display:flex; }
 .modal { width:100%;max-width:420px;background:var(--card);border-radius:24px 24px 0 0;padding:24px;max-height:90vh;overflow-y:auto; }
@@ -212,38 +206,43 @@ body.dark {
 .modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
 
-/* SETTINGS */
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
 .settings-back { font-size:20px;cursor:pointer;color:var(--text); }
 .settings-title { font-size:18px;font-weight:700;color:var(--text); }
 .settings-section { width:100%;padding:16px 20px 8px; }
 .settings-section-title { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.12em;margin-bottom:12px; }
-.settings-item { width:100%;background:var(--card);border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer;transition:all 0.2s; }
+.settings-item { width:100%;background:var(--card);border-radius:12px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;cursor:pointer;transition:all 0.2s; }
 .settings-item:hover { border-color:var(--purple); }
 .settings-item-left { display:flex;flex-direction:column;gap:3px;flex:1; }
 .settings-item-title { font-size:13px;font-weight:600;color:var(--text); }
 .settings-item-sub { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
-.settings-arrow { font-size:16px;color:var(--muted);margin-left:12px; }
-.settings-toggle { width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0; }
+.settings-arrow { font-size:16px;color:var(--muted);margin-left:12px;margin-top:2px; }
+.settings-toggle { width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;margin-top:2px; }
 .settings-toggle.on { background:var(--purple); }
 .settings-toggle::after { content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2); }
 .settings-toggle.on::after { transform:translateX(20px); }
 .pro-badge-sm { font-size:8px;background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;padding:2px 6px;border-radius:8px;letter-spacing:0.08em;margin-left:6px; }
-.color-swatches { display:flex;gap:8px;flex-wrap:wrap;margin-top:10px; }
+
+/* COLOR PICKERS */
+.color-swatches { display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center; }
 .swatch { width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s;flex-shrink:0; }
 .swatch:hover { transform:scale(1.15); }
-.swatch.selected { border-color:#fff;box-shadow:0 0 10px rgba(255,255,255,0.5); }
-.swatch-none { width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid var(--border);background:transparent;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all 0.2s; }
-.swatch-none:hover { border-color:var(--pink); }
-.color-wheel-btn { margin-top:8px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:10px;cursor:pointer;letter-spacing:0.06em;display:flex;align-items:center;gap:6px; }
-.color-wheel-input { opacity:0;position:absolute;width:0;height:0; }
+.swatch.selected { border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,0.6); }
+.color-wheel-wrap { display:flex;flex-direction:column;gap:8px;margin-top:10px; }
+.color-wheel-row { display:flex;align-items:center;gap:10px; }
+.color-wheel-label { position:relative;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;transition:border-color 0.2s; }
+.color-wheel-label:hover { border-color:var(--purple); }
+.color-wheel-label input[type=color] { position:absolute;opacity:0;width:0;height:0; }
+.color-preview-box { width:20px;height:20px;border-radius:6px;border:1px solid var(--border);flex-shrink:0; }
+.color-apply-btn { padding:8px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;white-space:nowrap; }
+.color-reset-btn { padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
+
 .logout-btn { width:calc(100% - 40px);margin:20px;padding:14px;border-radius:12px;border:1.5px solid rgba(255,16,240,0.3);background:rgba(255,16,240,0.06);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.04em; }
 .guest-settings-card { width:calc(100% - 40px);margin:20px;padding:20px;border-radius:14px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);text-align:center; }
 .guest-settings-title { font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px; }
 .guest-settings-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;line-height:1.6;margin-bottom:16px; }
 
-/* NOTIFICATIONS PANEL */
 .notif-panel { position:fixed;top:0;right:-100%;width:100%;max-width:320px;height:100vh;background:var(--card);border-left:1px solid var(--border);z-index:200;transition:right 0.3s;padding:24px;box-shadow:-4px 0 20px rgba(0,0,0,0.15);overflow-y:auto; }
 .notif-panel.open { right:0; }
 .notif-header { display:flex;justify-content:space-between;align-items:center;margin-bottom:20px; }
@@ -257,7 +256,6 @@ body.dark {
 .notif-guest-text { font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;line-height:1.6;margin-bottom:12px; }
 .notif-empty { text-align:center;padding:30px 0;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8; }
 
-/* GUEST BANNER */
 .guest-banner { width:100%;background:rgba(191,0,255,0.08);border-bottom:1px solid rgba(191,0,255,0.2);padding:10px 20px;display:none;justify-content:space-between;align-items:center; }
 .guest-banner.show { display:flex; }
 .guest-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);letter-spacing:0.06em;line-height:1.5; }
@@ -316,59 +314,42 @@ body.dark {
 
 <!-- MAIN APP -->
 <div class="screen" id="screen-app">
-
   <div class="guest-banner" id="guest-banner">
-    <div class="guest-text">
-      👀 BROWSING AS GUEST<br>
-      CREATE ACCOUNT TO TALK & CONNECT
-    </div>
+    <div class="guest-text">👀 BROWSING AS GUEST<br>CREATE ACCOUNT TO TALK</div>
     <button class="guest-signup-btn" onclick="showScreen('signup')">JOIN FREE →</button>
   </div>
-
   <div class="status-bar">
     <div class="status-live"><div class="status-dot"></div>LIVE</div>
     <span id="status-username">—</span>
     <span id="status-time">—</span>
   </div>
-
   <div class="app-header">
     <div>
       <div class="app-logo">ROXLY</div>
       <div class="app-logo-sub">proximity social</div>
     </div>
     <div class="header-icons">
-      <div class="hicon" onclick="openNotifications()">
-        🔔
-        <div class="notif-badge" id="notif-badge"></div>
-      </div>
+      <div class="hicon" onclick="openNotifications()">🔔<div class="notif-badge" id="notif-badge"></div></div>
       <div class="hicon" onclick="showScreen('settings')">⚙️</div>
     </div>
   </div>
-
   <div class="range-bar">
-    <div class="range-pill active" onclick="setRange(0.25, this)">0.25 mi</div>
-    <div class="range-pill" id="pill-05" onclick="setRange(0.5, this)">0.5 mi</div>
-    <div class="range-pill" id="pill-1" onclick="setRange(1, this)">1 mi</div>
-    <div class="range-pill" id="pill-5" onclick="setRange(5, this)">5 mi</div>
+    <div class="range-pill active" onclick="setRange(0.25,this)">0.25 mi</div>
+    <div class="range-pill" id="pill-05" onclick="setRange(0.5,this)">0.5 mi</div>
+    <div class="range-pill" id="pill-1" onclick="setRange(1,this)">1 mi</div>
+    <div class="range-pill" id="pill-5" onclick="setRange(5,this)">5 mi</div>
   </div>
-
   <div class="voice-status" id="voice-status">
     <div class="voice-waves">
-      <div class="voice-wave"></div>
-      <div class="voice-wave"></div>
-      <div class="voice-wave"></div>
-      <div class="voice-wave"></div>
-      <div class="voice-wave"></div>
+      <div class="voice-wave"></div><div class="voice-wave"></div>
+      <div class="voice-wave"></div><div class="voice-wave"></div><div class="voice-wave"></div>
     </div>
     <div class="voice-status-text">CONNECTED</div>
     <div class="voice-channel-name" id="voice-channel-display">—</div>
   </div>
-
   <div class="map-wrap">
     <div class="map" id="main-map">
-      <div class="pulse-ring"></div>
-      <div class="pulse-ring"></div>
-      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div><div class="pulse-ring"></div><div class="pulse-ring"></div>
       <div class="sweep"></div>
       <div class="map-dot dot-you-map" id="your-dot"></div>
       <div class="you-map-label">YOU</div>
@@ -379,31 +360,18 @@ body.dark {
       </div>
     </div>
   </div>
-
   <div class="stats-row">
-    <div class="stat-chip">
-      <div class="stat-val" style="color:var(--green)" id="nearby-count">0</div>
-      <div class="stat-lbl">NEARBY</div>
-    </div>
-    <div class="stat-chip">
-      <div class="stat-val" style="color:var(--pink)">0</div>
-      <div class="stat-lbl">LIVE NOW</div>
-    </div>
-    <div class="stat-chip">
-      <div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div>
-      <div class="stat-lbl" id="talk-stat">TALK TIME</div>
-    </div>
+    <div class="stat-chip"><div class="stat-val" style="color:var(--green)" id="nearby-count">0</div><div class="stat-lbl">NEARBY</div></div>
+    <div class="stat-chip"><div class="stat-val" style="color:var(--pink)">0</div><div class="stat-lbl">LIVE NOW</div></div>
+    <div class="stat-chip"><div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div><div class="stat-lbl" id="talk-stat">TALK TIME</div></div>
   </div>
-
   <div class="section-label">
     <div class="section-title">NEARBY CHANNELS</div>
     <button class="create-btn" id="create-channel-btn" onclick="openCreateChannel()" style="display:none">+ CREATE</button>
   </div>
-
   <div class="channels-list" id="channels-list">
     <div class="empty-state">SCANNING FOR NEARBY CHANNELS...</div>
   </div>
-
 </div>
 
 <!-- SETTINGS -->
@@ -412,18 +380,14 @@ body.dark {
     <div class="settings-back" onclick="showScreen('app')">←</div>
     <div class="settings-title">Settings</div>
   </div>
-
-  <!-- Guest settings -->
   <div id="guest-settings" style="display:none">
     <div class="guest-settings-card">
-      <div class="guest-settings-title">You're browsing as a Guest</div>
-      <div class="guest-settings-sub">CREATE A FREE ACCOUNT TO ACCESS<br>ALL FEATURES AND START TALKING</div>
+      <div class="guest-settings-title">Browsing as Guest</div>
+      <div class="guest-settings-sub">CREATE A FREE ACCOUNT TO ACCESS ALL FEATURES AND START TALKING</div>
       <button class="modal-btn" onclick="showScreen('signup')">Create Free Account</button>
       <button class="modal-btn-outline" onclick="showScreen('login')" style="margin-top:8px">Already have an account</button>
     </div>
   </div>
-
-  <!-- Logged in settings -->
   <div id="user-settings" style="display:none">
     <div class="settings-section">
       <div class="settings-section-title">ACCOUNT</div>
@@ -449,7 +413,6 @@ body.dark {
         <div class="settings-arrow">›</div>
       </div>
     </div>
-
     <div class="settings-section">
       <div class="settings-section-title">APPEARANCE</div>
       <div class="settings-item">
@@ -459,26 +422,25 @@ body.dark {
         </div>
         <div class="settings-toggle" id="dark-toggle" onclick="toggleDarkMode()"></div>
       </div>
-
+      <!-- Background color — Pro only, color wheel only -->
       <div class="settings-item" id="bg-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">Background Color <span class="pro-badge-sm">PRO</span></div>
-          <div class="settings-item-sub">PICK YOUR CUSTOM BACKGROUND</div>
-          <div class="color-swatches">
-            <div class="swatch-none" onclick="resetBgColor()" title="Reset">✕</div>
-            <div class="swatch" style="background:#1a0033;box-shadow:0 0 8px #1a0033" onclick="setBgColor('#1a0033',this)"></div>
-            <div class="swatch" style="background:#001a33;box-shadow:0 0 8px #001a33" onclick="setBgColor('#001a33',this)"></div>
-            <div class="swatch" style="background:#001a1a;box-shadow:0 0 8px #001a1a" onclick="setBgColor('#001a1a',this)"></div>
-            <div class="swatch" style="background:#1a0a00;box-shadow:0 0 8px #1a0a00" onclick="setBgColor('#1a0a00',this)"></div>
-            <div class="swatch" style="background:#0d0d1a;box-shadow:0 0 8px #0d0d1a" onclick="setBgColor('#0d0d1a',this)"></div>
-            <label class="color-wheel-btn">
-              🎨 Custom
-              <input type="color" class="color-wheel-input" id="bg-color-wheel" onchange="setBgColorWheel(this.value)">
-            </label>
+          <div class="settings-item-sub">CUSTOM BACKGROUND — WORKS IN LIGHT OR DARK MODE</div>
+          <div class="color-wheel-wrap">
+            <div class="color-wheel-row">
+              <label class="color-wheel-label">
+                🎨 Pick Color
+                <input type="color" id="bg-color-wheel" value="#0a0a0a">
+              </label>
+              <div class="color-preview-box" id="bg-preview-box"></div>
+              <button class="color-apply-btn" onclick="applyBgColor()">Apply</button>
+              <button class="color-reset-btn" onclick="resetBgColor()">Reset</button>
+            </div>
           </div>
         </div>
       </div>
-
+      <!-- Dot color — Pro only, swatches only -->
       <div class="settings-item" id="dot-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">Dot Color <span class="pro-badge-sm">PRO</span></div>
@@ -490,14 +452,12 @@ body.dark {
             <div class="swatch" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setDotColor('#39FF14',this)"></div>
             <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setDotColor('#FFD700',this)"></div>
             <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setDotColor('#FF6B00',this)"></div>
-            <label class="color-wheel-btn">
-              🎨 Custom
-              <input type="color" class="color-wheel-input" id="dot-color-wheel" onchange="setDotColorWheel(this.value)">
-            </label>
+            <div class="swatch" style="background:#FF0000;box-shadow:0 0 8px #FF0000" onclick="setDotColor('#FF0000',this)"></div>
+            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.5)" onclick="setDotColor('#FFFFFF',this)"></div>
           </div>
         </div>
       </div>
-
+      <!-- PTT color — Pro only, swatches only -->
       <div class="settings-item" id="ptt-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">PTT Button Color <span class="pro-badge-sm">PRO</span></div>
@@ -508,15 +468,13 @@ body.dark {
             <div class="swatch" style="background:#FF10F0;box-shadow:0 0 8px #FF10F0" onclick="setPttColor('#FF10F0',this)"></div>
             <div class="swatch" style="background:#00F5FF;box-shadow:0 0 8px #00F5FF" onclick="setPttColor('#00F5FF',this)"></div>
             <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setPttColor('#FFD700',this)"></div>
-            <label class="color-wheel-btn">
-              🎨 Custom
-              <input type="color" class="color-wheel-input" id="ptt-color-wheel" onchange="setPttColorWheel(this.value)">
-            </label>
+            <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setPttColor('#FF6B00',this)"></div>
+            <div class="swatch" style="background:#FF0000;box-shadow:0 0 8px #FF0000" onclick="setPttColor('#FF0000',this)"></div>
+            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.5)" onclick="setPttColor('#FFFFFF',this)"></div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="settings-section">
       <div class="settings-section-title">NOTIFICATIONS</div>
       <div class="settings-item">
@@ -527,7 +485,6 @@ body.dark {
         <div class="settings-toggle" id="notif-toggle" onclick="toggleNotifications()"></div>
       </div>
     </div>
-
     <div class="settings-section" id="upgrade-section">
       <div class="settings-section-title">MEMBERSHIP</div>
       <div class="settings-item" onclick="openUpgradeModal()">
@@ -538,7 +495,6 @@ body.dark {
         <div class="settings-arrow">›</div>
       </div>
     </div>
-
     <button class="logout-btn" onclick="handleLogout()">Log Out</button>
   </div>
 </div>
@@ -558,7 +514,7 @@ body.dark {
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Create Channel ✦</div>
-    <div class="modal-sub">PRO FEATURE · YOUR CHANNEL STAYS ACTIVE</div>
+    <div class="modal-sub">NAME YOUR CHANNEL AND SET PRIVACY</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
     <div class="field">
       <label>PRIVACY</label>
@@ -584,14 +540,7 @@ body.dark {
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time — no cooldown ever<br>
-        ✦ 5 mile range<br>
-        ✦ Create unlimited channels<br>
-        ✦ Private password protected channels<br>
-        ✦ Custom dot color + purple Pro badge<br>
-        ✦ Custom background + PTT button colors<br>
-        ✦ Push notifications<br>
-        ✦ Zero ads ever
+        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create unlimited channels<br>✦ Private channels<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
@@ -657,19 +606,11 @@ body.dark {
       </div>
       <div class="settings-toggle" id="notif-panel-toggle" onclick="toggleNotifications()"></div>
     </div>
-    <div class="notif-empty" id="notif-empty">
-      NO NOTIFICATIONS YET<br>
-      ENABLE ALERTS ABOVE TO<br>
-      KNOW WHEN PEOPLE ARE NEARBY
-    </div>
+    <div class="notif-empty">NO NOTIFICATIONS YET<br>ENABLE ALERTS ABOVE</div>
   </div>
   <div id="notif-guest" style="display:none">
     <div class="notif-guest-card">
-      <div class="notif-guest-text">
-        CREATE AN ACCOUNT TO ENABLE<br>
-        PUSH NOTIFICATIONS AND GET<br>
-        ALERTED WHEN PEOPLE ARE NEARBY
-      </div>
+      <div class="notif-guest-text">CREATE AN ACCOUNT TO ENABLE PUSH NOTIFICATIONS</div>
       <button class="modal-btn" onclick="closeNotifications();showScreen('signup')">Create Free Account</button>
       <button class="modal-btn-outline" onclick="closeNotifications();showScreen('login')" style="margin-top:8px">Log In</button>
     </div>
@@ -685,6 +626,7 @@ let locationInterval = null
 let isGuest = false
 let darkMode = false
 let pttColor = '#39FF14'
+let pendingBgColor = null
 
 // ── LIVEKIT ──────────────────────────────────────
 let livekitRoom = null
@@ -749,19 +691,26 @@ window.addEventListener('load', () => {
     const savedPtt = localStorage.getItem('roxly_ptt_color')
     const savedBg = localStorage.getItem('roxly_bg')
     const savedNotif = localStorage.getItem('roxly_notif')
+
     if (savedDark === 'true') {
       darkMode = true
       document.body.classList.add('dark')
       document.getElementById('dark-toggle').classList.add('on')
     }
-    if (savedPtt) { pttColor = savedPtt }
+    if (savedPtt) {
+      pttColor = savedPtt
+    }
     if (savedBg) {
       document.documentElement.style.setProperty('--bg', savedBg)
+      const previewBox = document.getElementById('bg-preview-box')
+      if (previewBox) previewBox.style.background = savedBg
     }
     if (savedNotif === 'true') {
       document.getElementById('notif-badge').style.display = 'block'
-      document.getElementById('notif-toggle') && document.getElementById('notif-toggle').classList.add('on')
-      document.getElementById('notif-panel-toggle') && document.getElementById('notif-panel-toggle').classList.add('on')
+      const t1 = document.getElementById('notif-toggle')
+      const t2 = document.getElementById('notif-panel-toggle')
+      if (t1) t1.classList.add('on')
+      if (t2) t2.classList.add('on')
     }
     if (saved) {
       currentUser = JSON.parse(saved)
@@ -786,8 +735,10 @@ function showScreen(name) {
     } else {
       document.getElementById('guest-settings').style.display = 'none'
       document.getElementById('user-settings').style.display = 'block'
-      document.getElementById('current-username-display').innerText = currentUser ? currentUser.username : '—'
-      document.getElementById('current-email-display').innerText = currentUser && currentUser.email ? currentUser.email : 'TAP TO UPDATE'
+      if (currentUser) {
+        document.getElementById('current-username-display').innerText = currentUser.username
+        document.getElementById('current-email-display').innerText = currentUser.email || 'TAP TO UPDATE'
+      }
     }
   }
 }
@@ -823,13 +774,17 @@ async function handleSignup() {
     errBox.style.display = 'block'; return
   }
   try {
-    const res  = await fetch(`${API}/users/signup`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({username, email, password})
+    const res = await fetch(`${API}/users/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
     })
     const data = await res.json()
-    if (!res.ok) { errBox.innerText = data.detail.toUpperCase(); errBox.style.display = 'block'; return }
-    currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14', email: email }
+    if (!res.ok) {
+      errBox.innerText = data.detail.toUpperCase()
+      errBox.style.display = 'block'; return
+    }
+    currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14', email }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
     document.getElementById('guest-banner').classList.remove('show')
@@ -847,12 +802,16 @@ async function handleLogin() {
   const errBox   = document.getElementById('login-error')
   errBox.style.display = 'none'
   try {
-    const res  = await fetch(`${API}/users/login`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({username, password})
+    const res = await fetch(`${API}/users/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
     })
     const data = await res.json()
-    if (!res.ok) { errBox.innerText = data.detail.toUpperCase(); errBox.style.display = 'block'; return }
+    if (!res.ok) {
+      errBox.innerText = data.detail.toUpperCase()
+      errBox.style.display = 'block'; return
+    }
     currentUser = { username: data.username, is_pro: data.is_pro, dot_color: data.dot_color }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
@@ -890,17 +849,22 @@ function initApp() {
     document.getElementById('ptt-color-item').style.display = 'flex'
     document.getElementById('upgrade-section').style.display = 'none'
     const yourDot = document.getElementById('your-dot')
-    if (yourDot) {
-      yourDot.style.background = currentUser.dot_color || '#BF00FF'
-      yourDot.style.boxShadow = `0 0 16px ${currentUser.dot_color || '#BF00FF'}`
+    if (yourDot && currentUser.dot_color) {
+      yourDot.style.background = currentUser.dot_color
+      yourDot.style.boxShadow = `0 0 16px ${currentUser.dot_color}`
     }
   } else {
     document.getElementById('talk-val').innerText = '60S'
     document.getElementById('talk-stat').innerText = 'FREE LIMIT'
+    document.getElementById('create-channel-btn').style.display = 'none'
+    document.getElementById('bg-color-item').style.display = 'none'
+    document.getElementById('dot-color-item').style.display = 'none'
+    document.getElementById('ptt-color-item').style.display = 'none'
+    document.getElementById('upgrade-section').style.display = 'block'
   }
 
   const savedPtt = localStorage.getItem('roxly_ptt_color')
-  if (savedPtt) applyPttColor(savedPtt)
+  if (savedPtt) { pttColor = savedPtt; applyPttColor(savedPtt) }
 
   updateRangePills()
   updateClock()
@@ -909,7 +873,7 @@ function initApp() {
   if (!isGuest) connectToVoice('general')
 }
 
-// ── RANGE PILLS ──────────────────────────────────
+// ── RANGE ────────────────────────────────────────
 function updateRangePills() {
   const isPro = currentUser && currentUser.is_pro && !isGuest
   ;['pill-05','pill-1','pill-5'].forEach(id => {
@@ -954,7 +918,8 @@ async function updateLocation() {
   if (!currentUser || !userLat || isGuest) return
   try {
     await fetch(`${API}/proximity/update-location`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: currentUser.username, latitude: userLat, longitude: userLon, range_miles: currentRange })
     })
   } catch(e) {}
@@ -964,7 +929,8 @@ async function scanNearby() {
   if (!userLat) return
   try {
     const res = await fetch(`${API}/proximity/nearby`, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: currentUser ? currentUser.username : 'guest', latitude: userLat, longitude: userLon, range_miles: currentRange })
     })
     const data = await res.json()
@@ -996,28 +962,26 @@ function updateMapDots(users) {
 
 async function loadChannels() {
   try {
-    const res  = await fetch(`${API}/channels/list`)
+    const res = await fetch(`${API}/channels/list`)
     const data = await res.json()
     const list = document.getElementById('channels-list')
     if (data.channels.length === 0) {
-      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET<br>${currentUser && currentUser.is_pro && !isGuest ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;">+ CREATE FIRST CHANNEL</button>' : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
+      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET<br>${currentUser && currentUser.is_pro && !isGuest ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;">+ CREATE FIRST CHANNEL</button>' : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
       return
     }
     list.innerHTML = data.channels.map(ch => `
       <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}" onclick="joinChannel('${ch.name}')">
         <div class="ch-left">
           <div class="ch-name">${ch.name}</div>
-          <div class="ch-meta">BY ${ch.created_by.toUpperCase()} ${ch.is_private ? '🔒' : ''}</div>
+          <div class="ch-meta">BY ${ch.created_by.toUpperCase()} ${ch.is_private ? '🔒 PRIVATE' : '🌐 PUBLIC'}</div>
         </div>
-        <div class="ch-right">
-          <div class="ch-arrow">›</div>
-        </div>
+        <div class="ch-right"><div class="ch-arrow">›</div></div>
       </div>`).join('')
   } catch(e) {}
 }
 
 async function joinChannel(channelName) {
-  if (isGuest) { closeModal('create-channel-modal'); showScreen('signup'); return }
+  if (isGuest) { showScreen('signup'); return }
   if (currentChannelName === channelName) return
   await disconnectFromVoice()
   await connectToVoice(channelName)
@@ -1038,8 +1002,8 @@ function togglePasswordField() {
 }
 
 async function createChannel() {
-  const name = document.getElementById('channel-name-input').value.trim()
-  const privacy = document.getElementById('channel-privacy').value
+  const name     = document.getElementById('channel-name-input').value.trim()
+  const privacy  = document.getElementById('channel-privacy').value
   const password = document.getElementById('channel-password-input').value
 
   if (!name) { alert('Please enter a channel name'); return }
@@ -1063,10 +1027,11 @@ async function createChannel() {
       closeModal('create-channel-modal')
       document.getElementById('channel-name-input').value = ''
       document.getElementById('channel-password-input').value = ''
-      loadChannels()
-      joinChannel(name)
+      await loadChannels()
+      await joinChannel(name)
     } else {
-      alert(data.detail || 'Error creating channel')
+      const msg = typeof data.detail === 'string' ? data.detail : 'Error creating channel'
+      alert(msg)
     }
   } catch(e) {
     alert('Connection error — please try again')
@@ -1113,16 +1078,14 @@ function saveUsername() {
   const sucBox = document.getElementById('username-success')
   errBox.style.display = 'none'
   sucBox.style.display = 'none'
-
   if (!newUsername) {
     errBox.innerText = 'PLEASE ENTER A USERNAME'
     errBox.style.display = 'block'; return
   }
   if (newUsername === currentUser.username) {
-    errBox.innerText = 'THAT IS YOUR CURRENT USERNAME'
+    errBox.innerText = 'THAT IS ALREADY YOUR USERNAME'
     errBox.style.display = 'block'; return
   }
-
   currentUser.username = newUsername
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
   document.getElementById('status-username').innerText = newUsername.toUpperCase()
@@ -1145,12 +1108,10 @@ function saveEmail() {
   const sucBox = document.getElementById('email-success')
   errBox.style.display = 'none'
   sucBox.style.display = 'none'
-
   if (!newEmail || !newEmail.includes('@')) {
     errBox.innerText = 'PLEASE ENTER A VALID EMAIL'
     errBox.style.display = 'block'; return
   }
-
   currentUser.email = newEmail
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
   document.getElementById('current-email-display').innerText = newEmail
@@ -1168,13 +1129,12 @@ function openChangePassword() {
 }
 
 function savePassword() {
-  const newPass = document.getElementById('new-password-input').value
+  const newPass     = document.getElementById('new-password-input').value
   const confirmPass = document.getElementById('confirm-password-input').value
   const errBox = document.getElementById('password-error')
   const sucBox = document.getElementById('password-success')
   errBox.style.display = 'none'
   sucBox.style.display = 'none'
-
   if (!newPass || newPass.length < 6) {
     errBox.innerText = 'PASSWORD MUST BE AT LEAST 6 CHARACTERS'
     errBox.style.display = 'block'; return
@@ -1183,7 +1143,6 @@ function savePassword() {
     errBox.innerText = 'PASSWORDS DO NOT MATCH'
     errBox.style.display = 'block'; return
   }
-
   sucBox.innerText = 'PASSWORD UPDATED SUCCESSFULLY!'
   sucBox.style.display = 'block'
   setTimeout(() => closeModal('change-password-modal'), 1500)
@@ -1210,22 +1169,30 @@ function toggleNotifications() {
   const isOn = toggle1 ? toggle1.classList.contains('on') : false
 
   if (!isOn) {
-    if ('Notification' in window) {
+    if (!('Notification' in window)) {
+      alert('Push notifications are not supported on this browser. Try adding ROXLY to your home screen first!')
+      return
+    }
+    if (Notification.permission === 'granted') {
+      toggle1 && toggle1.classList.add('on')
+      toggle2 && toggle2.classList.add('on')
+      document.getElementById('notif-badge').style.display = 'block'
+      localStorage.setItem('roxly_notif', 'true')
+      new Notification('ROXLY', { body: 'You will be alerted when people are nearby!' })
+    } else if (Notification.permission === 'denied') {
+      alert('Notifications are blocked.\n\nOn iPhone: Settings → Safari → Advanced → Website Data\nOr try in Chrome browser instead of Safari.')
+    } else {
       Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
           toggle1 && toggle1.classList.add('on')
           toggle2 && toggle2.classList.add('on')
           document.getElementById('notif-badge').style.display = 'block'
           localStorage.setItem('roxly_notif', 'true')
-          new Notification('ROXLY', {
-            body: 'Notifications enabled! You will be alerted when people are nearby.',
-          })
+          new Notification('ROXLY', { body: 'Notifications enabled! You will be alerted when people are nearby.' })
         } else {
-          alert('Please allow notifications in your browser settings to enable this feature.')
+          alert('Notifications were denied. You can enable them in your browser settings.')
         }
       })
-    } else {
-      alert('Push notifications are not supported on this browser.')
     }
   } else {
     toggle1 && toggle1.classList.remove('on')
@@ -1241,51 +1208,50 @@ function toggleDarkMode() {
   document.body.classList.toggle('dark', darkMode)
   document.getElementById('dark-toggle').classList.toggle('on', darkMode)
   localStorage.setItem('roxly_dark', darkMode)
+}
 
-  if (!darkMode) {
-    document.documentElement.style.removeProperty('--bg')
-    document.documentElement.style.removeProperty('--card')
-    localStorage.removeItem('roxly_bg')
-    if (currentUser && currentUser.is_pro) {
-      document.getElementById('bg-color-item').style.display = 'none'
-    }
-  } else {
-    if (currentUser && currentUser.is_pro) {
-      document.getElementById('bg-color-item').style.display = 'flex'
-    }
+// ── BACKGROUND COLOR (Pro — color wheel + apply) ─
+document.getElementById('bg-color-wheel').addEventListener('input', function() {
+  pendingBgColor = this.value
+  const previewBox = document.getElementById('bg-preview-box')
+  if (previewBox) previewBox.style.background = this.value
+})
+
+function applyBgColor() {
+  if (!pendingBgColor) {
+    const wheel = document.getElementById('bg-color-wheel')
+    pendingBgColor = wheel ? wheel.value : null
   }
-}
-
-// ── PRO COLORS ───────────────────────────────────
-function setBgColor(color, el) {
-  document.querySelectorAll('#bg-swatches .swatch').forEach(s => s.classList.remove('selected'))
-  if (el) el.classList.add('selected')
-  document.documentElement.style.setProperty('--bg', color)
-  document.documentElement.style.setProperty('--card', adjustColor(color, 15))
-  localStorage.setItem('roxly_bg', color)
-}
-
-function setBgColorWheel(color) {
-  document.documentElement.style.setProperty('--bg', color)
-  document.documentElement.style.setProperty('--card', adjustColor(color, 15))
-  localStorage.setItem('roxly_bg', color)
+  if (!pendingBgColor) return
+  document.documentElement.style.setProperty('--bg', pendingBgColor)
+  document.documentElement.style.setProperty('--card', adjustColor(pendingBgColor, 12))
+  localStorage.setItem('roxly_bg', pendingBgColor)
+  const previewBox = document.getElementById('bg-preview-box')
+  if (previewBox) previewBox.style.background = pendingBgColor
 }
 
 function resetBgColor() {
-  document.documentElement.style.setProperty('--bg', '#0a0a0a')
-  document.documentElement.style.setProperty('--card', '#111111')
-  localStorage.setItem('roxly_bg', '#0a0a0a')
-  document.querySelectorAll('.color-swatches .swatch').forEach(s => s.classList.remove('selected'))
+  pendingBgColor = null
+  document.documentElement.style.removeProperty('--bg')
+  document.documentElement.style.removeProperty('--card')
+  localStorage.removeItem('roxly_bg')
+  const previewBox = document.getElementById('bg-preview-box')
+  if (previewBox) previewBox.style.background = 'transparent'
+  const wheel = document.getElementById('bg-color-wheel')
+  if (wheel) wheel.value = '#0a0a0a'
 }
 
 function adjustColor(hex, amount) {
-  const num = parseInt(hex.slice(1), 16)
-  const r = Math.min(255, (num >> 16) + amount)
-  const g = Math.min(255, ((num >> 8) & 0xff) + amount)
-  const b = Math.min(255, (num & 0xff) + amount)
-  return `rgb(${r},${g},${b})`
+  try {
+    const num = parseInt(hex.replace('#',''), 16)
+    const r = Math.min(255, Math.max(0, (num >> 16) + amount))
+    const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + amount))
+    const b = Math.min(255, Math.max(0, (num & 0xff) + amount))
+    return `rgb(${r},${g},${b})`
+  } catch(e) { return hex }
 }
 
+// ── DOT COLOR (swatches only) ────────────────────
 function setDotColor(color, el) {
   document.querySelectorAll('#dot-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
@@ -1298,20 +1264,13 @@ function setDotColor(color, el) {
   }
 }
 
-function setDotColorWheel(color) {
-  setDotColor(color, null)
-}
-
+// ── PTT COLOR (swatches only) ────────────────────
 function setPttColor(color, el) {
   document.querySelectorAll('#ptt-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
   pttColor = color
   applyPttColor(color)
   localStorage.setItem('roxly_ptt_color', color)
-}
-
-function setPttColorWheel(color) {
-  setPttColor(color, null)
 }
 
 function applyPttColor(color) {
@@ -1324,7 +1283,7 @@ function applyPttColor(color) {
   if (lbl) lbl.style.color = color
 }
 
-// ── PTT ──────────────────────────────────────────
+// ── PTT TALK ─────────────────────────────────────
 let talkTimer = null
 let talkSeconds = 0
 
@@ -1353,7 +1312,6 @@ async function stopTalking() {
   btn.classList.remove('talking')
   document.getElementById('ptt-label').innerText = 'HOLD'
   if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
-
   if (isConnectedToVoice && localAudioTrack && livekitRoom) {
     try { await livekitRoom.localParticipant.unpublishTrack(localAudioTrack) }
     catch(e) {}
@@ -1367,7 +1325,6 @@ function showCooldown() {
   btn.style.borderColor = '#ccc'
   btn.style.boxShadow = 'none'
   btn.style.background = 'transparent'
-
   const t = setInterval(() => {
     const m = Math.floor(countdown/60), s = countdown % 60
     document.getElementById('ptt-label').innerText = `${m}:${s.toString().padStart(2,'0')}`
@@ -1379,10 +1336,7 @@ function showCooldown() {
       applyPttColor(pttColor)
     }
   }, 1000)
-
-  setTimeout(() => {
-    if (!currentUser.is_pro) openUpgradeModal()
-  }, 2000)
+  setTimeout(() => { if (!currentUser.is_pro) openUpgradeModal() }, 2000)
 }
 </script>
 </body>
