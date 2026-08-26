@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
@@ -12,7 +12,7 @@ router = APIRouter(prefix="/channels", tags=["channels"])
 class Channel(Base):
     __tablename__ = "channels"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    name = Column(String, unique=True, index=True)
     created_by = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
@@ -21,6 +21,13 @@ class Channel(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+class ChannelMember(Base):
+    __tablename__ = "channel_members"
+    id = Column(Integer, primary_key=True, index=True)
+    channel_id = Column(Integer)
+    username = Column(String)
+    joined_at = Column(DateTime(timezone=True), server_default=func.now())
+
 class CreateChannelForm(BaseModel):
     name: str
     username: str
@@ -28,6 +35,15 @@ class CreateChannelForm(BaseModel):
     longitude: float
     is_private: bool = False
     password: str = None
+
+class JoinChannelForm(BaseModel):
+    channel_id: int
+    username: str
+
+class KickForm(BaseModel):
+    channel_id: int
+    owner_username: str
+    kick_username: str
 
 class NearbyChannelsRequest(BaseModel):
     latitude: float
@@ -40,8 +56,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     dlat = lat2 - lat1
     dlon = lon2 - lon1
     a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
-    c = 2 * math.asin(math.sqrt(a))
-    return R * c
+    return R * 2 * math.asin(math.sqrt(a))
 
 @router.post("/create")
 def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
@@ -52,7 +67,7 @@ def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
         raise HTTPException(status_code=403, detail="Pro feature only")
     existing = db.query(Channel).filter(Channel.name == form.name).first()
     if existing:
-        raise HTTPException(status_code=400, detail="Channel name already exists")
+        raise HTTPException(status_code=400, detail="Channel name already taken")
     new_channel = Channel(
         name=form.name,
         created_by=form.username,
@@ -64,6 +79,9 @@ def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
     db.add(new_channel)
     db.commit()
     db.refresh(new_channel)
+    member = ChannelMember(channel_id=new_channel.id, username=form.username)
+    db.add(member)
+    db.commit()
     return {
         "message": "Channel created",
         "channel_id": new_channel.id,
@@ -72,15 +90,95 @@ def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
         "created_by": new_channel.created_by
     }
 
+@router.get("/list")
+def list_channels(db: Session = Depends(get_db)):
+    channels = db.query(Channel).filter(Channel.is_active == True).all()
+    result = []
+    for c in channels:
+        members = db.query(ChannelMember).filter(ChannelMember.channel_id == c.id).all()
+        result.append({
+            "id": c.id,
+            "name": c.name,
+            "created_by": c.created_by,
+            "is_private": c.is_private,
+            "member_count": len(members),
+            "members": [m.username for m in members]
+        })
+    return {"total": len(result), "channels": result}
+
+@router.post("/join")
+def join_channel(form: JoinChannelForm, db: Session = Depends(get_db)):
+    channel = db.query(Channel).filter(Channel.id == form.channel_id, Channel.is_active == True).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    existing = db.query(ChannelMember).filter(
+        ChannelMember.channel_id == form.channel_id,
+        ChannelMember.username == form.username
+    ).first()
+    if not existing:
+        member = ChannelMember(channel_id=form.channel_id, username=form.username)
+        db.add(member)
+        db.commit()
+    return {"message": "Joined channel", "channel": channel.name}
+
+@router.post("/leave")
+def leave_channel(form: JoinChannelForm, db: Session = Depends(get_db)):
+    member = db.query(ChannelMember).filter(
+        ChannelMember.channel_id == form.channel_id,
+        ChannelMember.username == form.username
+    ).first()
+    if member:
+        db.delete(member)
+        db.commit()
+    return {"message": "Left channel"}
+
+@router.post("/kick")
+def kick_member(form: KickForm, db: Session = Depends(get_db)):
+    channel = db.query(Channel).filter(Channel.id == form.channel_id).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    if channel.created_by != form.owner_username:
+        raise HTTPException(status_code=403, detail="Only the channel creator can kick members")
+    member = db.query(ChannelMember).filter(
+        ChannelMember.channel_id == form.channel_id,
+        ChannelMember.username == form.kick_username
+    ).first()
+    if member:
+        db.delete(member)
+        db.commit()
+    return {"message": f"Kicked {form.kick_username}"}
+
+@router.delete("/delete/{channel_id}")
+def delete_channel(channel_id: int, username: str, db: Session = Depends(get_db)):
+    channel = db.query(Channel).filter(Channel.id == channel_id).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    if channel.created_by != username:
+        raise HTTPException(status_code=403, detail="Only the creator can delete this channel")
+    db.query(ChannelMember).filter(ChannelMember.channel_id == channel_id).delete()
+    channel.is_active = False
+    db.commit()
+    return {"message": "Channel deleted"}
+
+@router.get("/members/{channel_id}")
+def get_members(channel_id: int, db: Session = Depends(get_db)):
+    channel = db.query(Channel).filter(Channel.id == channel_id).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    members = db.query(ChannelMember).filter(ChannelMember.channel_id == channel_id).all()
+    return {
+        "channel": channel.name,
+        "created_by": channel.created_by,
+        "members": [m.username for m in members],
+        "member_count": len(members)
+    }
+
 @router.post("/nearby")
 def nearby_channels(data: NearbyChannelsRequest, db: Session = Depends(get_db)):
     all_channels = db.query(Channel).filter(Channel.is_active == True).all()
     nearby = []
     for channel in all_channels:
-        distance = calculate_distance(
-            data.latitude, data.longitude,
-            channel.latitude, channel.longitude
-        )
+        distance = calculate_distance(data.latitude, data.longitude, channel.latitude, channel.longitude)
         if distance <= data.range_miles:
             nearby.append({
                 "channel_id": channel.id,
@@ -90,26 +188,4 @@ def nearby_channels(data: NearbyChannelsRequest, db: Session = Depends(get_db)):
                 "is_private": channel.is_private,
             })
     nearby.sort(key=lambda x: x["distance_miles"])
-    return {
-        "range_miles": data.range_miles,
-        "channels_found": len(nearby),
-        "channels": nearby
-    }
-
-@router.get("/list")
-def list_channels(db: Session = Depends(get_db)):
-    channels = db.query(Channel).filter(
-        Channel.is_active == True
-    ).all()
-    return {
-        "total": len(channels),
-        "channels": [
-            {
-                "id": c.id,
-                "name": c.name,
-                "created_by": c.created_by,
-                "is_private": c.is_private
-            }
-            for c in channels
-        ]
-    }
+    return {"range_miles": data.range_miles, "channels_found": len(nearby), "channels": nearby}
