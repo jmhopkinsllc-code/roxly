@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, Float, DateTime
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from pydantic import BaseModel
 from database import get_db, Base
 from models import User
@@ -64,31 +65,48 @@ def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not user.is_pro:
-        raise HTTPException(status_code=403, detail="Pro feature only")
-    existing = db.query(Channel).filter(Channel.name == form.name).first()
+        raise HTTPException(status_code=403, detail="Only Pro members can create channels")
+
+    clean_name = form.name.strip()
+    if not clean_name:
+        raise HTTPException(status_code=400, detail="Channel name cannot be empty")
+    if clean_name.lower() == "general":
+        raise HTTPException(status_code=400, detail="'General' is a reserved channel name")
+
+    existing = db.query(Channel).filter(Channel.name == clean_name).first()
     if existing:
-        raise HTTPException(status_code=400, detail="Channel name already taken")
-    new_channel = Channel(
-        name=form.name,
-        created_by=form.username,
-        latitude=form.latitude,
-        longitude=form.longitude,
-        is_private=form.is_private,
-        password=form.password
-    )
-    db.add(new_channel)
-    db.commit()
-    db.refresh(new_channel)
-    member = ChannelMember(channel_id=new_channel.id, username=form.username)
-    db.add(member)
-    db.commit()
-    return {
-        "message": "Channel created",
-        "channel_id": new_channel.id,
-        "name": new_channel.name,
-        "is_private": new_channel.is_private,
-        "created_by": new_channel.created_by
-    }
+        raise HTTPException(status_code=400, detail=f"A channel named '{clean_name}' already exists")
+
+    try:
+        new_channel = Channel(
+            name=clean_name,
+            created_by=form.username,
+            latitude=form.latitude,
+            longitude=form.longitude,
+            is_private=form.is_private,
+            password=form.password
+        )
+        db.add(new_channel)
+        db.commit()
+        db.refresh(new_channel)
+
+        member = ChannelMember(channel_id=new_channel.id, username=form.username)
+        db.add(member)
+        db.commit()
+
+        return {
+            "message": "Channel created",
+            "channel_id": new_channel.id,
+            "name": new_channel.name,
+            "is_private": new_channel.is_private,
+            "created_by": new_channel.created_by
+        }
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="A channel with that name already exists")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Server error: {str(e)}")
 
 @router.get("/list")
 def list_channels(db: Session = Depends(get_db)):
@@ -137,6 +155,8 @@ def kick_member(form: KickForm, db: Session = Depends(get_db)):
     channel = db.query(Channel).filter(Channel.id == form.channel_id).first()
     if not channel:
         raise HTTPException(status_code=404, detail="Channel not found")
+    if not channel.is_private:
+        raise HTTPException(status_code=403, detail="Only private channels allow kicking members")
     if channel.created_by != form.owner_username:
         raise HTTPException(status_code=403, detail="Only the channel creator can kick members")
     member = db.query(ChannelMember).filter(
@@ -159,19 +179,6 @@ def delete_channel(channel_id: int, username: str, db: Session = Depends(get_db)
     channel.is_active = False
     db.commit()
     return {"message": "Channel deleted"}
-
-@router.get("/members/{channel_id}")
-def get_members(channel_id: int, db: Session = Depends(get_db)):
-    channel = db.query(Channel).filter(Channel.id == channel_id).first()
-    if not channel:
-        raise HTTPException(status_code=404, detail="Channel not found")
-    members = db.query(ChannelMember).filter(ChannelMember.channel_id == channel_id).all()
-    return {
-        "channel": channel.name,
-        "created_by": channel.created_by,
-        "members": [m.username for m in members],
-        "member_count": len(members)
-    }
 
 @router.post("/nearby")
 def nearby_channels(data: NearbyChannelsRequest, db: Session = Depends(get_db)):
