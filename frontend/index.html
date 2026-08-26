@@ -178,15 +178,17 @@ body.dark {
 .section-label { width:100%;padding:16px 20px 8px;display:flex;justify-content:space-between;align-items:center; }
 .section-title { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em; }
 .create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 12px;cursor:pointer;letter-spacing:0.06em; }
+
 .channels-list { width:100%;padding:0 20px;display:flex;flex-direction:column;gap:10px; }
-.channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
-.channel-card:hover { border-color:var(--purple);box-shadow:0 2px 12px rgba(191,0,255,0.12); }
+.channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
-.ch-left { display:flex;flex-direction:column;gap:3px; }
-.ch-name { font-size:13px;font-weight:600;color:var(--text); }
+.ch-left { display:flex;flex-direction:column;gap:3px;flex:1;cursor:pointer; }
+.ch-left:hover .ch-name { color:var(--purple); }
+.ch-name { font-size:13px;font-weight:600;color:var(--text);transition:color 0.2s; }
 .ch-meta { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
-.ch-right { display:flex;align-items:center;gap:8px; }
-.ch-arrow { font-size:16px;color:#ccc; }
+.ch-menu-btn { background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:8px;transition:background 0.2s;flex-shrink:0; }
+.ch-menu-btn:hover { background:var(--border);color:var(--text); }
+
 .empty-state { width:100%;padding:30px 20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8;background:var(--card);border-radius:14px;border:1.5px dashed var(--border); }
 
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
@@ -204,8 +206,17 @@ body.dark {
 .modal-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;margin-bottom:20px; }
 .modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
+.modal-btn-danger { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,rgba(255,16,240,0.8),rgba(200,0,0,0.8));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
+.modal-btn-dark { width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
 
+/* MEMBER ROW */
+.member-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border); }
+.member-name { font-size:13px;font-weight:600;color:var(--text); }
+.member-badges { display:flex;align-items:center;gap:6px; }
+.kick-btn { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:3px 10px;cursor:pointer;letter-spacing:0.06em; }
+
+/* SETTINGS */
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
 .settings-back { font-size:20px;cursor:pointer;color:var(--text); }
@@ -224,18 +235,18 @@ body.dark {
 .settings-toggle.on::after { transform:translateX(20px); }
 .pro-badge-sm { font-size:8px;background:linear-gradient(90deg,var(--purple),var(--pink));color:#fff;padding:2px 6px;border-radius:8px;letter-spacing:0.08em;margin-left:6px; }
 
-/* COLOR PICKERS */
 .color-swatches { display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center; }
 .swatch { width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.2s;flex-shrink:0; }
 .swatch:hover { transform:scale(1.15); }
 .swatch.selected { border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,0.6); }
-.color-wheel-wrap { display:flex;flex-direction:column;gap:8px;margin-top:10px; }
-.color-wheel-row { display:flex;align-items:center;gap:10px; }
+
+.color-wheel-wrap { margin-top:10px; }
+.color-wheel-row { display:flex;align-items:center;gap:8px;flex-wrap:wrap; }
 .color-wheel-label { position:relative;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;transition:border-color 0.2s; }
 .color-wheel-label:hover { border-color:var(--purple); }
 .color-wheel-label input[type=color] { position:absolute;opacity:0;width:0;height:0; }
-.color-preview-box { width:20px;height:20px;border-radius:6px;border:1px solid var(--border);flex-shrink:0; }
-.color-apply-btn { padding:8px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;white-space:nowrap; }
+.color-preview-box { width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);flex-shrink:0;transition:background 0.2s; }
+.color-apply-btn { padding:8px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 .color-reset-btn { padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 
 .logout-btn { width:calc(100% - 40px);margin:20px;padding:14px;border-radius:12px;border:1.5px solid rgba(255,16,240,0.3);background:rgba(255,16,240,0.06);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.04em; }
@@ -422,11 +433,10 @@ body.dark {
         </div>
         <div class="settings-toggle" id="dark-toggle" onclick="toggleDarkMode()"></div>
       </div>
-      <!-- Background color — Pro only, color wheel only -->
       <div class="settings-item" id="bg-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">Background Color <span class="pro-badge-sm">PRO</span></div>
-          <div class="settings-item-sub">CUSTOM BACKGROUND — WORKS IN LIGHT OR DARK MODE</div>
+          <div class="settings-item-sub">CUSTOM BACKGROUND — ANY MODE</div>
           <div class="color-wheel-wrap">
             <div class="color-wheel-row">
               <label class="color-wheel-label">
@@ -440,7 +450,6 @@ body.dark {
           </div>
         </div>
       </div>
-      <!-- Dot color — Pro only, swatches only -->
       <div class="settings-item" id="dot-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">Dot Color <span class="pro-badge-sm">PRO</span></div>
@@ -453,11 +462,10 @@ body.dark {
             <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setDotColor('#FFD700',this)"></div>
             <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setDotColor('#FF6B00',this)"></div>
             <div class="swatch" style="background:#FF0000;box-shadow:0 0 8px #FF0000" onclick="setDotColor('#FF0000',this)"></div>
-            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.5)" onclick="setDotColor('#FFFFFF',this)"></div>
+            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.4);border:1px solid #ddd" onclick="setDotColor('#FFFFFF',this)"></div>
           </div>
         </div>
       </div>
-      <!-- PTT color — Pro only, swatches only -->
       <div class="settings-item" id="ptt-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">PTT Button Color <span class="pro-badge-sm">PRO</span></div>
@@ -470,7 +478,7 @@ body.dark {
             <div class="swatch" style="background:#FFD700;box-shadow:0 0 8px #FFD700" onclick="setPttColor('#FFD700',this)"></div>
             <div class="swatch" style="background:#FF6B00;box-shadow:0 0 8px #FF6B00" onclick="setPttColor('#FF6B00',this)"></div>
             <div class="swatch" style="background:#FF0000;box-shadow:0 0 8px #FF0000" onclick="setPttColor('#FF0000',this)"></div>
-            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.5)" onclick="setPttColor('#FFFFFF',this)"></div>
+            <div class="swatch" style="background:#FFFFFF;box-shadow:0 0 8px rgba(255,255,255,0.4);border:1px solid #ddd" onclick="setPttColor('#FFFFFF',this)"></div>
           </div>
         </div>
       </div>
@@ -507,6 +515,23 @@ body.dark {
     <div class="ptt-icon">🎙️</div>
     <div class="ptt-label" id="ptt-label">HOLD</div>
   </button>
+</div>
+
+<!-- CHANNEL MENU MODAL -->
+<div class="modal-overlay" id="channel-menu-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="channel-menu-title">Channel</div>
+    <div class="modal-sub" id="channel-menu-sub"></div>
+    <div style="margin-bottom:16px;">
+      <div style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:8px;">MEMBERS IN CHANNEL</div>
+      <div id="channel-members-list"></div>
+    </div>
+    <button class="modal-btn" id="channel-join-btn" onclick="joinFromMenu()">Join Channel</button>
+    <button class="modal-btn-dark" id="channel-leave-btn" onclick="leaveChannel()" style="display:none">Leave Channel</button>
+    <button class="modal-btn-danger" id="channel-delete-btn" onclick="deleteChannel()" style="display:none">🗑️ Delete Channel</button>
+    <button class="modal-cancel" onclick="closeModal('channel-menu-modal')">Close</button>
+  </div>
 </div>
 
 <!-- CREATE CHANNEL MODAL -->
@@ -628,6 +653,12 @@ let darkMode = false
 let pttColor = '#39FF14'
 let pendingBgColor = null
 
+// ── CHANNEL MENU STATE ────────────────────────────
+let activeChannelId = null
+let activeChannelName = null
+let activeChannelOwner = null
+let activeChannelMembers = []
+
 // ── LIVEKIT ──────────────────────────────────────
 let livekitRoom = null
 let localAudioTrack = null
@@ -650,10 +681,6 @@ async function connectToVoice(channelName) {
     currentChannelName = channelName
     document.getElementById('voice-status').classList.add('active')
     document.getElementById('voice-channel-display').innerText = channelName.toUpperCase()
-    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active-channel'))
-    document.querySelectorAll('.ch-name').forEach(c => {
-      if (c.innerText === channelName) c.closest('.channel-card').classList.add('active-channel')
-    })
     livekitRoom.on(LivekitClient.RoomEvent.TrackSubscribed, (track, publication, participant) => {
       if (track.kind === 'audio') {
         const audioEl = track.attach()
@@ -691,19 +718,16 @@ window.addEventListener('load', () => {
     const savedPtt = localStorage.getItem('roxly_ptt_color')
     const savedBg = localStorage.getItem('roxly_bg')
     const savedNotif = localStorage.getItem('roxly_notif')
-
     if (savedDark === 'true') {
       darkMode = true
       document.body.classList.add('dark')
       document.getElementById('dark-toggle').classList.add('on')
     }
-    if (savedPtt) {
-      pttColor = savedPtt
-    }
+    if (savedPtt) pttColor = savedPtt
     if (savedBg) {
       document.documentElement.style.setProperty('--bg', savedBg)
-      const previewBox = document.getElementById('bg-preview-box')
-      if (previewBox) previewBox.style.background = savedBg
+      const pb = document.getElementById('bg-preview-box')
+      if (pb) pb.style.background = savedBg
     }
     if (savedNotif === 'true') {
       document.getElementById('notif-badge').style.display = 'block'
@@ -727,7 +751,6 @@ function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
   document.getElementById('screen-' + name).classList.add('active')
   document.getElementById('ptt-wrap').style.display = (name === 'app') ? 'flex' : 'none'
-
   if (name === 'settings') {
     if (isGuest) {
       document.getElementById('guest-settings').style.display = 'block'
@@ -780,10 +803,7 @@ async function handleSignup() {
       body: JSON.stringify({ username, email, password })
     })
     const data = await res.json()
-    if (!res.ok) {
-      errBox.innerText = data.detail.toUpperCase()
-      errBox.style.display = 'block'; return
-    }
+    if (!res.ok) { errBox.innerText = data.detail.toUpperCase(); errBox.style.display = 'block'; return }
     currentUser = { username: data.username, is_pro: false, dot_color: '#39FF14', email }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
@@ -808,10 +828,7 @@ async function handleLogin() {
       body: JSON.stringify({ username, password })
     })
     const data = await res.json()
-    if (!res.ok) {
-      errBox.innerText = data.detail.toUpperCase()
-      errBox.style.display = 'block'; return
-    }
+    if (!res.ok) { errBox.innerText = data.detail.toUpperCase(); errBox.style.display = 'block'; return }
     currentUser = { username: data.username, is_pro: data.is_pro, dot_color: data.dot_color }
     localStorage.setItem('roxly_user', JSON.stringify(currentUser))
     isGuest = false
@@ -839,7 +856,6 @@ function initApp() {
   document.getElementById('status-username').innerText = currentUser.username.toUpperCase()
   document.getElementById('notif-logged-in').style.display = 'block'
   document.getElementById('notif-guest').style.display = 'none'
-
   if (currentUser.is_pro) {
     document.getElementById('talk-val').innerText = '∞'
     document.getElementById('talk-stat').innerText = 'UNLIMITED'
@@ -862,10 +878,8 @@ function initApp() {
     document.getElementById('ptt-color-item').style.display = 'none'
     document.getElementById('upgrade-section').style.display = 'block'
   }
-
   const savedPtt = localStorage.getItem('roxly_ptt_color')
   if (savedPtt) { pttColor = savedPtt; applyPttColor(savedPtt) }
-
   updateRangePills()
   updateClock()
   setInterval(updateClock, 1000)
@@ -966,33 +980,139 @@ async function loadChannels() {
     const data = await res.json()
     const list = document.getElementById('channels-list')
     if (data.channels.length === 0) {
-      list.innerHTML = `<div class="empty-state">NO CHANNELS NEARBY YET<br>${currentUser && currentUser.is_pro && !isGuest ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;">+ CREATE FIRST CHANNEL</button>' : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
+      list.innerHTML = `<div class="empty-state">NO CHANNELS YET<br>${currentUser && currentUser.is_pro && !isGuest
+        ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;">+ CREATE FIRST CHANNEL</button>'
+        : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
       return
     }
     list.innerHTML = data.channels.map(ch => `
-      <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}" onclick="joinChannel('${ch.name}')">
-        <div class="ch-left">
-          <div class="ch-name">${ch.name}</div>
-          <div class="ch-meta">BY ${ch.created_by.toUpperCase()} ${ch.is_private ? '🔒 PRIVATE' : '🌐 PUBLIC'}</div>
+      <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}">
+        <div class="ch-left" onclick="joinChannel('${ch.name}', ${ch.id})">
+          <div class="ch-name">${ch.name} ${currentChannelName === ch.name ? '🔊' : ''}</div>
+          <div class="ch-meta">${ch.is_private ? '🔒 PRIVATE' : '🌐 PUBLIC'} · BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
         </div>
-        <div class="ch-right"><div class="ch-arrow">›</div></div>
+        <button class="ch-menu-btn" onclick="openChannelMenu(${ch.id}, '${ch.name}', '${ch.created_by}', ${JSON.stringify(ch.members || [])})">⋯</button>
       </div>`).join('')
   } catch(e) {}
 }
 
-async function joinChannel(channelName) {
+async function joinChannel(channelName, channelId) {
   if (isGuest) { showScreen('signup'); return }
   if (currentChannelName === channelName) return
   await disconnectFromVoice()
   await connectToVoice(channelName)
+  if (channelId && currentUser) {
+    try {
+      await fetch(`${API}/channels/join`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ channel_id: channelId, username: currentUser.username })
+      })
+    } catch(e) {}
+  }
+  loadChannels()
 }
 </script>
 <script>
+// ── CHANNEL MENU ─────────────────────────────────
+function openChannelMenu(id, name, owner, members) {
+  activeChannelId = id
+  activeChannelName = name
+  activeChannelOwner = owner
+  activeChannelMembers = Array.isArray(members) ? members : []
+
+  const isOwner = currentUser && currentUser.username === owner
+  const isInChannel = currentChannelName === name
+
+  document.getElementById('channel-menu-title').innerText = name
+  document.getElementById('channel-menu-sub').innerText =
+    `${activeChannelMembers.length} MEMBER${activeChannelMembers.length !== 1 ? 'S' : ''} · BY ${owner.toUpperCase()}`
+
+  const membersList = document.getElementById('channel-members-list')
+  if (activeChannelMembers.length === 0) {
+    membersList.innerHTML = '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);padding:12px 0;">NO MEMBERS YET</div>'
+  } else {
+    membersList.innerHTML = activeChannelMembers.map(m => `
+      <div class="member-row">
+        <div class="member-badges">
+          <div class="member-name">${m}</div>
+          ${m === owner ? '<span style="font-size:12px;">👑</span>' : ''}
+          ${m === (currentUser ? currentUser.username : '') ? '<span style="font-size:10px;font-family:Share Tech Mono,monospace;color:var(--muted);">(you)</span>' : ''}
+        </div>
+        ${isOwner && m !== owner ? `<button class="kick-btn" onclick="kickMember('${m}')">KICK</button>` : ''}
+      </div>`).join('')
+  }
+
+  const joinBtn = document.getElementById('channel-join-btn')
+  const leaveBtn = document.getElementById('channel-leave-btn')
+  const deleteBtn = document.getElementById('channel-delete-btn')
+
+  joinBtn.style.display = isInChannel ? 'none' : 'block'
+  leaveBtn.style.display = isInChannel && !isOwner ? 'block' : 'none'
+  deleteBtn.style.display = isOwner ? 'block' : 'none'
+
+  document.getElementById('channel-menu-modal').classList.add('active')
+}
+
+async function joinFromMenu() {
+  closeModal('channel-menu-modal')
+  await joinChannel(activeChannelName, activeChannelId)
+}
+
+async function leaveChannel() {
+  if (!activeChannelId || !currentUser) return
+  try {
+    await fetch(`${API}/channels/leave`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channel_id: activeChannelId, username: currentUser.username })
+    })
+    await disconnectFromVoice()
+    closeModal('channel-menu-modal')
+    loadChannels()
+  } catch(e) { alert('Error leaving channel') }
+}
+
+async function deleteChannel() {
+  if (!activeChannelId || !currentUser) return
+  if (!confirm(`Delete "${activeChannelName}"?\nThis removes the channel for everyone.`)) return
+  try {
+    const res = await fetch(`${API}/channels/delete/${activeChannelId}?username=${currentUser.username}`, {
+      method: 'DELETE'
+    })
+    if (res.ok) {
+      await disconnectFromVoice()
+      closeModal('channel-menu-modal')
+      loadChannels()
+    } else {
+      const data = await res.json()
+      alert(typeof data.detail === 'string' ? data.detail : 'Error deleting channel')
+    }
+  } catch(e) { alert('Error deleting channel') }
+}
+
+async function kickMember(username) {
+  if (!activeChannelId || !currentUser) return
+  if (!confirm(`Kick ${username} from "${activeChannelName}"?`)) return
+  try {
+    await fetch(`${API}/channels/kick`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        channel_id: activeChannelId,
+        owner_username: currentUser.username,
+        kick_username: username
+      })
+    })
+    activeChannelMembers = activeChannelMembers.filter(m => m !== username)
+    openChannelMenu(activeChannelId, activeChannelName, activeChannelOwner, activeChannelMembers)
+    loadChannels()
+  } catch(e) { alert('Error kicking member') }
+}
+
 // ── CREATE CHANNEL ───────────────────────────────
 function openCreateChannel() {
-  if (!currentUser || !currentUser.is_pro || isGuest) {
-    openUpgradeModal(); return
-  }
+  if (!currentUser || !currentUser.is_pro || isGuest) { openUpgradeModal(); return }
   document.getElementById('create-channel-modal').classList.add('active')
 }
 
@@ -1005,16 +1125,14 @@ async function createChannel() {
   const name     = document.getElementById('channel-name-input').value.trim()
   const privacy  = document.getElementById('channel-privacy').value
   const password = document.getElementById('channel-password-input').value
-
   if (!name) { alert('Please enter a channel name'); return }
   if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
-
   try {
     const res = await fetch(`${API}/channels/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: name,
+        name,
         username: currentUser.username,
         latitude: userLat || 42.8142,
         longitude: userLon || -73.9396,
@@ -1028,14 +1146,12 @@ async function createChannel() {
       document.getElementById('channel-name-input').value = ''
       document.getElementById('channel-password-input').value = ''
       await loadChannels()
-      await joinChannel(name)
+      await joinChannel(name, data.channel_id)
     } else {
       const msg = typeof data.detail === 'string' ? data.detail : 'Error creating channel'
       alert(msg)
     }
-  } catch(e) {
-    alert('Connection error — please try again')
-  }
+  } catch(e) { alert('Connection error — please try again') }
 }
 
 // ── MODALS ───────────────────────────────────────
@@ -1052,12 +1168,7 @@ async function goToPro(plan) {
     const res = await fetch(`${API}/payments/create-checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: currentUser.username,
-        plan: plan,
-        success_url: window.location.origin,
-        cancel_url: window.location.origin
-      })
+      body: JSON.stringify({ username: currentUser.username, plan, success_url: window.location.origin, cancel_url: window.location.origin })
     })
     const data = await res.json()
     if (data.checkout_url) window.location.href = data.checkout_url
@@ -1076,22 +1187,14 @@ function saveUsername() {
   const newUsername = document.getElementById('new-username-input').value.trim()
   const errBox = document.getElementById('username-error')
   const sucBox = document.getElementById('username-success')
-  errBox.style.display = 'none'
-  sucBox.style.display = 'none'
-  if (!newUsername) {
-    errBox.innerText = 'PLEASE ENTER A USERNAME'
-    errBox.style.display = 'block'; return
-  }
-  if (newUsername === currentUser.username) {
-    errBox.innerText = 'THAT IS ALREADY YOUR USERNAME'
-    errBox.style.display = 'block'; return
-  }
+  errBox.style.display = 'none'; sucBox.style.display = 'none'
+  if (!newUsername) { errBox.innerText = 'PLEASE ENTER A USERNAME'; errBox.style.display = 'block'; return }
+  if (newUsername === currentUser.username) { errBox.innerText = 'THAT IS ALREADY YOUR USERNAME'; errBox.style.display = 'block'; return }
   currentUser.username = newUsername
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
   document.getElementById('status-username').innerText = newUsername.toUpperCase()
   document.getElementById('current-username-display').innerText = newUsername
-  sucBox.innerText = 'USERNAME UPDATED!'
-  sucBox.style.display = 'block'
+  sucBox.innerText = 'USERNAME UPDATED!'; sucBox.style.display = 'block'
   setTimeout(() => closeModal('edit-username-modal'), 1500)
 }
 
@@ -1106,17 +1209,12 @@ function saveEmail() {
   const newEmail = document.getElementById('new-email-input').value.trim()
   const errBox = document.getElementById('email-error')
   const sucBox = document.getElementById('email-success')
-  errBox.style.display = 'none'
-  sucBox.style.display = 'none'
-  if (!newEmail || !newEmail.includes('@')) {
-    errBox.innerText = 'PLEASE ENTER A VALID EMAIL'
-    errBox.style.display = 'block'; return
-  }
+  errBox.style.display = 'none'; sucBox.style.display = 'none'
+  if (!newEmail || !newEmail.includes('@')) { errBox.innerText = 'PLEASE ENTER A VALID EMAIL'; errBox.style.display = 'block'; return }
   currentUser.email = newEmail
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
   document.getElementById('current-email-display').innerText = newEmail
-  sucBox.innerText = 'EMAIL UPDATED!'
-  sucBox.style.display = 'block'
+  sucBox.innerText = 'EMAIL UPDATED!'; sucBox.style.display = 'block'
   setTimeout(() => closeModal('edit-email-modal'), 1500)
 }
 
@@ -1133,18 +1231,10 @@ function savePassword() {
   const confirmPass = document.getElementById('confirm-password-input').value
   const errBox = document.getElementById('password-error')
   const sucBox = document.getElementById('password-success')
-  errBox.style.display = 'none'
-  sucBox.style.display = 'none'
-  if (!newPass || newPass.length < 6) {
-    errBox.innerText = 'PASSWORD MUST BE AT LEAST 6 CHARACTERS'
-    errBox.style.display = 'block'; return
-  }
-  if (newPass !== confirmPass) {
-    errBox.innerText = 'PASSWORDS DO NOT MATCH'
-    errBox.style.display = 'block'; return
-  }
-  sucBox.innerText = 'PASSWORD UPDATED SUCCESSFULLY!'
-  sucBox.style.display = 'block'
+  errBox.style.display = 'none'; sucBox.style.display = 'none'
+  if (!newPass || newPass.length < 6) { errBox.innerText = 'PASSWORD MUST BE AT LEAST 6 CHARACTERS'; errBox.style.display = 'block'; return }
+  if (newPass !== confirmPass) { errBox.innerText = 'PASSWORDS DO NOT MATCH'; errBox.style.display = 'block'; return }
+  sucBox.innerText = 'PASSWORD UPDATED!'; sucBox.style.display = 'block'
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
@@ -1152,26 +1242,18 @@ function savePassword() {
 function openNotifications() {
   document.getElementById('notif-panel').classList.add('open')
 }
-
 function closeNotifications() {
   document.getElementById('notif-panel').classList.remove('open')
 }
 
 function toggleNotifications() {
-  if (isGuest) {
-    closeNotifications()
-    showScreen('signup')
-    return
-  }
-
+  if (isGuest) { closeNotifications(); showScreen('signup'); return }
   const toggle1 = document.getElementById('notif-toggle')
   const toggle2 = document.getElementById('notif-panel-toggle')
   const isOn = toggle1 ? toggle1.classList.contains('on') : false
-
   if (!isOn) {
     if (!('Notification' in window)) {
-      alert('Push notifications are not supported on this browser. Try adding ROXLY to your home screen first!')
-      return
+      alert('Push notifications not supported. Try adding ROXLY to your home screen first!'); return
     }
     if (Notification.permission === 'granted') {
       toggle1 && toggle1.classList.add('on')
@@ -1180,7 +1262,7 @@ function toggleNotifications() {
       localStorage.setItem('roxly_notif', 'true')
       new Notification('ROXLY', { body: 'You will be alerted when people are nearby!' })
     } else if (Notification.permission === 'denied') {
-      alert('Notifications are blocked.\n\nOn iPhone: Settings → Safari → Advanced → Website Data\nOr try in Chrome browser instead of Safari.')
+      alert('Notifications are blocked.\n\niPhone: Settings → Safari → Advanced → Website Data\nOr try opening ROXLY in Chrome instead of Safari.')
     } else {
       Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
@@ -1188,9 +1270,9 @@ function toggleNotifications() {
           toggle2 && toggle2.classList.add('on')
           document.getElementById('notif-badge').style.display = 'block'
           localStorage.setItem('roxly_notif', 'true')
-          new Notification('ROXLY', { body: 'Notifications enabled! You will be alerted when people are nearby.' })
+          new Notification('ROXLY', { body: 'Notifications enabled!' })
         } else {
-          alert('Notifications were denied. You can enable them in your browser settings.')
+          alert('Notifications denied. Enable in browser settings to use this feature.')
         }
       })
     }
@@ -1210,24 +1292,22 @@ function toggleDarkMode() {
   localStorage.setItem('roxly_dark', darkMode)
 }
 
-// ── BACKGROUND COLOR (Pro — color wheel + apply) ─
+// ── BACKGROUND COLOR ─────────────────────────────
 document.getElementById('bg-color-wheel').addEventListener('input', function() {
   pendingBgColor = this.value
-  const previewBox = document.getElementById('bg-preview-box')
-  if (previewBox) previewBox.style.background = this.value
+  const pb = document.getElementById('bg-preview-box')
+  if (pb) pb.style.background = this.value
 })
 
 function applyBgColor() {
-  if (!pendingBgColor) {
-    const wheel = document.getElementById('bg-color-wheel')
-    pendingBgColor = wheel ? wheel.value : null
-  }
-  if (!pendingBgColor) return
-  document.documentElement.style.setProperty('--bg', pendingBgColor)
-  document.documentElement.style.setProperty('--card', adjustColor(pendingBgColor, 12))
-  localStorage.setItem('roxly_bg', pendingBgColor)
-  const previewBox = document.getElementById('bg-preview-box')
-  if (previewBox) previewBox.style.background = pendingBgColor
+  const wheel = document.getElementById('bg-color-wheel')
+  const color = pendingBgColor || (wheel ? wheel.value : null)
+  if (!color) return
+  document.documentElement.style.setProperty('--bg', color)
+  document.documentElement.style.setProperty('--card', adjustColor(color, 12))
+  localStorage.setItem('roxly_bg', color)
+  const pb = document.getElementById('bg-preview-box')
+  if (pb) pb.style.background = color
 }
 
 function resetBgColor() {
@@ -1235,8 +1315,8 @@ function resetBgColor() {
   document.documentElement.style.removeProperty('--bg')
   document.documentElement.style.removeProperty('--card')
   localStorage.removeItem('roxly_bg')
-  const previewBox = document.getElementById('bg-preview-box')
-  if (previewBox) previewBox.style.background = 'transparent'
+  const pb = document.getElementById('bg-preview-box')
+  if (pb) pb.style.background = 'transparent'
   const wheel = document.getElementById('bg-color-wheel')
   if (wheel) wheel.value = '#0a0a0a'
 }
@@ -1251,20 +1331,17 @@ function adjustColor(hex, amount) {
   } catch(e) { return hex }
 }
 
-// ── DOT COLOR (swatches only) ────────────────────
+// ── DOT COLOR ────────────────────────────────────
 function setDotColor(color, el) {
   document.querySelectorAll('#dot-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
   currentUser.dot_color = color
   localStorage.setItem('roxly_user', JSON.stringify(currentUser))
   const yourDot = document.getElementById('your-dot')
-  if (yourDot) {
-    yourDot.style.background = color
-    yourDot.style.boxShadow = `0 0 16px ${color}`
-  }
+  if (yourDot) { yourDot.style.background = color; yourDot.style.boxShadow = `0 0 16px ${color}` }
 }
 
-// ── PTT COLOR (swatches only) ────────────────────
+// ── PTT COLOR ────────────────────────────────────
 function setPttColor(color, el) {
   document.querySelectorAll('#ptt-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
@@ -1292,12 +1369,10 @@ async function startTalking() {
   const btn = document.getElementById('ptt-btn')
   btn.classList.add('talking')
   document.getElementById('ptt-label').innerText = 'LIVE'
-
   if (isConnectedToVoice && localAudioTrack && livekitRoom) {
     try { await livekitRoom.localParticipant.publishTrack(localAudioTrack) }
     catch(e) { console.error('PTT error:', e) }
   }
-
   if (!currentUser.is_pro) {
     talkSeconds = 0
     talkTimer = setInterval(() => {
