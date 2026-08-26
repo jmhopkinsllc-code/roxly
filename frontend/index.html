@@ -53,7 +53,6 @@ body.dark {
 }
 .screen.active { display: flex; }
 
-/* LOADING */
 .loading {
   position: fixed; inset: 0; background: #000;
   display: flex; flex-direction: column;
@@ -70,7 +69,6 @@ body.dark {
 @keyframes load { from{width:0} to{width:100%} }
 .loading-text { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #555; letter-spacing: 0.1em; }
 
-/* LANDING */
 #screen-landing { justify-content: center; padding: 40px 24px; background: #000; }
 .landing-logo {
   font-size: 56px; font-weight: 700; letter-spacing: 0.15em;
@@ -97,7 +95,6 @@ body.dark {
 .btn-ghost { width:100%;padding:12px;border-radius:14px;border:1px solid #222;background:transparent;color:#555;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
 .btn-ghost:hover { color: var(--blue); border-color: var(--blue); }
 
-/* AUTH */
 #screen-login, #screen-signup { padding: 40px 24px; justify-content: flex-start; background: var(--bg); }
 .auth-back { align-self:flex-start;font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--muted);cursor:pointer;margin-bottom:32px;letter-spacing:0.06em; }
 .auth-back:hover { color: var(--purple); }
@@ -117,7 +114,6 @@ body.dark {
 .auth-switch span { color:var(--purple);text-decoration:underline; }
 </style>
 <style>
-/* APP */
 #screen-app { background: var(--bg); padding-bottom: 160px; }
 
 .status-bar { width:100%;display:flex;justify-content:space-between;padding:14px 20px 6px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;background:var(--card);border-bottom:1px solid var(--border); }
@@ -168,7 +164,7 @@ body.dark {
 .voice-wave:nth-child(5){height:8px;animation-delay:0.4s}
 @keyframes wave { from{transform:scaleY(0.4)} to{transform:scaleY(1)} }
 .voice-status-text { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green);letter-spacing:0.06em; }
-.voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto; }
+.voice-channel-name { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-left:auto;cursor:pointer;text-decoration:underline; }
 
 .stats-row { width:100%;padding:14px 20px 0;display:flex;gap:10px; }
 .stat-chip { flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
@@ -177,11 +173,14 @@ body.dark {
 
 .section-label { width:100%;padding:16px 20px 8px;display:flex;justify-content:space-between;align-items:center; }
 .section-title { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.1em; }
-.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 12px;cursor:pointer;letter-spacing:0.06em; }
+.create-btns { display:flex;gap:6px; }
+.create-btn { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--purple);background:rgba(191,0,255,0.1);border:1px solid rgba(191,0,255,0.3);border-radius:20px;padding:4px 10px;cursor:pointer;letter-spacing:0.04em;white-space:nowrap; }
+.create-btn.private { color:var(--pink);background:rgba(255,16,240,0.1);border-color:rgba(255,16,240,0.3); }
 
 .channels-list { width:100%;padding:0 20px;display:flex;flex-direction:column;gap:10px; }
 .channel-card { background:var(--card);border-radius:14px;padding:14px 16px;border:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;transition:all 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.06); }
 .channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
+.channel-card.general-card { border-color:rgba(0,245,255,0.3); }
 .ch-left { display:flex;flex-direction:column;gap:3px;flex:1;cursor:pointer; }
 .ch-left:hover .ch-name { color:var(--purple); }
 .ch-name { font-size:13px;font-weight:600;color:var(--text);transition:color 0.2s; }
@@ -210,13 +209,11 @@ body.dark {
 .modal-btn-dark { width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
 
-/* MEMBER ROW */
 .member-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border); }
 .member-name { font-size:13px;font-weight:600;color:var(--text); }
 .member-badges { display:flex;align-items:center;gap:6px; }
 .kick-btn { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:3px 10px;cursor:pointer;letter-spacing:0.06em; }
 
-/* SETTINGS */
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
 .settings-back { font-size:20px;cursor:pointer;color:var(--text); }
@@ -275,14 +272,12 @@ body.dark {
 </head>
 <body>
 
-<!-- Loading -->
 <div class="loading" id="loading">
   <div class="loading-logo">ROXLY</div>
   <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
   <div class="loading-text">PROXIMITY SOCIAL</div>
 </div>
 
-<!-- LANDING -->
 <div class="screen" id="screen-landing">
   <div class="landing-logo">ROXLY</div>
   <div class="landing-tagline">proximity social</div>
@@ -298,7 +293,6 @@ body.dark {
   <button class="btn-ghost" onclick="enterGuestMode()">👀 Browse as Guest</button>
 </div>
 
-<!-- SIGNUP -->
 <div class="screen" id="screen-signup">
   <div class="auth-back" onclick="showScreen('landing')">← Back</div>
   <div class="auth-title">Join <span>ROXLY</span></div>
@@ -311,7 +305,6 @@ body.dark {
   <div class="auth-switch">Already have an account? <span onclick="showScreen('login')">Log in</span></div>
 </div>
 
-<!-- LOGIN -->
 <div class="screen" id="screen-login">
   <div class="auth-back" onclick="showScreen('landing')">← Back</div>
   <div class="auth-title">Welcome to <span>ROXLY</span></div>
@@ -323,7 +316,6 @@ body.dark {
   <div class="auth-switch">Don't have an account? <span onclick="showScreen('signup')">Sign up</span></div>
 </div>
 
-<!-- MAIN APP -->
 <div class="screen" id="screen-app">
   <div class="guest-banner" id="guest-banner">
     <div class="guest-text">👀 BROWSING AS GUEST<br>CREATE ACCOUNT TO TALK</div>
@@ -356,7 +348,7 @@ body.dark {
       <div class="voice-wave"></div><div class="voice-wave"></div><div class="voice-wave"></div>
     </div>
     <div class="voice-status-text">CONNECTED</div>
-    <div class="voice-channel-name" id="voice-channel-display">—</div>
+    <div class="voice-channel-name" id="voice-channel-display" onclick="openCurrentChannelMenu()">—</div>
   </div>
   <div class="map-wrap">
     <div class="map" id="main-map">
@@ -377,15 +369,16 @@ body.dark {
     <div class="stat-chip"><div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div><div class="stat-lbl" id="talk-stat">TALK TIME</div></div>
   </div>
   <div class="section-label">
-    <div class="section-title">NEARBY CHANNELS</div>
-    <button class="create-btn" id="create-channel-btn" onclick="openCreateChannel()" style="display:none">+ CREATE</button>
+    <div class="section-title">CHANNELS</div>
+    <div class="create-btns" id="create-btns" style="display:none">
+      <button class="create-btn" onclick="openCreateChannel(false)">+ PUBLIC</button>
+      <button class="create-btn private" onclick="openCreateChannel(true)">+ PRIVATE 🔒</button>
+    </div>
   </div>
   <div class="channels-list" id="channels-list">
-    <div class="empty-state">SCANNING FOR NEARBY CHANNELS...</div>
+    <div class="empty-state">LOADING CHANNELS...</div>
   </div>
 </div>
-
-<!-- SETTINGS -->
 <div class="screen" id="screen-settings">
   <div class="settings-header">
     <div class="settings-back" onclick="showScreen('app')">←</div>
@@ -507,7 +500,6 @@ body.dark {
   </div>
 </div>
 
-<!-- PTT -->
 <div class="ptt-wrap" id="ptt-wrap" style="display:none">
   <button class="ptt-btn" id="ptt-btn"
     onmousedown="startTalking()" onmouseup="stopTalking()"
@@ -517,7 +509,6 @@ body.dark {
   </button>
 </div>
 
-<!-- CHANNEL MENU MODAL -->
 <div class="modal-overlay" id="channel-menu-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -534,20 +525,12 @@ body.dark {
   </div>
 </div>
 
-<!-- CREATE CHANNEL MODAL -->
 <div class="modal-overlay" id="create-channel-modal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">Create Channel ✦</div>
-    <div class="modal-sub">NAME YOUR CHANNEL AND SET PRIVACY</div>
+    <div class="modal-title" id="create-modal-title">Create Channel ✦</div>
+    <div class="modal-sub" id="create-modal-sub">NAME YOUR CHANNEL</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
-    <div class="field">
-      <label>PRIVACY</label>
-      <select id="channel-privacy" onchange="togglePasswordField()">
-        <option value="public">Public — Anyone nearby can join</option>
-        <option value="private">Private — Password required</option>
-      </select>
-    </div>
     <div class="field" id="password-field" style="display:none">
       <label>CHANNEL PASSWORD</label>
       <input type="text" id="channel-password-input" placeholder="set a password">
@@ -557,7 +540,6 @@ body.dark {
   </div>
 </div>
 
-<!-- UPGRADE MODAL -->
 <div class="modal-overlay" id="upgrade-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -565,7 +547,7 @@ body.dark {
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create unlimited channels<br>✦ Private channels<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
+        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create public + private channels<br>✦ Kick members from private channels<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
@@ -574,7 +556,6 @@ body.dark {
   </div>
 </div>
 
-<!-- EDIT USERNAME MODAL -->
 <div class="modal-overlay" id="edit-username-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -588,7 +569,6 @@ body.dark {
   </div>
 </div>
 
-<!-- EDIT EMAIL MODAL -->
 <div class="modal-overlay" id="edit-email-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -602,7 +582,6 @@ body.dark {
   </div>
 </div>
 
-<!-- CHANGE PASSWORD MODAL -->
 <div class="modal-overlay" id="change-password-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -617,7 +596,6 @@ body.dark {
   </div>
 </div>
 
-<!-- NOTIFICATIONS PANEL -->
 <div class="notif-panel" id="notif-panel">
   <div class="notif-header">
     <div class="notif-title">Notifications</div>
@@ -652,18 +630,20 @@ let isGuest = false
 let darkMode = false
 let pttColor = '#39FF14'
 let pendingBgColor = null
+let creatingPrivate = false
 
-// ── CHANNEL MENU STATE ────────────────────────────
 let activeChannelId = null
 let activeChannelName = null
 let activeChannelOwner = null
+let activeChannelPrivate = false
 let activeChannelMembers = []
+let allChannelsCache = []
 
-// ── LIVEKIT ──────────────────────────────────────
 let livekitRoom = null
 let localAudioTrack = null
 let isConnectedToVoice = false
 let currentChannelName = null
+let currentChannelId = null
 
 async function connectToVoice(channelName) {
   if (isGuest) return
@@ -703,13 +683,13 @@ async function disconnectFromVoice() {
     localAudioTrack = null
     isConnectedToVoice = false
     currentChannelName = null
+    currentChannelId = null
     document.getElementById('voice-status').classList.remove('active')
     document.getElementById('voice-channel-display').innerText = '—'
     document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active-channel'))
   }
 }
 
-// ── LOADING ──────────────────────────────────────
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loading').style.display = 'none'
@@ -746,7 +726,6 @@ window.addEventListener('load', () => {
   }, 1800)
 })
 
-// ── SCREENS ──────────────────────────────────────
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
   document.getElementById('screen-' + name).classList.add('active')
@@ -766,7 +745,6 @@ function showScreen(name) {
   }
 }
 
-// ── GUEST MODE ───────────────────────────────────
 function enterGuestMode() {
   isGuest = true
   currentUser = { username: 'Guest', is_pro: false, dot_color: '#888888' }
@@ -785,7 +763,6 @@ function enterGuestMode() {
   getLocation()
 }
 
-// ── SIGNUP ───────────────────────────────────────
 async function handleSignup() {
   const username = document.getElementById('signup-username').value.trim()
   const email    = document.getElementById('signup-email').value.trim()
@@ -815,7 +792,6 @@ async function handleSignup() {
   }
 }
 
-// ── LOGIN ────────────────────────────────────────
 async function handleLogin() {
   const username = document.getElementById('login-username').value.trim()
   const password = document.getElementById('login-password').value
@@ -840,7 +816,6 @@ async function handleLogin() {
   }
 }
 
-// ── LOGOUT ───────────────────────────────────────
 function handleLogout() {
   disconnectFromVoice()
   localStorage.removeItem('roxly_user')
@@ -851,7 +826,6 @@ function handleLogout() {
   showScreen('landing')
 }
 
-// ── INIT APP ─────────────────────────────────────
 function initApp() {
   document.getElementById('status-username').innerText = currentUser.username.toUpperCase()
   document.getElementById('notif-logged-in').style.display = 'block'
@@ -859,7 +833,7 @@ function initApp() {
   if (currentUser.is_pro) {
     document.getElementById('talk-val').innerText = '∞'
     document.getElementById('talk-stat').innerText = 'UNLIMITED'
-    document.getElementById('create-channel-btn').style.display = 'block'
+    document.getElementById('create-btns').style.display = 'flex'
     document.getElementById('bg-color-item').style.display = 'flex'
     document.getElementById('dot-color-item').style.display = 'flex'
     document.getElementById('ptt-color-item').style.display = 'flex'
@@ -872,7 +846,7 @@ function initApp() {
   } else {
     document.getElementById('talk-val').innerText = '60S'
     document.getElementById('talk-stat').innerText = 'FREE LIMIT'
-    document.getElementById('create-channel-btn').style.display = 'none'
+    document.getElementById('create-btns').style.display = 'none'
     document.getElementById('bg-color-item').style.display = 'none'
     document.getElementById('dot-color-item').style.display = 'none'
     document.getElementById('ptt-color-item').style.display = 'none'
@@ -884,10 +858,9 @@ function initApp() {
   updateClock()
   setInterval(updateClock, 1000)
   getLocation()
-  if (!isGuest) connectToVoice('general')
+  if (!isGuest) connectToVoice('General')
 }
 
-// ── RANGE ────────────────────────────────────────
 function updateRangePills() {
   const isPro = currentUser && currentUser.is_pro && !isGuest
   ;['pill-05','pill-1','pill-5'].forEach(id => {
@@ -907,14 +880,12 @@ function setRange(miles, el) {
   scanNearby()
 }
 
-// ── CLOCK ────────────────────────────────────────
 function updateClock() {
   const now = new Date()
   document.getElementById('status-time').innerText =
     `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`
 }
 
-// ── LOCATION ─────────────────────────────────────
 function getLocation() {
   if (!navigator.geolocation) return
   navigator.geolocation.getCurrentPosition(pos => {
@@ -950,8 +921,8 @@ async function scanNearby() {
     const data = await res.json()
     document.getElementById('nearby-count').innerText = data.nearby_count
     updateMapDots(data.nearby_users)
-    loadChannels()
   } catch(e) {}
+  loadChannels()
 }
 
 function updateMapDots(users) {
@@ -978,21 +949,40 @@ async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
     const data = await res.json()
+    allChannelsCache = data.channels || []
     const list = document.getElementById('channels-list')
-    if (data.channels.length === 0) {
-      list.innerHTML = `<div class="empty-state">NO CHANNELS YET<br>${currentUser && currentUser.is_pro && !isGuest
-        ? '<button onclick="openCreateChannel()" style="margin-top:12px;padding:8px 20px;border-radius:20px;border:none;background:var(--purple);color:#fff;font-family:Share Tech Mono,monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em;">+ CREATE FIRST CHANNEL</button>'
-        : 'UPGRADE TO PRO TO CREATE ONE'}</div>`
+
+    if (allChannelsCache.length === 0) {
+      list.innerHTML = `<div class="empty-state">NO CHANNELS AVAILABLE</div>`
       return
     }
-    list.innerHTML = data.channels.map(ch => `
+
+    // General always first
+    const general = allChannelsCache.find(c => c.name === 'General')
+    const others = allChannelsCache.filter(c => c.name !== 'General')
+
+    let html = ''
+    if (general) {
+      html += `
+        <div class="channel-card general-card ${currentChannelName === general.name ? 'active-channel' : ''}">
+          <div class="ch-left" onclick="joinChannel('${general.name}', ${general.id})">
+            <div class="ch-name">🌐 ${general.name} ${currentChannelName === general.name ? '🔊' : ''}</div>
+            <div class="ch-meta">DEFAULT CHANNEL · ${general.member_count || 0} MEMBER${general.member_count !== 1 ? 'S' : ''}</div>
+          </div>
+          <button class="ch-menu-btn" onclick="openChannelMenu(${general.id}, '${general.name}', '${general.created_by}', false, ${JSON.stringify(general.members || [])})">⋯</button>
+        </div>`
+    }
+
+    html += others.map(ch => `
       <div class="channel-card ${currentChannelName === ch.name ? 'active-channel' : ''}">
         <div class="ch-left" onclick="joinChannel('${ch.name}', ${ch.id})">
           <div class="ch-name">${ch.name} ${currentChannelName === ch.name ? '🔊' : ''}</div>
           <div class="ch-meta">${ch.is_private ? '🔒 PRIVATE' : '🌐 PUBLIC'} · BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
         </div>
-        <button class="ch-menu-btn" onclick="openChannelMenu(${ch.id}, '${ch.name}', '${ch.created_by}', ${JSON.stringify(ch.members || [])})">⋯</button>
+        <button class="ch-menu-btn" onclick="openChannelMenu(${ch.id}, '${ch.name}', '${ch.created_by}', ${ch.is_private}, ${JSON.stringify(ch.members || [])})">⋯</button>
       </div>`).join('')
+
+    list.innerHTML = html
   } catch(e) {}
 }
 
@@ -1001,6 +991,7 @@ async function joinChannel(channelName, channelId) {
   if (currentChannelName === channelName) return
   await disconnectFromVoice()
   await connectToVoice(channelName)
+  currentChannelId = channelId
   if (channelId && currentUser) {
     try {
       await fetch(`${API}/channels/join`, {
@@ -1012,21 +1003,28 @@ async function joinChannel(channelName, channelId) {
   }
   loadChannels()
 }
+
+function openCurrentChannelMenu() {
+  if (!currentChannelName || !currentChannelId) return
+  const ch = allChannelsCache.find(c => c.id === currentChannelId)
+  if (ch) openChannelMenu(ch.id, ch.name, ch.created_by, ch.is_private, ch.members || [])
+}
 </script>
 <script>
-// ── CHANNEL MENU ─────────────────────────────────
-function openChannelMenu(id, name, owner, members) {
+function openChannelMenu(id, name, owner, isPrivate, members) {
   activeChannelId = id
   activeChannelName = name
   activeChannelOwner = owner
+  activeChannelPrivate = isPrivate
   activeChannelMembers = Array.isArray(members) ? members : []
 
   const isOwner = currentUser && currentUser.username === owner
   const isInChannel = currentChannelName === name
+  const isGeneral = name === 'General'
 
-  document.getElementById('channel-menu-title').innerText = name
+  document.getElementById('channel-menu-title').innerText = (isPrivate ? '🔒 ' : '🌐 ') + name
   document.getElementById('channel-menu-sub').innerText =
-    `${activeChannelMembers.length} MEMBER${activeChannelMembers.length !== 1 ? 'S' : ''} · BY ${owner.toUpperCase()}`
+    `${activeChannelMembers.length} MEMBER${activeChannelMembers.length !== 1 ? 'S' : ''} · ${isGeneral ? 'DEFAULT CHANNEL' : 'BY ' + owner.toUpperCase()}`
 
   const membersList = document.getElementById('channel-members-list')
   if (activeChannelMembers.length === 0) {
@@ -1036,10 +1034,10 @@ function openChannelMenu(id, name, owner, members) {
       <div class="member-row">
         <div class="member-badges">
           <div class="member-name">${m}</div>
-          ${m === owner ? '<span style="font-size:12px;">👑</span>' : ''}
+          ${m === owner && !isGeneral ? '<span style="font-size:12px;">👑</span>' : ''}
           ${m === (currentUser ? currentUser.username : '') ? '<span style="font-size:10px;font-family:Share Tech Mono,monospace;color:var(--muted);">(you)</span>' : ''}
         </div>
-        ${isOwner && m !== owner ? `<button class="kick-btn" onclick="kickMember('${m}')">KICK</button>` : ''}
+        ${isPrivate && isOwner && m !== owner ? `<button class="kick-btn" onclick="kickMember('${m}')">KICK</button>` : ''}
       </div>`).join('')
   }
 
@@ -1048,8 +1046,8 @@ function openChannelMenu(id, name, owner, members) {
   const deleteBtn = document.getElementById('channel-delete-btn')
 
   joinBtn.style.display = isInChannel ? 'none' : 'block'
-  leaveBtn.style.display = isInChannel && !isOwner ? 'block' : 'none'
-  deleteBtn.style.display = isOwner ? 'block' : 'none'
+  leaveBtn.style.display = (isInChannel && !isGeneral) ? 'block' : 'none'
+  deleteBtn.style.display = (isOwner && !isGeneral) ? 'block' : 'none'
 
   document.getElementById('channel-menu-modal').classList.add('active')
 }
@@ -1069,6 +1067,7 @@ async function leaveChannel() {
     })
     await disconnectFromVoice()
     closeModal('channel-menu-modal')
+    await connectToVoice('General')
     loadChannels()
   } catch(e) { alert('Error leaving channel') }
 }
@@ -1083,6 +1082,7 @@ async function deleteChannel() {
     if (res.ok) {
       await disconnectFromVoice()
       closeModal('channel-menu-modal')
+      await connectToVoice('General')
       loadChannels()
     } else {
       const data = await res.json()
@@ -1105,28 +1105,30 @@ async function kickMember(username) {
       })
     })
     activeChannelMembers = activeChannelMembers.filter(m => m !== username)
-    openChannelMenu(activeChannelId, activeChannelName, activeChannelOwner, activeChannelMembers)
+    openChannelMenu(activeChannelId, activeChannelName, activeChannelOwner, activeChannelPrivate, activeChannelMembers)
     loadChannels()
   } catch(e) { alert('Error kicking member') }
 }
 
-// ── CREATE CHANNEL ───────────────────────────────
-function openCreateChannel() {
+function openCreateChannel(isPrivate) {
   if (!currentUser || !currentUser.is_pro || isGuest) { openUpgradeModal(); return }
+  creatingPrivate = isPrivate
+  document.getElementById('create-modal-title').innerText = isPrivate ? 'Create Private Channel 🔒' : 'Create Public Channel 🌐'
+  document.getElementById('create-modal-sub').innerText = isPrivate ? 'ONLY PEOPLE WITH THE PASSWORD CAN JOIN' : 'ANYONE NEARBY CAN JOIN'
+  document.getElementById('password-field').style.display = isPrivate ? 'block' : 'none'
+  document.getElementById('channel-name-input').value = ''
+  document.getElementById('channel-password-input').value = ''
   document.getElementById('create-channel-modal').classList.add('active')
-}
-
-function togglePasswordField() {
-  const privacy = document.getElementById('channel-privacy').value
-  document.getElementById('password-field').style.display = privacy === 'private' ? 'block' : 'none'
 }
 
 async function createChannel() {
   const name     = document.getElementById('channel-name-input').value.trim()
-  const privacy  = document.getElementById('channel-privacy').value
   const password = document.getElementById('channel-password-input').value
+
   if (!name) { alert('Please enter a channel name'); return }
+  if (creatingPrivate && !password) { alert('Please set a password for the private channel'); return }
   if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
+
   try {
     const res = await fetch(`${API}/channels/create`, {
       method: 'POST',
@@ -1136,25 +1138,24 @@ async function createChannel() {
         username: currentUser.username,
         latitude: userLat || 42.8142,
         longitude: userLon || -73.9396,
-        is_private: privacy === 'private',
-        password: password || null
+        is_private: creatingPrivate,
+        password: creatingPrivate ? password : null
       })
     })
     const data = await res.json()
     if (res.ok) {
       closeModal('create-channel-modal')
-      document.getElementById('channel-name-input').value = ''
-      document.getElementById('channel-password-input').value = ''
       await loadChannels()
       await joinChannel(name, data.channel_id)
     } else {
       const msg = typeof data.detail === 'string' ? data.detail : 'Error creating channel'
       alert(msg)
     }
-  } catch(e) { alert('Connection error — please try again') }
+  } catch(e) {
+    alert('Connection error — please try again')
+  }
 }
 
-// ── MODALS ───────────────────────────────────────
 function closeModal(id) {
   document.getElementById(id).classList.remove('active')
 }
@@ -1175,7 +1176,6 @@ async function goToPro(plan) {
   } catch(e) { alert('Error opening checkout') }
 }
 
-// ── EDIT PROFILE ─────────────────────────────────
 function openEditUsername() {
   document.getElementById('new-username-input').value = currentUser.username
   document.getElementById('username-error').style.display = 'none'
@@ -1238,7 +1238,6 @@ function savePassword() {
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
-// ── NOTIFICATIONS ────────────────────────────────
 function openNotifications() {
   document.getElementById('notif-panel').classList.add('open')
 }
@@ -1284,7 +1283,6 @@ function toggleNotifications() {
   }
 }
 
-// ── DARK MODE ────────────────────────────────────
 function toggleDarkMode() {
   darkMode = !darkMode
   document.body.classList.toggle('dark', darkMode)
@@ -1292,7 +1290,6 @@ function toggleDarkMode() {
   localStorage.setItem('roxly_dark', darkMode)
 }
 
-// ── BACKGROUND COLOR ─────────────────────────────
 document.getElementById('bg-color-wheel').addEventListener('input', function() {
   pendingBgColor = this.value
   const pb = document.getElementById('bg-preview-box')
@@ -1331,7 +1328,6 @@ function adjustColor(hex, amount) {
   } catch(e) { return hex }
 }
 
-// ── DOT COLOR ────────────────────────────────────
 function setDotColor(color, el) {
   document.querySelectorAll('#dot-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
@@ -1341,7 +1337,6 @@ function setDotColor(color, el) {
   if (yourDot) { yourDot.style.background = color; yourDot.style.boxShadow = `0 0 16px ${color}` }
 }
 
-// ── PTT COLOR ────────────────────────────────────
 function setPttColor(color, el) {
   document.querySelectorAll('#ptt-color-item .swatch').forEach(s => s.classList.remove('selected'))
   if (el) el.classList.add('selected')
@@ -1360,7 +1355,6 @@ function applyPttColor(color) {
   if (lbl) lbl.style.color = color
 }
 
-// ── PTT TALK ─────────────────────────────────────
 let talkTimer = null
 let talkSeconds = 0
 
