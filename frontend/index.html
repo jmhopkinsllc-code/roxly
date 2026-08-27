@@ -285,7 +285,7 @@ body.dark {
 </style>
 </head>
 <body>
-<div class="loading" id="loading">
+   <div class="loading" id="loading">
   <div class="loading-logo">ROXLY</div>
   <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
   <div class="loading-text">PROXIMITY SOCIAL</div>
@@ -648,7 +648,7 @@ body.dark {
     </div>
   </div>
 </div>
-<script>
+    <script>
 const API = 'https://roxly-production.up.railway.app'
 
 // Global audio-unlock queue — browsers block autoplay unless tied
@@ -830,8 +830,7 @@ window.addEventListener('load', () => {
       if (t1) t1.classList.add('on')
       if (t2) t2.classList.add('on')
     }
-        try {
-          try {
+    try {
       if (saved) {
         currentUser = JSON.parse(saved)
         showScreen('app')
@@ -1102,7 +1101,7 @@ function updateMapDots(users) {
   })
 }
 </script>
-<script>
+   <script>
 async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
@@ -1652,3 +1651,4 @@ function showCooldown() {
 </script>
 </body>
 </html>
+  
