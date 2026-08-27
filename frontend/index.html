@@ -202,7 +202,6 @@ body.dark {
 .chat-send-btn { width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
 .chat-guest-lock { padding:20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.04em;line-height:1.8; }
 
-/* PTT — now TAP not hold */
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
@@ -651,6 +650,19 @@ body.dark {
 </div>
 <script>
 const API = 'https://roxly-production.up.railway.app'
+
+// Global audio-unlock queue — browsers block autoplay unless tied
+// to a user gesture. Any tap anywhere retries blocked audio.
+let pendingAudioElements = []
+document.addEventListener('click', () => {
+  pendingAudioElements.forEach(el => el.play().catch(()=>{}))
+  pendingAudioElements = []
+}, true)
+document.addEventListener('touchstart', () => {
+  pendingAudioElements.forEach(el => el.play().catch(()=>{}))
+  pendingAudioElements = []
+}, true)
+
 let currentUser = null
 let currentRange = 0.25
 let userLat = null
@@ -663,7 +675,7 @@ let pendingBgColor = null
 let chatPollInterval = null
 let notifPollInterval = null
 let notifItems = []
-let pendingJoinChannel = null // {id, name}
+let pendingJoinChannel = null
 
 let livekitRoom = null
 let localAudioTrack = null
@@ -671,12 +683,11 @@ let isConnectedToVoice = false
 let isTalking = false
 let currentChannelName = null
 let currentChannelId = null
-let joinedPrivateChannels = new Set() // channel ids user has verified password for, this session
+let joinedPrivateChannels = new Set()
 
 let allChannelsCache = []
-let knownMemberCounts = {} // for notif diffing
+let knownMemberCounts = {}
 
-// ── VOICE — connect ONCE per channel switch, tap toggles publish ──
 async function connectToVoice(channelName, attempt = 1) {
   if (isGuest) return
   try {
@@ -690,42 +701,40 @@ async function connectToVoice(channelName, attempt = 1) {
     livekitRoom = new LivekitClient.Room({ adaptiveStream: true, dynacast: true })
     await livekitRoom.connect(data.livekit_url, data.token)
     localAudioTrack = await LivekitClient.createLocalAudioTrack()
+    localAudioTrack.mediaStreamTrack.enabled = true
 
     isConnectedToVoice = true
     currentChannelName = channelName
     document.getElementById('voice-status').classList.add('active')
     document.getElementById('voice-channel-display').innerText = channelName.toUpperCase()
 
-    // Remote audio playback
+    // Attach audio for anyone ALREADY in the room when we join
+    livekitRoom.remoteParticipants.forEach(participant => {
+      participant.audioTrackPublications.forEach(pub => {
+        if (pub.track) attachRemoteAudio(pub.track, participant)
+      })
+    })
+
     livekitRoom.on(LivekitClient.RoomEvent.TrackSubscribed, (track, publication, participant) => {
-      if (track.kind === 'audio') {
-        const audioEl = track.attach()
-        audioEl.id = `audio-${participant.identity}`
-        document.body.appendChild(audioEl)
-        audioEl.play()
-      }
+      if (track.kind === 'audio') attachRemoteAudio(track, participant)
     })
     livekitRoom.on(LivekitClient.RoomEvent.TrackUnsubscribed, (track, publication, participant) => {
       const el = document.getElementById(`audio-${participant.identity}`)
       if (el) el.remove()
     })
 
-    // Live speaking indicator — turns matching map dot PINK while talking
     livekitRoom.on(LivekitClient.RoomEvent.ActiveSpeakersChanged, (speakers) => {
       document.querySelectorAll('.nearby-dot').forEach(dot => {
         const isSpeaking = speakers.some(s => s.identity === dot.dataset.username)
         if (isSpeaking) {
-          dot.classList.add('dot-active-map')
           dot.style.background = '#FF10F0'
           dot.style.boxShadow = '0 0 14px #FF10F0, 0 0 28px rgba(255,16,240,0.5)'
         } else {
-          dot.classList.remove('dot-active-map')
           const c = dot.dataset.color || '#39FF14'
           dot.style.background = c
           dot.style.boxShadow = `0 0 10px ${c}`
         }
       })
-      // your own dot glows pink while you talk
       const yourDot = document.getElementById('your-dot')
       if (yourDot) {
         const youSpeaking = speakers.some(s => s.identity === currentUser.username)
@@ -752,13 +761,27 @@ async function connectToVoice(channelName, attempt = 1) {
   }
 }
 
+function attachRemoteAudio(track, participant) {
+  const existing = document.getElementById(`audio-${participant.identity}`)
+  if (existing) existing.remove()
+  const audioEl = track.attach()
+  audioEl.id = `audio-${participant.identity}`
+  audioEl.autoplay = true
+  audioEl.setAttribute('playsinline', 'true')
+  document.body.appendChild(audioEl)
+  audioEl.play().catch(err => {
+    console.warn('Autoplay blocked, queued for next tap:', err)
+    pendingAudioElements.push(audioEl)
+  })
+}
+
 async function disconnectFromVoice() {
   if (isTalking) await stopTalkingTrack()
   if (localAudioTrack) {
     try { localAudioTrack.stop() } catch(e) {}
   }
   if (livekitRoom) {
-    try { await livekitRoom.disconnect(true) } catch(e) {}
+    try { await livekitRoom.disconnect() } catch(e) {}
   }
   livekitRoom = null
   localAudioTrack = null
@@ -766,7 +789,6 @@ async function disconnectFromVoice() {
   currentChannelName = null
   document.getElementById('voice-status').classList.remove('active')
   document.getElementById('voice-channel-display').innerText = '—'
-  // give the browser a moment to fully release the mic device
   await new Promise(r => setTimeout(r, 250))
 }
 
@@ -1046,7 +1068,6 @@ function updateMapDots(users) {
 }
 </script>
 <script>
-// ── CHANNELS — General + ALL private channels visible ──
 async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
@@ -1091,8 +1112,6 @@ async function loadChannels() {
   } catch(e) {}
 }
 
-// Tap a private channel — if already unlocked this session, join directly.
-// Otherwise show password modal.
 function handlePrivateChannelTap(channelId, channelName) {
   if (isGuest) { showScreen('signup'); return }
   if (currentChannelName === channelName) return
@@ -1168,7 +1187,6 @@ async function switchToPrivate(channelId, name) {
   loadChannels()
 }
 
-// ── CREATE PRIVATE CHANNEL (Pro only, joinable by anyone with password) ──
 function openCreatePrivate() {
   if (!currentUser || !currentUser.is_pro || isGuest) { openUpgradeModal(); return }
   document.getElementById('channel-name-input').value = ''
@@ -1209,7 +1227,6 @@ async function createChannel() {
   } catch(e) { alert('Connection error — please try again') }
 }
 
-// ── MY CHANNELS IN SETTINGS ───────────────────────
 async function loadMyChannels() {
   if (!currentUser || !currentUser.is_pro || isGuest) return
   try {
@@ -1248,7 +1265,6 @@ async function deleteMyChannel(id, name) {
   } catch(e) { alert('Error deleting channel') }
 }
 
-// ── CHAT HUB ──────────────────────────────────────
 async function loadChatMessages() {
   try {
     const res = await fetch(`${API}/chat/messages`)
@@ -1286,7 +1302,6 @@ async function sendChatMessage() {
   } catch(e) {}
 }
 
-// ── NOTIFICATIONS — alert when someone joins a channel nearby ──
 async function checkForNotifications() {
   if (isGuest || !currentUser) return
   const notifOn = localStorage.getItem('roxly_notif') === 'true'
@@ -1330,7 +1345,6 @@ function renderNotifications() {
   `).join('')
 }
 
-// ── MODALS ───────────────────────────────────────
 function closeModal(id) { document.getElementById(id).classList.remove('active') }
 function openUpgradeModal() { document.getElementById('upgrade-modal').classList.add('active') }
 
@@ -1346,7 +1360,6 @@ async function goToPro(plan) {
   } catch(e) { alert('Error opening checkout') }
 }
 
-// ── EDIT PROFILE ──────────────────────────────────
 function openEditUsername() {
   document.getElementById('new-username-input').value = currentUser.username
   document.getElementById('username-error').style.display = 'none'
@@ -1406,7 +1419,6 @@ function savePassword() {
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
-// ── NOTIFICATIONS TOGGLE ──────────────────────────
 function openNotifications() {
   document.getElementById('notif-panel').classList.add('open')
   document.getElementById('notif-badge').style.display = 'none'
@@ -1442,7 +1454,6 @@ function toggleNotifications() {
   }
 }
 
-// ── DARK MODE + COLORS ─────────────────────────────
 function toggleDarkMode() {
   darkMode = !darkMode
   document.body.classList.toggle('dark', darkMode)
@@ -1515,17 +1526,12 @@ function applyPttColor(color) {
   if (lbl) lbl.style.color = color
 }
 
-// ── PTT — NOW TAP TO TALK / TAP TO MUTE ────────────
-// This fixes the "can't speak again" bug entirely —
-// the voice room connection never drops between talks,
-// we only publish/unpublish the mic track on tap.
 let talkTimer = null
 let talkSeconds = 0
 
 async function togglePTT() {
   if (isGuest) { showScreen('signup'); return }
   if (!isConnectedToVoice) {
-    // reconnect defensively if somehow dropped
     await connectToVoice(currentChannelName || 'General')
   }
   if (!isTalking) {
