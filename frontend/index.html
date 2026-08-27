@@ -1007,16 +1007,32 @@ function updateClock() {
 }
 
 function getLocation() {
-  if (!navigator.geolocation) return
+  // fallback: if location never responds within 6 seconds, use default
+  const fallbackTimer = setTimeout(() => {
+    if (!userLat) {
+      userLat = 42.8142; userLon = -73.9396
+      updateLocation(); scanNearby()
+    }
+  }, 6000)
+
+  if (!navigator.geolocation) {
+    clearTimeout(fallbackTimer)
+    userLat = 42.8142; userLon = -73.9396
+    updateLocation(); scanNearby()
+    return
+  }
+
   navigator.geolocation.getCurrentPosition(pos => {
+    clearTimeout(fallbackTimer)
     userLat = pos.coords.latitude
     userLon = pos.coords.longitude
     updateLocation(); scanNearby()
     locationInterval = setInterval(() => { updateLocation(); scanNearby() }, 30000)
   }, () => {
+    clearTimeout(fallbackTimer)
     userLat = 42.8142; userLon = -73.9396
     updateLocation(); scanNearby()
-  })
+  }, { timeout: 5000, maximumAge: 60000 })
 }
 
 async function updateLocation() {
