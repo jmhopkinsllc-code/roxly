@@ -793,6 +793,17 @@ async function disconnectFromVoice() {
   await new Promise(r => setTimeout(r, 250))
 }
 
+// Safety net — force-hide loading screen no matter what after 4 seconds
+setTimeout(() => {
+  const loadingEl = document.getElementById('loading')
+  if (loadingEl && loadingEl.style.display !== 'none') {
+    loadingEl.style.display = 'none'
+    if (!document.querySelector('.screen.active')) {
+      showScreen('landing')
+    }
+  }
+}, 4000)
+
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loading').style.display = 'none'
@@ -819,11 +830,18 @@ window.addEventListener('load', () => {
       if (t1) t1.classList.add('on')
       if (t2) t2.classList.add('on')
     }
-    if (saved) {
-      currentUser = JSON.parse(saved)
-      showScreen('app')
-      initApp()
-    } else {
+        try {
+          try {
+      if (saved) {
+        currentUser = JSON.parse(saved)
+        showScreen('app')
+        initApp()
+      } else {
+        showScreen('landing')
+      }
+    } catch(e) {
+      console.error('Startup error:', e)
+      localStorage.removeItem('roxly_user')
       showScreen('landing')
     }
   }, 1800)
@@ -1607,31 +1625,6 @@ async function stopTalkingTrack() {
       localAudioTrack.mediaStreamTrack.enabled = false
       await livekitRoom.localParticipant.setMicrophoneEnabled(false)
     } catch(e) {}
-  }
-}
-
-  if (currentUser && !currentUser.is_pro) {
-    talkSeconds = 0
-    talkTimer = setInterval(() => {
-      talkSeconds++
-      if (talkSeconds >= 60) { stopTalkingTrack(); showCooldown() }
-    }, 1000)
-  }
-}
-
-async function stopTalkingTrack() {
-  const btn = document.getElementById('ptt-btn')
-  const icon = document.getElementById('ptt-icon')
-  const lbl = document.getElementById('ptt-label')
-  isTalking = false
-  btn.classList.remove('talking')
-  icon.innerText = '🎙️'
-  lbl.innerText = 'TAP TO TALK'
-  if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
-
-  if (localAudioTrack && livekitRoom) {
-    try { await livekitRoom.localParticipant.unpublishTrack(localAudioTrack) }
-    catch(e) {}
   }
 }
 
