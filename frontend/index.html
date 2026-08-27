@@ -777,6 +777,7 @@ function attachRemoteAudio(track, participant) {
 
 async function disconnectFromVoice() {
   if (isTalking) await stopTalkingTrack()
+  audioIsPublished = false
   if (localAudioTrack) {
     try { localAudioTrack.stop() } catch(e) {}
   }
@@ -1541,6 +1542,8 @@ async function togglePTT() {
   }
 }
 
+let audioIsPublished = false
+
 async function startTalkingTrack() {
   const btn = document.getElementById('ptt-btn')
   const icon = document.getElementById('ptt-icon')
@@ -1551,9 +1554,45 @@ async function startTalkingTrack() {
   lbl.innerText = 'TAP TO MUTE'
 
   if (localAudioTrack && livekitRoom) {
-    try { await livekitRoom.localParticipant.publishTrack(localAudioTrack) }
-    catch(e) { console.error('PTT publish error:', e) }
+    try {
+      if (!audioIsPublished) {
+        // publish once per channel session, never unpublish again
+        await livekitRoom.localParticipant.publishTrack(localAudioTrack)
+        audioIsPublished = true
+      }
+      // just unmute the existing published track
+      localAudioTrack.mediaStreamTrack.enabled = true
+      await livekitRoom.localParticipant.setMicrophoneEnabled(true)
+    } catch(e) { console.error('PTT unmute error:', e) }
   }
+
+  if (currentUser && !currentUser.is_pro) {
+    talkSeconds = 0
+    talkTimer = setInterval(() => {
+      talkSeconds++
+      if (talkSeconds >= 60) { stopTalkingTrack(); showCooldown() }
+    }, 1000)
+  }
+}
+
+async function stopTalkingTrack() {
+  const btn = document.getElementById('ptt-btn')
+  const icon = document.getElementById('ptt-icon')
+  const lbl = document.getElementById('ptt-label')
+  isTalking = false
+  btn.classList.remove('talking')
+  icon.innerText = '🎙️'
+  lbl.innerText = 'TAP TO TALK'
+  if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
+
+  if (localAudioTrack && livekitRoom) {
+    try {
+      // mute only — keep track alive and published
+      localAudioTrack.mediaStreamTrack.enabled = false
+      await livekitRoom.localParticipant.setMicrophoneEnabled(false)
+    } catch(e) {}
+  }
+}
 
   if (currentUser && !currentUser.is_pro) {
     talkSeconds = 0
