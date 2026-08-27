@@ -180,13 +180,14 @@ body.dark {
 .channel-card:hover { border-color:var(--purple); }
 .channel-card.active-channel { border-color:var(--green);background:rgba(57,255,20,0.04); }
 .channel-card.general-card { border-color:rgba(0,245,255,0.3); }
+.channel-card.private-card { border-color:rgba(255,16,240,0.25); }
 .ch-name { font-size:13px;font-weight:600;color:var(--text); }
 .ch-meta { font-size:10px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em; }
 .ch-toggle-hint { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--purple);letter-spacing:0.04em; }
+.lock-badge { font-size:11px; }
 
 .empty-state { width:100%;padding:30px 20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8;background:var(--card);border-radius:14px;border:1.5px dashed var(--border); }
 
-/* CHAT HUB */
 .chat-hub { width:100%;padding:0 20px;margin-top:16px; }
 .chat-box { background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden; }
 .chat-messages { height:220px;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px; }
@@ -201,8 +202,9 @@ body.dark {
 .chat-send-btn { width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
 .chat-guest-lock { padding:20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.04em;line-height:1.8; }
 
+/* PTT — now TAP not hold */
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
-.ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:none; }
+.ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none; }
 .ptt-btn.talking { background:rgba(57,255,20,0.25);box-shadow:0 0 50px rgba(57,255,20,0.6);transform:scale(0.95); }
 .ptt-btn:disabled { opacity:0.4;cursor:not-allowed; }
 .ptt-icon { font-size:26px; }
@@ -217,6 +219,9 @@ body.dark {
 .modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
+
+.member-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border); }
+.member-name { font-size:13px;font-weight:600;color:var(--text); }
 
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
@@ -271,6 +276,8 @@ body.dark {
 .notif-guest-card { margin-top:20px;padding:16px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;text-align:center; }
 .notif-guest-text { font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;line-height:1.6;margin-bottom:12px; }
 .notif-empty { text-align:center;padding:30px 0;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.06em;line-height:1.8; }
+.notif-item { padding:10px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text); }
+.notif-item-time { font-size:9px;color:var(--muted);font-family:'Share Tech Mono',monospace;margin-top:2px; }
 
 .guest-banner { width:100%;background:rgba(191,0,255,0.08);border-bottom:1px solid rgba(191,0,255,0.2);padding:10px 20px;display:none;justify-content:space-between;align-items:center; }
 .guest-banner.show { display:flex; }
@@ -376,14 +383,13 @@ body.dark {
     <div class="stat-chip"><div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div><div class="stat-lbl" id="talk-stat">TALK TIME</div></div>
   </div>
   <div class="section-label">
-    <div class="section-title">VOICE CHANNEL</div>
-    <button class="create-btn" id="create-private-btn" onclick="openCreatePrivate()" style="display:none">+ PRIVATE 🔒</button>
+    <div class="section-title">VOICE CHANNELS</div>
+    <div class="create-btn" id="create-private-btn" onclick="openCreatePrivate()" style="display:none">+ PRIVATE 🔒</div>
   </div>
   <div class="channels-list" id="channels-list">
     <div class="empty-state">LOADING...</div>
   </div>
 
-  <!-- CHAT HUB -->
   <div class="section-label" style="margin-top:8px;">
     <div class="section-title">💬 GENERAL CHAT HUB</div>
   </div>
@@ -492,7 +498,7 @@ body.dark {
       </div>
       <div class="settings-item" id="ptt-color-item" style="display:none">
         <div class="settings-item-left">
-          <div class="settings-item-title">PTT Button Color <span class="pro-badge-sm">PRO</span></div>
+          <div class="settings-item-title">Talk Button Color <span class="pro-badge-sm">PRO</span></div>
           <div class="settings-item-sub">CUSTOMIZE YOUR MIC BUTTON</div>
           <div class="color-swatches">
             <div class="swatch selected" style="background:#39FF14;box-shadow:0 0 8px #39FF14" onclick="setPttColor('#39FF14',this)"></div>
@@ -512,7 +518,7 @@ body.dark {
       <div class="settings-item">
         <div class="settings-item-left">
           <div class="settings-item-title">Push Notifications</div>
-          <div class="settings-item-sub">ALERTS FOR NEARBY ACTIVITY</div>
+          <div class="settings-item-sub">ALERTS WHEN PEOPLE JOIN CHANNELS NEARBY</div>
         </div>
         <div class="settings-toggle" id="notif-toggle" onclick="toggleNotifications()"></div>
       </div>
@@ -532,19 +538,29 @@ body.dark {
 </div>
 
 <div class="ptt-wrap" id="ptt-wrap" style="display:none">
-  <button class="ptt-btn" id="ptt-btn"
-    onmousedown="startTalking()" onmouseup="stopTalking()"
-    ontouchstart="startTalking()" ontouchend="stopTalking()">
-    <div class="ptt-icon">🎙️</div>
-    <div class="ptt-label" id="ptt-label">HOLD</div>
+  <button class="ptt-btn" id="ptt-btn" onclick="togglePTT()">
+    <div class="ptt-icon" id="ptt-icon">🎙️</div>
+    <div class="ptt-label" id="ptt-label">TAP TO TALK</div>
   </button>
+</div>
+
+<div class="modal-overlay" id="password-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="password-modal-title">🔒 Enter Password</div>
+    <div class="modal-sub" id="password-modal-sub">THIS CHANNEL IS PASSWORD PROTECTED</div>
+    <div class="auth-error" id="password-modal-error"></div>
+    <div class="field"><label>PASSWORD</label><input type="text" id="join-password-input" placeholder="enter channel password"></div>
+    <button class="modal-btn" onclick="submitJoinPassword()">Join Channel</button>
+    <button class="modal-cancel" onclick="closeModal('password-modal')">Cancel</button>
+  </div>
 </div>
 
 <div class="modal-overlay" id="create-channel-modal">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Create Private Channel 🔒</div>
-    <div class="modal-sub">ONLY PEOPLE WITH THE PASSWORD CAN JOIN</div>
+    <div class="modal-sub">ANY USER WITH THE PASSWORD CAN JOIN — PRO OR FREE</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
     <div class="field"><label>CHANNEL PASSWORD</label><input type="text" id="channel-password-input" placeholder="set a password"></div>
     <button class="modal-btn" onclick="createChannel()">Create Channel</button>
@@ -559,7 +575,7 @@ body.dark {
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create private channels<br>✦ Kick members<br>✦ Custom dot + PTT colors<br>✦ Custom background color<br>✦ Zero ads ever
+        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create private channels<br>✦ Custom dot + button colors<br>✦ Custom background color<br>✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
@@ -617,11 +633,13 @@ body.dark {
     <div class="notif-toggle-row">
       <div class="notif-toggle-info">
         <div class="notif-toggle-label">Push Notifications</div>
-        <div class="notif-toggle-sub">GET ALERTS WHEN PEOPLE ARE NEARBY</div>
+        <div class="notif-toggle-sub">ALERTS WHEN PEOPLE JOIN CHANNELS NEARBY</div>
       </div>
       <div class="settings-toggle" id="notif-panel-toggle" onclick="toggleNotifications()"></div>
     </div>
-    <div class="notif-empty">NO NOTIFICATIONS YET<br>ENABLE ALERTS ABOVE</div>
+    <div id="notif-list-area">
+      <div class="notif-empty">NO NOTIFICATIONS YET<br>ENABLE ALERTS ABOVE</div>
+    </div>
   </div>
   <div id="notif-guest" style="display:none">
     <div class="notif-guest-card">
@@ -643,14 +661,22 @@ let darkMode = false
 let pttColor = '#39FF14'
 let pendingBgColor = null
 let chatPollInterval = null
+let notifPollInterval = null
+let notifItems = []
+let pendingJoinChannel = null // {id, name}
 
 let livekitRoom = null
 let localAudioTrack = null
 let isConnectedToVoice = false
+let isTalking = false
 let currentChannelName = null
 let currentChannelId = null
-let myPrivateChannel = null // {id, name}
+let joinedPrivateChannels = new Set() // channel ids user has verified password for, this session
 
+let allChannelsCache = []
+let knownMemberCounts = {} // for notif diffing
+
+// ── VOICE — connect ONCE per channel switch, tap toggles publish ──
 async function connectToVoice(channelName) {
   if (isGuest) return
   try {
@@ -683,6 +709,7 @@ async function connectToVoice(channelName) {
 }
 
 async function disconnectFromVoice() {
+  if (isTalking) await stopTalkingTrack()
   if (livekitRoom) {
     await livekitRoom.disconnect()
     livekitRoom = null
@@ -759,7 +786,7 @@ function enterGuestMode() {
   document.getElementById('talk-val').innerText = '60S'
   document.getElementById('talk-stat').innerText = 'FREE LIMIT'
   document.getElementById('ptt-btn').disabled = true
-  document.getElementById('ptt-label').innerText = 'LOGIN'
+  document.getElementById('ptt-label').innerText = 'LOG IN TO TALK'
   document.getElementById('notif-logged-in').style.display = 'none'
   document.getElementById('notif-guest').style.display = 'block'
   document.getElementById('chat-input-area').innerHTML = '<div class="chat-guest-lock">CREATE AN ACCOUNT TO JOIN THE CHAT</div>'
@@ -829,8 +856,10 @@ function handleLogout() {
   localStorage.removeItem('roxly_user')
   currentUser = null
   isGuest = false
+  joinedPrivateChannels.clear()
   if (locationInterval) clearInterval(locationInterval)
   if (chatPollInterval) clearInterval(chatPollInterval)
+  if (notifPollInterval) clearInterval(notifPollInterval)
   document.getElementById('guest-banner').classList.remove('show')
   showScreen('landing')
 }
@@ -877,6 +906,7 @@ function initApp() {
   if (!isGuest) connectToVoice('General')
   loadChatMessages()
   chatPollInterval = setInterval(loadChatMessages, 5000)
+  notifPollInterval = setInterval(checkForNotifications, 8000)
 }
 
 function updateRangePills() {
@@ -964,21 +994,21 @@ function updateMapDots(users) {
 }
 </script>
 <script>
-// ── CHANNELS (General <-> Private toggle) ────────
+// ── CHANNELS — General + ALL private channels visible ──
 async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
     const data = await res.json()
+    allChannelsCache = data.channels || []
     const list = document.getElementById('channels-list')
-    const channels = data.channels || []
 
-    const general = channels.find(c => c.name === 'General')
-    // find a private channel this user belongs to
-    let myChan = null
-    if (currentUser && !isGuest) {
-      myChan = channels.find(c => c.is_private && (c.members || []).includes(currentUser.username))
+    if (allChannelsCache.length === 0) {
+      list.innerHTML = `<div class="empty-state">LOADING CHANNELS...</div>`
+      return
     }
-    myPrivateChannel = myChan ? { id: myChan.id, name: myChan.name } : null
+
+    const general = allChannelsCache.find(c => c.name === 'General')
+    const privates = allChannelsCache.filter(c => c.is_private)
 
     let html = ''
     if (general) {
@@ -993,20 +1023,63 @@ async function loadChannels() {
         </div>`
     }
 
-    if (myPrivateChannel) {
-      const isActive = currentChannelName === myPrivateChannel.name
+    privates.forEach(ch => {
+      const isActive = currentChannelName === ch.name
       html += `
-        <div class="channel-card ${isActive ? 'active-channel' : ''}" onclick="switchToPrivate(${myPrivateChannel.id}, '${myPrivateChannel.name}')">
+        <div class="channel-card private-card ${isActive ? 'active-channel' : ''}" onclick="handlePrivateChannelTap(${ch.id}, '${ch.name}')">
           <div>
-            <div class="ch-name">🔒 ${myPrivateChannel.name} ${isActive ? '🔊' : ''}</div>
-            <div class="ch-meta">YOUR PRIVATE CHANNEL</div>
+            <div class="ch-name"><span class="lock-badge">🔒</span> ${ch.name} ${isActive ? '🔊' : ''}</div>
+            <div class="ch-meta">BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
           </div>
           ${!isActive ? '<div class="ch-toggle-hint">TAP TO JOIN</div>' : ''}
         </div>`
-    }
+    })
 
-    list.innerHTML = html || '<div class="empty-state">LOADING CHANNELS...</div>'
+    list.innerHTML = html
   } catch(e) {}
+}
+
+// Tap a private channel — if already unlocked this session, join directly.
+// Otherwise show password modal.
+function handlePrivateChannelTap(channelId, channelName) {
+  if (isGuest) { showScreen('signup'); return }
+  if (currentChannelName === channelName) return
+  if (joinedPrivateChannels.has(channelId)) {
+    switchToPrivate(channelId, channelName)
+    return
+  }
+  pendingJoinChannel = { id: channelId, name: channelName }
+  document.getElementById('password-modal-title').innerText = `🔒 ${channelName}`
+  document.getElementById('join-password-input').value = ''
+  document.getElementById('password-modal-error').style.display = 'none'
+  document.getElementById('password-modal').classList.add('active')
+}
+
+async function submitJoinPassword() {
+  if (!pendingJoinChannel) return
+  const pw = document.getElementById('join-password-input').value
+  const errBox = document.getElementById('password-modal-error')
+  errBox.style.display = 'none'
+  try {
+    const res = await fetch(`${API}/channels/verify-password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channel_id: pendingJoinChannel.id, password: pw })
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      errBox.innerText = (data.detail || 'INCORRECT PASSWORD').toUpperCase()
+      errBox.style.display = 'block'
+      return
+    }
+    joinedPrivateChannels.add(pendingJoinChannel.id)
+    closeModal('password-modal')
+    await switchToPrivate(pendingJoinChannel.id, pendingJoinChannel.name)
+    pendingJoinChannel = null
+  } catch(e) {
+    errBox.innerText = 'CONNECTION ERROR'
+    errBox.style.display = 'block'
+  }
 }
 
 async function switchToGeneral(channelId) {
@@ -1031,10 +1104,17 @@ async function switchToPrivate(channelId, name) {
   await disconnectFromVoice()
   await connectToVoice(name)
   currentChannelId = channelId
+  try {
+    await fetch(`${API}/channels/join`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channel_id: channelId, username: currentUser.username })
+    })
+  } catch(e) {}
   loadChannels()
 }
 
-// ── CREATE PRIVATE CHANNEL ───────────────────────
+// ── CREATE PRIVATE CHANNEL (Pro only, joinable by anyone with password) ──
 function openCreatePrivate() {
   if (!currentUser || !currentUser.is_pro || isGuest) { openUpgradeModal(); return }
   document.getElementById('channel-name-input').value = ''
@@ -1066,6 +1146,7 @@ async function createChannel() {
     const data = await res.json()
     if (res.ok) {
       closeModal('create-channel-modal')
+      joinedPrivateChannels.add(data.channel_id)
       await loadChannels()
       await switchToPrivate(data.channel_id, name)
     } else {
@@ -1103,6 +1184,7 @@ async function deleteMyChannel(id, name) {
         await disconnectFromVoice()
         await connectToVoice('General')
       }
+      joinedPrivateChannels.delete(id)
       loadMyChannels()
       loadChannels()
     } else {
@@ -1148,6 +1230,50 @@ async function sendChatMessage() {
     })
     loadChatMessages()
   } catch(e) {}
+}
+
+// ── NOTIFICATIONS — alert when someone joins a channel nearby ──
+async function checkForNotifications() {
+  if (isGuest || !currentUser) return
+  const notifOn = localStorage.getItem('roxly_notif') === 'true'
+  if (!notifOn) return
+  try {
+    const res = await fetch(`${API}/channels/list`)
+    const data = await res.json()
+    const channels = data.channels || []
+    channels.forEach(ch => {
+      const prevCount = knownMemberCounts[ch.id]
+      const newCount = ch.member_count || 0
+      if (prevCount !== undefined && newCount > prevCount) {
+        const joinedName = (ch.members || []).find(m => m !== currentUser.username) || 'Someone'
+        addNotification(`${joinedName} joined ${ch.name}`)
+      }
+      knownMemberCounts[ch.id] = newCount
+    })
+  } catch(e) {}
+}
+
+function addNotification(text) {
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})
+  notifItems.unshift({ text, time })
+  if (notifItems.length > 20) notifItems.pop()
+  document.getElementById('notif-badge').style.display = 'block'
+  renderNotifications()
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('ROXLY', { body: text })
+  }
+}
+
+function renderNotifications() {
+  const area = document.getElementById('notif-list-area')
+  if (!area) return
+  if (notifItems.length === 0) {
+    area.innerHTML = '<div class="notif-empty">NO NOTIFICATIONS YET<br>ENABLE ALERTS ABOVE</div>'
+    return
+  }
+  area.innerHTML = notifItems.map(n => `
+    <div class="notif-item">${n.text}<div class="notif-item-time">${n.time}</div></div>
+  `).join('')
 }
 
 // ── MODALS ───────────────────────────────────────
@@ -1226,9 +1352,13 @@ function savePassword() {
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
-// ── NOTIFICATIONS ──────────────────────────────────
-function openNotifications() { document.getElementById('notif-panel').classList.add('open') }
+// ── NOTIFICATIONS TOGGLE ──────────────────────────
+function openNotifications() {
+  document.getElementById('notif-panel').classList.add('open')
+  document.getElementById('notif-badge').style.display = 'none'
+}
 function closeNotifications() { document.getElementById('notif-panel').classList.remove('open') }
+
 function toggleNotifications() {
   if (isGuest) { closeNotifications(); showScreen('signup'); return }
   const toggle1 = document.getElementById('notif-toggle')
@@ -1238,16 +1368,14 @@ function toggleNotifications() {
     if (!('Notification' in window)) { alert('Push notifications not supported. Try adding ROXLY to your home screen first!'); return }
     if (Notification.permission === 'granted') {
       toggle1 && toggle1.classList.add('on'); toggle2 && toggle2.classList.add('on')
-      document.getElementById('notif-badge').style.display = 'block'
       localStorage.setItem('roxly_notif', 'true')
-      new Notification('ROXLY', { body: 'You will be alerted when people are nearby!' })
+      new Notification('ROXLY', { body: 'You will be alerted when people join channels near you!' })
     } else if (Notification.permission === 'denied') {
       alert('Notifications are blocked.\n\niPhone: Settings → Safari → Advanced → Website Data\nOr try opening ROXLY in Chrome instead.')
     } else {
       Notification.requestPermission().then(permission => {
         if (permission === 'granted') {
           toggle1 && toggle1.classList.add('on'); toggle2 && toggle2.classList.add('on')
-          document.getElementById('notif-badge').style.display = 'block'
           localStorage.setItem('roxly_notif', 'true')
           new Notification('ROXLY', { body: 'Notifications enabled!' })
         } else { alert('Notifications denied.') }
@@ -1333,34 +1461,60 @@ function applyPttColor(color) {
   if (lbl) lbl.style.color = color
 }
 
-// ── PTT ────────────────────────────────────────────
+// ── PTT — NOW TAP TO TALK / TAP TO MUTE ────────────
+// This fixes the "can't speak again" bug entirely —
+// the voice room connection never drops between talks,
+// we only publish/unpublish the mic track on tap.
 let talkTimer = null
 let talkSeconds = 0
 
-async function startTalking() {
+async function togglePTT() {
   if (isGuest) { showScreen('signup'); return }
-  const btn = document.getElementById('ptt-btn')
-  btn.classList.add('talking')
-  document.getElementById('ptt-label').innerText = 'LIVE'
-  if (isConnectedToVoice && localAudioTrack && livekitRoom) {
-    try { await livekitRoom.localParticipant.publishTrack(localAudioTrack) }
-    catch(e) { console.error('PTT error:', e) }
+  if (!isConnectedToVoice) {
+    // reconnect defensively if somehow dropped
+    await connectToVoice(currentChannelName || 'General')
   }
-  if (!currentUser.is_pro) {
+  if (!isTalking) {
+    await startTalkingTrack()
+  } else {
+    await stopTalkingTrack()
+  }
+}
+
+async function startTalkingTrack() {
+  const btn = document.getElementById('ptt-btn')
+  const icon = document.getElementById('ptt-icon')
+  const lbl = document.getElementById('ptt-label')
+  isTalking = true
+  btn.classList.add('talking')
+  icon.innerText = '🔴'
+  lbl.innerText = 'TAP TO MUTE'
+
+  if (localAudioTrack && livekitRoom) {
+    try { await livekitRoom.localParticipant.publishTrack(localAudioTrack) }
+    catch(e) { console.error('PTT publish error:', e) }
+  }
+
+  if (currentUser && !currentUser.is_pro) {
     talkSeconds = 0
     talkTimer = setInterval(() => {
       talkSeconds++
-      if (talkSeconds >= 60) { stopTalking(); showCooldown() }
+      if (talkSeconds >= 60) { stopTalkingTrack(); showCooldown() }
     }, 1000)
   }
 }
 
-async function stopTalking() {
+async function stopTalkingTrack() {
   const btn = document.getElementById('ptt-btn')
+  const icon = document.getElementById('ptt-icon')
+  const lbl = document.getElementById('ptt-label')
+  isTalking = false
   btn.classList.remove('talking')
-  document.getElementById('ptt-label').innerText = 'HOLD'
+  icon.innerText = '🎙️'
+  lbl.innerText = 'TAP TO TALK'
   if (talkTimer) { clearInterval(talkTimer); talkTimer = null }
-  if (isConnectedToVoice && localAudioTrack && livekitRoom) {
+
+  if (localAudioTrack && livekitRoom) {
     try { await livekitRoom.localParticipant.unpublishTrack(localAudioTrack) }
     catch(e) {}
   }
@@ -1369,22 +1523,23 @@ async function stopTalking() {
 function showCooldown() {
   let countdown = 120
   const btn = document.getElementById('ptt-btn')
+  const lbl = document.getElementById('ptt-label')
   btn.disabled = true
   btn.style.borderColor = '#ccc'
   btn.style.boxShadow = 'none'
   btn.style.background = 'transparent'
   const t = setInterval(() => {
     const m = Math.floor(countdown/60), s = countdown % 60
-    document.getElementById('ptt-label').innerText = `${m}:${s.toString().padStart(2,'0')}`
+    lbl.innerText = `WAIT ${m}:${s.toString().padStart(2,'0')}`
     countdown--
     if (countdown < 0) {
       clearInterval(t)
-      document.getElementById('ptt-label').innerText = 'HOLD'
+      lbl.innerText = 'TAP TO TALK'
       btn.disabled = false
       applyPttColor(pttColor)
     }
   }, 1000)
-  setTimeout(() => { if (!currentUser.is_pro) openUpgradeModal() }, 2000)
+  setTimeout(() => { if (currentUser && !currentUser.is_pro) openUpgradeModal() }, 2000)
 }
 </script>
 </body>
