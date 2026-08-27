@@ -41,10 +41,9 @@ class JoinChannelForm(BaseModel):
     channel_id: int
     username: str
 
-class KickForm(BaseModel):
+class VerifyPasswordForm(BaseModel):
     channel_id: int
-    owner_username: str
-    kick_username: str
+    password: str
 
 class NearbyChannelsRequest(BaseModel):
     latitude: float
@@ -124,6 +123,17 @@ def list_channels(db: Session = Depends(get_db)):
         })
     return {"total": len(result), "channels": result}
 
+@router.post("/verify-password")
+def verify_password(form: VerifyPasswordForm, db: Session = Depends(get_db)):
+    channel = db.query(Channel).filter(Channel.id == form.channel_id, Channel.is_active == True).first()
+    if not channel:
+        raise HTTPException(status_code=404, detail="Channel not found")
+    if not channel.is_private:
+        return {"valid": True}
+    if channel.password != form.password:
+        raise HTTPException(status_code=401, detail="Incorrect password")
+    return {"valid": True, "name": channel.name}
+
 @router.post("/join")
 def join_channel(form: JoinChannelForm, db: Session = Depends(get_db)):
     channel = db.query(Channel).filter(Channel.id == form.channel_id, Channel.is_active == True).first()
@@ -149,24 +159,6 @@ def leave_channel(form: JoinChannelForm, db: Session = Depends(get_db)):
         db.delete(member)
         db.commit()
     return {"message": "Left channel"}
-
-@router.post("/kick")
-def kick_member(form: KickForm, db: Session = Depends(get_db)):
-    channel = db.query(Channel).filter(Channel.id == form.channel_id).first()
-    if not channel:
-        raise HTTPException(status_code=404, detail="Channel not found")
-    if not channel.is_private:
-        raise HTTPException(status_code=403, detail="Only private channels allow kicking members")
-    if channel.created_by != form.owner_username:
-        raise HTTPException(status_code=403, detail="Only the channel creator can kick members")
-    member = db.query(ChannelMember).filter(
-        ChannelMember.channel_id == form.channel_id,
-        ChannelMember.username == form.kick_username
-    ).first()
-    if member:
-        db.delete(member)
-        db.commit()
-    return {"message": f"Kicked {form.kick_username}"}
 
 @router.delete("/delete/{channel_id}")
 def delete_channel(channel_id: int, username: str, db: Session = Depends(get_db)):
