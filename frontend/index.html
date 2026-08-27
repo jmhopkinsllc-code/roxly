@@ -677,7 +677,7 @@ let allChannelsCache = []
 let knownMemberCounts = {} // for notif diffing
 
 // ── VOICE — connect ONCE per channel switch, tap toggles publish ──
-async function connectToVoice(channelName) {
+async function connectToVoice(channelName, attempt = 1) {
   if (isGuest) return
   try {
     const res = await fetch(`${API}/voice/token`, {
@@ -686,13 +686,17 @@ async function connectToVoice(channelName) {
       body: JSON.stringify({ username: currentUser.username, channel_name: channelName })
     })
     const data = await res.json()
+
     livekitRoom = new LivekitClient.Room({ adaptiveStream: true, dynacast: true })
     await livekitRoom.connect(data.livekit_url, data.token)
     localAudioTrack = await LivekitClient.createLocalAudioTrack()
+
     isConnectedToVoice = true
     currentChannelName = channelName
     document.getElementById('voice-status').classList.add('active')
     document.getElementById('voice-channel-display').innerText = channelName.toUpperCase()
+
+    // Remote audio playback
     livekitRoom.on(LivekitClient.RoomEvent.TrackSubscribed, (track, publication, participant) => {
       if (track.kind === 'audio') {
         const audioEl = track.attach()
@@ -705,20 +709,65 @@ async function connectToVoice(channelName) {
       const el = document.getElementById(`audio-${participant.identity}`)
       if (el) el.remove()
     })
-  } catch(e) { console.error('Voice error:', e) }
+
+    // Live speaking indicator — turns matching map dot PINK while talking
+    livekitRoom.on(LivekitClient.RoomEvent.ActiveSpeakersChanged, (speakers) => {
+      document.querySelectorAll('.nearby-dot').forEach(dot => {
+        const isSpeaking = speakers.some(s => s.identity === dot.dataset.username)
+        if (isSpeaking) {
+          dot.classList.add('dot-active-map')
+          dot.style.background = '#FF10F0'
+          dot.style.boxShadow = '0 0 14px #FF10F0, 0 0 28px rgba(255,16,240,0.5)'
+        } else {
+          dot.classList.remove('dot-active-map')
+          const c = dot.dataset.color || '#39FF14'
+          dot.style.background = c
+          dot.style.boxShadow = `0 0 10px ${c}`
+        }
+      })
+      // your own dot glows pink while you talk
+      const yourDot = document.getElementById('your-dot')
+      if (yourDot) {
+        const youSpeaking = speakers.some(s => s.identity === currentUser.username)
+        if (youSpeaking) {
+          yourDot.style.background = '#FF10F0'
+          yourDot.style.boxShadow = '0 0 20px #FF10F0, 0 0 40px rgba(255,16,240,0.5)'
+        } else {
+          const c = currentUser.dot_color || '#BF00FF'
+          yourDot.style.background = c
+          yourDot.style.boxShadow = `0 0 16px ${c}`
+        }
+      }
+    })
+
+  } catch(e) {
+    console.error('Voice connection error:', e)
+    isConnectedToVoice = false
+    if (attempt < 3) {
+      await new Promise(r => setTimeout(r, 400))
+      return connectToVoice(channelName, attempt + 1)
+    } else {
+      alert('Could not connect to voice. Please check your microphone permission and try tapping the channel again.')
+    }
+  }
 }
 
 async function disconnectFromVoice() {
   if (isTalking) await stopTalkingTrack()
-  if (livekitRoom) {
-    await livekitRoom.disconnect()
-    livekitRoom = null
-    localAudioTrack = null
-    isConnectedToVoice = false
-    currentChannelName = null
-    document.getElementById('voice-status').classList.remove('active')
-    document.getElementById('voice-channel-display').innerText = '—'
+  if (localAudioTrack) {
+    try { localAudioTrack.stop() } catch(e) {}
   }
+  if (livekitRoom) {
+    try { await livekitRoom.disconnect(true) } catch(e) {}
+  }
+  livekitRoom = null
+  localAudioTrack = null
+  isConnectedToVoice = false
+  currentChannelName = null
+  document.getElementById('voice-status').classList.remove('active')
+  document.getElementById('voice-channel-display').innerText = '—'
+  // give the browser a moment to fully release the mic device
+  await new Promise(r => setTimeout(r, 250))
 }
 
 window.addEventListener('load', () => {
@@ -982,13 +1031,16 @@ function updateMapDots(users) {
   ]
   users.forEach((user, i) => {
     if (i >= positions.length) return
+    const color = user.dot_color || '#39FF14'
     const dot = document.createElement('div')
     dot.className = 'map-dot nearby-dot dot-near-map'
     dot.style.top = positions[i].top
     dot.style.left = positions[i].left
-    dot.style.background = user.dot_color || '#39FF14'
-    dot.style.boxShadow = `0 0 10px ${user.dot_color || '#39FF14'}`
+    dot.style.background = color
+    dot.style.boxShadow = `0 0 10px ${color}`
     dot.title = user.username
+    dot.dataset.username = user.username
+    dot.dataset.color = color
     map.appendChild(dot)
   })
 }
@@ -1085,6 +1137,7 @@ async function submitJoinPassword() {
 async function switchToGeneral(channelId) {
   if (isGuest) { showScreen('signup'); return }
   if (currentChannelName === 'General') return
+  document.getElementById('voice-channel-display').innerText = 'CONNECTING...'
   await disconnectFromVoice()
   await connectToVoice('General')
   currentChannelId = channelId
@@ -1101,6 +1154,7 @@ async function switchToGeneral(channelId) {
 async function switchToPrivate(channelId, name) {
   if (isGuest) { showScreen('signup'); return }
   if (currentChannelName === name) return
+  document.getElementById('voice-channel-display').innerText = 'CONNECTING...'
   await disconnectFromVoice()
   await connectToVoice(name)
   currentChannelId = channelId
