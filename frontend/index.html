@@ -43,6 +43,21 @@ body.dark {
   --border: #222222;
 }
 
+body.custom-bg-photo #screen-app {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+body.custom-bg-photo #screen-app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+body.custom-bg-photo #screen-app > * { position: relative; z-index: 1; }
+
 .screen {
   display: none;
   width: 100%;
@@ -90,6 +105,7 @@ body.dark {
 
 .btn-primary { width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.08em;cursor:pointer;box-shadow:0 0 24px rgba(191,0,255,0.35);transition:all 0.2s;margin-bottom:12px; }
 .btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity:0.4; cursor:not-allowed; }
 .btn-secondary { width:100%;padding:16px;border-radius:14px;border:1px solid #333;background:transparent;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
 .btn-secondary:hover { border-color: var(--purple); }
 .btn-ghost { width:100%;padding:12px;border-radius:14px;border:1px solid #222;background:transparent;color:#555;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;margin-bottom:12px; }
@@ -110,8 +126,14 @@ body.dark {
 .auth-success { width:100%;padding:12px 16px;background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.3);border-radius:10px;font-size:12px;font-family:'Share Tech Mono',monospace;color:var(--green);letter-spacing:0.04em;margin-bottom:16px;display:none; }
 .auth-btn { width:100%;padding:16px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.08em;cursor:pointer;box-shadow:0 4px 20px rgba(191,0,255,0.3);transition:all 0.2s;margin-bottom:16px; }
 .auth-btn:active { transform: scale(0.98); }
+.auth-btn:disabled { opacity:0.4; cursor:not-allowed; }
 .auth-switch { text-align:center;font-size:12px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;margin-top:8px;cursor:pointer; }
 .auth-switch span { color:var(--purple);text-decoration:underline; }
+
+.agree-row { display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
+.agree-checkbox { width:20px; height:20px; flex-shrink:0; margin-top:2px; accent-color:var(--purple); cursor:pointer; }
+.agree-text { font-size:12px; color:var(--muted); line-height:1.6; font-family:'Share Tech Mono',monospace; letter-spacing:0.02em; }
+.agree-text a { color:var(--purple); text-decoration:underline; }
 </style>
 <style>
 #screen-app { background: var(--bg); padding-bottom: 160px; }
@@ -135,16 +157,24 @@ body.dark {
 .range-pill.locked { opacity:0.5;cursor:not-allowed; }
 .range-pill.locked::after { content:' ✦';color:var(--purple); }
 
+.map-modes { display:flex; gap:6px; padding:10px 20px 0; background:var(--card); }
+.map-mode-btn { flex:1; padding:6px; border-radius:10px; border:1.5px solid var(--border); background:var(--bg); font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--muted); cursor:pointer; text-align:center; letter-spacing:0.04em; }
+.map-mode-btn.active { border-color:var(--purple); color:var(--purple); background:rgba(191,0,255,0.06); }
+
 .map-wrap { width:100%;padding:16px 20px 0; }
-.map { width:100%;aspect-ratio:1/1;background:#050510;border-radius:18px;border:1px solid #1a1a2e;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.18); }
+.map { width:100%;aspect-ratio:1/1;background:#050510;border-radius:18px;border:1px solid #1a1a2e;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.18);transition:background 0.3s; }
+.map.mode-white { background:#f0f0f5; border-color:#ddd; }
+.map.mode-green { background:#00ff00; border-color:#00cc00; }
 .map::before { content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,0.04) 1px,transparent 1px);background-size:40px 40px; }
+.map.mode-white::before { background-image:linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px); }
+.map.mode-green::before { display:none; }
 .sweep { position:absolute;top:50%;left:50%;width:50%;height:2px;background:linear-gradient(90deg,transparent,rgba(57,255,20,0.5));transform-origin:left center;animation:sweep 4s linear infinite;opacity:0.4; }
 @keyframes sweep { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 .pulse-ring { position:absolute;top:50%;left:50%;border-radius:50%;border:1px solid rgba(0,245,255,0.12);transform:translate(-50%,-50%);animation:expand 4s ease-out infinite; }
 .pulse-ring:nth-child(2){animation-delay:1.3s}
 .pulse-ring:nth-child(3){animation-delay:2.6s}
 @keyframes expand { 0%{width:20px;height:20px;opacity:0.5} 100%{width:380px;height:380px;opacity:0} }
-.map-dot { position:absolute;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;transition:transform 0.2s; }
+.map-dot { position:absolute;border-radius:50%;transform:translate(-50%,-50%);cursor:pointer;transition:top 0.6s linear, left 0.6s linear, transform 0.2s; }
 .map-dot:hover { transform:translate(-50%,-50%) scale(1.5); }
 .dot-you-map { width:14px;height:14px;background:var(--purple);box-shadow:0 0 16px var(--purple);top:50%;left:50%;z-index:10; }
 .dot-near-map { width:10px;height:10px;background:var(--green);box-shadow:0 0 10px var(--green); }
@@ -201,6 +231,7 @@ body.dark {
 .chat-input:focus { border-color:var(--purple); }
 .chat-send-btn { width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
 .chat-guest-lock { padding:20px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.04em;line-height:1.8; }
+.chat-reset-note { font-size:8px; color:var(--muted); font-family:'Share Tech Mono',monospace; text-align:center; padding:6px; letter-spacing:0.04em; }
 
 .ptt-wrap { position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:100%;max-width:420px;padding:10px 20px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;justify-content:center;z-index:50; }
 .ptt-btn { width:82px;height:82px;border-radius:50%;border:2px solid var(--green);background:rgba(57,255,20,0.08);box-shadow:0 0 20px rgba(57,255,20,0.25);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all 0.15s;-webkit-user-select:none;user-select:none; }
@@ -208,7 +239,8 @@ body.dark {
 .ptt-btn:disabled { opacity:0.4;cursor:not-allowed; }
 .ptt-icon { font-size:26px; }
 .ptt-label { font-size:8px;font-family:'Share Tech Mono',monospace;color:var(--green);letter-spacing:0.12em; }
-
+</style>
+<style>
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:flex-end;justify-content:center; }
 .modal-overlay.active { display:flex; }
 .modal { width:100%;max-width:420px;background:var(--card);border-radius:24px 24px 0 0;padding:24px;max-height:90vh;overflow-y:auto; }
@@ -217,10 +249,8 @@ body.dark {
 .modal-sub { font-size:11px;color:var(--muted);font-family:'Share Tech Mono',monospace;letter-spacing:0.06em;margin-bottom:20px; }
 .modal-btn { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-btn-outline { width:100%;padding:14px;border-radius:12px;border:1px solid var(--purple);background:transparent;color:var(--purple);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
+.modal-btn-danger { width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,rgba(255,16,240,0.8),rgba(200,0,0,0.8));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:10px;letter-spacing:0.04em; }
 .modal-cancel { width:100%;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:14px;cursor:pointer; }
-
-.member-row { display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border); }
-.member-name { font-size:13px;font-weight:600;color:var(--text); }
 
 #screen-settings { background:var(--bg);padding-bottom:40px; }
 .settings-header { width:100%;display:flex;align-items:center;gap:12px;padding:20px;background:var(--card);border-bottom:1px solid var(--border); }
@@ -254,9 +284,24 @@ body.dark {
 .color-apply-btn { padding:8px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 .color-reset-btn { padding:8px 14px;border-radius:10px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:11px;cursor:pointer;letter-spacing:0.06em; }
 
+.photo-upload-row { display:flex; align-items:center; gap:10px; margin-top:10px; flex-wrap:wrap; }
+.photo-upload-label { position:relative; display:flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px; border:1.5px solid var(--border); background:var(--bg); cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--muted); }
+.photo-upload-label:hover { border-color:var(--purple); }
+.photo-upload-label input[type=file] { position:absolute; opacity:0; width:0; height:0; }
+.photo-preview-thumb { width:40px; height:40px; border-radius:8px; object-fit:cover; border:1.5px solid var(--border); display:none; }
+
 .my-channel-row { display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border); }
 .my-channel-name { font-size:12px;font-weight:600;color:var(--text); }
 .my-channel-del { font-size:10px;font-family:'Share Tech Mono',monospace;color:var(--pink);background:rgba(255,16,240,0.1);border:1px solid rgba(255,16,240,0.3);border-radius:20px;padding:4px 10px;cursor:pointer;letter-spacing:0.06em; }
+
+.membership-card { background:linear-gradient(135deg, rgba(191,0,255,0.08), rgba(255,16,240,0.05)); border:1.5px solid rgba(191,0,255,0.25); border-radius:14px; padding:16px; margin-bottom:10px; }
+.membership-status { font-size:14px; font-weight:700; margin-bottom:4px; }
+.membership-status.pro { color:var(--purple); }
+.membership-status.free { color:var(--muted); }
+.membership-sub { font-size:10px; color:var(--muted); font-family:'Share Tech Mono',monospace; letter-spacing:0.04em; margin-bottom:14px; }
+
+.contact-info { font-size:12px; color:var(--text); font-family:'Share Tech Mono',monospace; letter-spacing:0.02em; line-height:1.8; }
+.contact-info a { color:var(--purple); }
 
 .logout-btn { width:calc(100% - 40px);margin:20px;padding:14px;border-radius:12px;border:1.5px solid rgba(255,16,240,0.3);background:rgba(255,16,240,0.06);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.04em; }
 .guest-settings-card { width:calc(100% - 40px);margin:20px;padding:20px;border-radius:14px;background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);text-align:center; }
@@ -285,7 +330,7 @@ body.dark {
 </style>
 </head>
 <body>
-   <div class="loading" id="loading">
+<div class="loading" id="loading">
   <div class="loading-logo">ROXLY</div>
   <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
   <div class="loading-text">PROXIMITY SOCIAL</div>
@@ -314,7 +359,11 @@ body.dark {
   <div class="field"><label>USERNAME</label><input type="text" id="signup-username" placeholder="your_username"></div>
   <div class="field"><label>EMAIL</label><input type="email" id="signup-email" placeholder="you@email.com"></div>
   <div class="field"><label>PASSWORD</label><input type="password" id="signup-password" placeholder="••••••••"></div>
-  <button class="auth-btn" onclick="handleSignup()">Create Account</button>
+  <div class="agree-row">
+    <input type="checkbox" class="agree-checkbox" id="agree-checkbox" onchange="toggleSignupButton()">
+    <div class="agree-text">I am 18 years or older and I agree to ROXLY's <a href="terms.html" target="_blank">Terms of Service</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</div>
+  </div>
+  <button class="auth-btn" id="signup-submit-btn" onclick="handleSignup()" disabled>Create Account</button>
   <div class="auth-switch">Already have an account? <span onclick="showScreen('login')">Log in</span></div>
 </div>
 
@@ -355,6 +404,11 @@ body.dark {
     <div class="range-pill" id="pill-1" onclick="setRange(1,this)">1 mi</div>
     <div class="range-pill" id="pill-5" onclick="setRange(5,this)">5 mi</div>
   </div>
+  <div class="map-modes">
+    <div class="map-mode-btn active" id="mode-black" onclick="setMapMode('black')">⚫ BLACK</div>
+    <div class="map-mode-btn" id="mode-white" onclick="setMapMode('white')">⚪ WHITE</div>
+    <div class="map-mode-btn" id="mode-green" onclick="setMapMode('green')">🟢 GREEN SCREEN</div>
+  </div>
   <div class="voice-status" id="voice-status">
     <div class="voice-waves">
       <div class="voice-wave"></div><div class="voice-wave"></div>
@@ -378,14 +432,22 @@ body.dark {
   </div>
   <div class="stats-row">
     <div class="stat-chip"><div class="stat-val" style="color:var(--green)" id="nearby-count">0</div><div class="stat-lbl">NEARBY</div></div>
-    <div class="stat-chip"><div class="stat-val" style="color:var(--pink)">0</div><div class="stat-lbl">LIVE NOW</div></div>
+    <div class="stat-chip"><div class="stat-val" style="color:var(--pink)" id="live-now-count">0</div><div class="stat-lbl">LIVE NOW</div></div>
     <div class="stat-chip"><div class="stat-val" style="color:var(--purple)" id="talk-val">∞</div><div class="stat-lbl" id="talk-stat">TALK TIME</div></div>
   </div>
+
   <div class="section-label">
-    <div class="section-title">VOICE CHANNELS</div>
+    <div class="section-title">MY CHANNELS</div>
     <div class="create-btn" id="create-private-btn" onclick="openCreatePrivate()" style="display:none">+ PRIVATE 🔒</div>
   </div>
-  <div class="channels-list" id="channels-list">
+  <div class="channels-list" id="my-channels-list-app">
+    <div class="empty-state">LOADING...</div>
+  </div>
+
+  <div class="section-label" style="margin-top:8px;">
+    <div class="section-title">NEARBY CHANNELS</div>
+  </div>
+  <div class="channels-list" id="nearby-channels-list">
     <div class="empty-state">LOADING...</div>
   </div>
 
@@ -395,6 +457,7 @@ body.dark {
   <div class="chat-hub">
     <div class="chat-box">
       <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-reset-note">CHAT RESETS EVERY 24 HOURS</div>
       <div id="chat-input-area">
         <div class="chat-input-row">
           <input type="text" class="chat-input" id="chat-input" placeholder="Say something..." onkeypress="if(event.key==='Enter')sendChatMessage()">
@@ -404,7 +467,6 @@ body.dark {
     </div>
   </div>
 </div>
-
 <div class="screen" id="screen-settings">
   <div class="settings-header">
     <div class="settings-back" onclick="showScreen('app')">←</div>
@@ -419,6 +481,16 @@ body.dark {
     </div>
   </div>
   <div id="user-settings" style="display:none">
+
+    <div class="settings-section">
+      <div class="settings-section-title">MEMBERSHIP</div>
+      <div class="membership-card">
+        <div class="membership-status" id="membership-status-text">Free Account</div>
+        <div class="membership-sub" id="membership-sub-text">UPGRADE FOR UNLIMITED TALK TIME + MORE</div>
+        <button class="modal-btn" id="membership-action-btn" onclick="openUpgradeModal()">Upgrade to Pro ✦</button>
+      </div>
+    </div>
+
     <div class="settings-section">
       <div class="settings-section-title">ACCOUNT</div>
       <div class="settings-item" onclick="openEditUsername()">
@@ -479,6 +551,20 @@ body.dark {
           </div>
         </div>
       </div>
+      <div class="settings-item" id="bg-photo-item" style="display:none">
+        <div class="settings-item-left">
+          <div class="settings-item-title">Background Photo <span class="pro-badge-sm">PRO</span></div>
+          <div class="settings-item-sub">USE A PHOTO FROM YOUR CAMERA ROLL</div>
+          <div class="photo-upload-row">
+            <label class="photo-upload-label">
+              📷 Choose Photo
+              <input type="file" accept="image/*" id="bg-photo-input" onchange="handleBgPhotoUpload(event)">
+            </label>
+            <img class="photo-preview-thumb" id="bg-photo-thumb">
+            <button class="color-reset-btn" onclick="resetBgPhoto()">Remove</button>
+          </div>
+        </div>
+      </div>
       <div class="settings-item" id="dot-color-item" style="display:none">
         <div class="settings-item-left">
           <div class="settings-item-title">Dot Color <span class="pro-badge-sm">PRO</span></div>
@@ -522,16 +608,29 @@ body.dark {
         <div class="settings-toggle" id="notif-toggle" onclick="toggleNotifications()"></div>
       </div>
     </div>
-    <div class="settings-section" id="upgrade-section">
-      <div class="settings-section-title">MEMBERSHIP</div>
-      <div class="settings-item" onclick="openUpgradeModal()">
+
+    <div class="settings-section">
+      <div class="settings-section-title">CONTACT US</div>
+      <div class="settings-item" style="cursor:default;">
         <div class="settings-item-left">
-          <div class="settings-item-title">Upgrade to Pro ✦</div>
-          <div class="settings-item-sub">$2.99/MONTH · UNLOCK EVERYTHING</div>
+          <div class="settings-item-title">Need Help?</div>
+          <div class="contact-info">Email us anytime at<br><a href="mailto:hello@roxlyfive.com">hello@roxlyfive.com</a></div>
         </div>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">LEGAL</div>
+      <div class="settings-item" onclick="window.open('terms.html','_blank')">
+        <div class="settings-item-left"><div class="settings-item-title">Terms of Service</div></div>
+        <div class="settings-arrow">›</div>
+      </div>
+      <div class="settings-item" onclick="window.open('privacy.html','_blank')">
+        <div class="settings-item-left"><div class="settings-item-title">Privacy Policy</div></div>
         <div class="settings-arrow">›</div>
       </div>
     </div>
+
     <button class="logout-btn" onclick="handleLogout()">Log Out</button>
   </div>
 </div>
@@ -559,7 +658,7 @@ body.dark {
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Create Private Channel 🔒</div>
-    <div class="modal-sub">ANY USER WITH THE PASSWORD CAN JOIN — PRO OR FREE</div>
+    <div class="modal-sub">ANY USER WITH THE PASSWORD CAN JOIN — RESETS EVERY 24 HOURS</div>
     <div class="field"><label>CHANNEL NAME</label><input type="text" id="channel-name-input" placeholder="e.g. Highway Crew"></div>
     <div class="field"><label>CHANNEL PASSWORD</label><input type="text" id="channel-password-input" placeholder="set a password"></div>
     <button class="modal-btn" onclick="createChannel()">Create Channel</button>
@@ -574,12 +673,22 @@ body.dark {
     <div class="modal-sub">TALK UNLIMITED · 5 MILE RANGE · CREATE CHANNELS</div>
     <div style="background:rgba(191,0,255,0.06);border:1px solid rgba(191,0,255,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
       <div style="font-size:12px;color:var(--text);line-height:2;font-family:'Share Tech Mono',monospace;letter-spacing:0.04em;">
-        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create private channels<br>✦ Custom dot + button colors<br>✦ Custom background color<br>✦ Zero ads ever
+        ✦ Unlimited talk time<br>✦ 5 mile range<br>✦ Create private channels<br>✦ Custom dot + button colors<br>✦ Custom background color or photo<br>✦ Zero ads ever
       </div>
     </div>
     <button class="modal-btn" onclick="goToPro('monthly')">$2.99/month — Start Pro</button>
     <button class="modal-btn-outline" onclick="goToPro('yearly')">$19.99/year — Save 44%</button>
     <button class="modal-cancel" onclick="closeModal('upgrade-modal')">Maybe Later</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="cancel-membership-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Cancel ROXLY Pro?</div>
+    <div class="modal-sub">YOU'LL LOSE PRO FEATURES AT THE END OF YOUR BILLING PERIOD</div>
+    <button class="modal-btn-danger" onclick="confirmCancelMembership()">Yes, Cancel Membership</button>
+    <button class="modal-cancel" onclick="closeModal('cancel-membership-modal')">Never Mind</button>
   </div>
 </div>
 
@@ -632,7 +741,7 @@ body.dark {
     <div class="notif-toggle-row">
       <div class="notif-toggle-info">
         <div class="notif-toggle-label">Push Notifications</div>
-        <div class="notif-toggle-sub">ALERTS WHEN PEOPLE JOIN CHANNELS NEARBY</div>
+        <div class="notif-toggle-sub">GET ALERTS WHEN PEOPLE JOIN CHANNELS NEARBY</div>
       </div>
       <div class="settings-toggle" id="notif-panel-toggle" onclick="toggleNotifications()"></div>
     </div>
@@ -648,11 +757,9 @@ body.dark {
     </div>
   </div>
 </div>
-    <script>
+<script>
 const API = 'https://roxly-production.up.railway.app'
 
-// Global audio-unlock queue — browsers block autoplay unless tied
-// to a user gesture. Any tap anywhere retries blocked audio.
 let pendingAudioElements = []
 document.addEventListener('click', () => {
   pendingAudioElements.forEach(el => el.play().catch(()=>{}))
@@ -676,17 +783,37 @@ let chatPollInterval = null
 let notifPollInterval = null
 let notifItems = []
 let pendingJoinChannel = null
+let currentMapMode = 'black'
+let activeSpeakerUsernames = new Set()
 
 let livekitRoom = null
 let localAudioTrack = null
 let isConnectedToVoice = false
 let isTalking = false
+let audioIsPublished = false
 let currentChannelName = null
 let currentChannelId = null
 let joinedPrivateChannels = new Set()
 
 let allChannelsCache = []
 let knownMemberCounts = {}
+let currentPosition = { top: '50%', left: '50%' }
+
+function setMapMode(mode) {
+  currentMapMode = mode
+  document.querySelectorAll('.map-mode-btn').forEach(b => b.classList.remove('active'))
+  document.getElementById('mode-' + mode).classList.add('active')
+  const map = document.getElementById('main-map')
+  map.classList.remove('mode-white', 'mode-green')
+  if (mode === 'white') map.classList.add('mode-white')
+  if (mode === 'green') map.classList.add('mode-green')
+  localStorage.setItem('roxly_map_mode', mode)
+}
+
+function toggleSignupButton() {
+  const box = document.getElementById('agree-checkbox')
+  document.getElementById('signup-submit-btn').disabled = !box.checked
+}
 
 async function connectToVoice(channelName, attempt = 1) {
   if (isGuest) return
@@ -702,13 +829,13 @@ async function connectToVoice(channelName, attempt = 1) {
     await livekitRoom.connect(data.livekit_url, data.token)
     localAudioTrack = await LivekitClient.createLocalAudioTrack()
     localAudioTrack.mediaStreamTrack.enabled = true
+    audioIsPublished = false
 
     isConnectedToVoice = true
     currentChannelName = channelName
     document.getElementById('voice-status').classList.add('active')
     document.getElementById('voice-channel-display').innerText = channelName.toUpperCase()
 
-    // Attach audio for anyone ALREADY in the room when we join
     livekitRoom.remoteParticipants.forEach(participant => {
       participant.audioTrackPublications.forEach(pub => {
         if (pub.track) attachRemoteAudio(pub.track, participant)
@@ -724,8 +851,11 @@ async function connectToVoice(channelName, attempt = 1) {
     })
 
     livekitRoom.on(LivekitClient.RoomEvent.ActiveSpeakersChanged, (speakers) => {
+      activeSpeakerUsernames = new Set(speakers.map(s => s.identity))
+      document.getElementById('live-now-count').innerText = activeSpeakerUsernames.size
+
       document.querySelectorAll('.nearby-dot').forEach(dot => {
-        const isSpeaking = speakers.some(s => s.identity === dot.dataset.username)
+        const isSpeaking = activeSpeakerUsernames.has(dot.dataset.username)
         if (isSpeaking) {
           dot.style.background = '#FF10F0'
           dot.style.boxShadow = '0 0 14px #FF10F0, 0 0 28px rgba(255,16,240,0.5)'
@@ -737,7 +867,7 @@ async function connectToVoice(channelName, attempt = 1) {
       })
       const yourDot = document.getElementById('your-dot')
       if (yourDot) {
-        const youSpeaking = speakers.some(s => s.identity === currentUser.username)
+        const youSpeaking = activeSpeakerUsernames.has(currentUser.username)
         if (youSpeaking) {
           yourDot.style.background = '#FF10F0'
           yourDot.style.boxShadow = '0 0 20px #FF10F0, 0 0 40px rgba(255,16,240,0.5)'
@@ -770,7 +900,6 @@ function attachRemoteAudio(track, participant) {
   audioEl.setAttribute('playsinline', 'true')
   document.body.appendChild(audioEl)
   audioEl.play().catch(err => {
-    console.warn('Autoplay blocked, queued for next tap:', err)
     pendingAudioElements.push(audioEl)
   })
 }
@@ -788,21 +917,12 @@ async function disconnectFromVoice() {
   localAudioTrack = null
   isConnectedToVoice = false
   currentChannelName = null
+  activeSpeakerUsernames = new Set()
+  document.getElementById('live-now-count').innerText = '0'
   document.getElementById('voice-status').classList.remove('active')
   document.getElementById('voice-channel-display').innerText = '—'
   await new Promise(r => setTimeout(r, 250))
 }
-
-// Safety net — force-hide loading screen no matter what after 4 seconds
-setTimeout(() => {
-  const loadingEl = document.getElementById('loading')
-  if (loadingEl && loadingEl.style.display !== 'none') {
-    loadingEl.style.display = 'none'
-    if (!document.querySelector('.screen.active')) {
-      showScreen('landing')
-    }
-  }
-}, 4000)
 
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -811,14 +931,23 @@ window.addEventListener('load', () => {
     const savedDark = localStorage.getItem('roxly_dark')
     const savedPtt = localStorage.getItem('roxly_ptt_color')
     const savedBg = localStorage.getItem('roxly_bg')
+    const savedBgPhoto = localStorage.getItem('roxly_bg_photo')
     const savedNotif = localStorage.getItem('roxly_notif')
+    const savedMapMode = localStorage.getItem('roxly_map_mode')
+
     if (savedDark === 'true') {
       darkMode = true
       document.body.classList.add('dark')
       document.getElementById('dark-toggle').classList.add('on')
     }
     if (savedPtt) pttColor = savedPtt
-    if (savedBg) {
+    if (savedMapMode) setMapMode(savedMapMode)
+    if (savedBgPhoto) {
+      document.body.classList.add('custom-bg-photo')
+      document.getElementById('screen-app').style.backgroundImage = `url(${savedBgPhoto})`
+      const thumb = document.getElementById('bg-photo-thumb')
+      if (thumb) { thumb.src = savedBgPhoto; thumb.style.display = 'block' }
+    } else if (savedBg) {
       document.documentElement.style.setProperty('--bg', savedBg)
       const pb = document.getElementById('bg-preview-box')
       if (pb) pb.style.background = savedBg
@@ -830,6 +959,7 @@ window.addEventListener('load', () => {
       if (t1) t1.classList.add('on')
       if (t2) t2.classList.add('on')
     }
+
     try {
       if (saved) {
         currentUser = JSON.parse(saved)
@@ -839,12 +969,19 @@ window.addEventListener('load', () => {
         showScreen('landing')
       }
     } catch(e) {
-      console.error('Startup error:', e)
       localStorage.removeItem('roxly_user')
       showScreen('landing')
     }
   }, 1800)
 })
+
+setTimeout(() => {
+  const loadingEl = document.getElementById('loading')
+  if (loadingEl && loadingEl.style.display !== 'none') {
+    loadingEl.style.display = 'none'
+    if (!document.querySelector('.screen.active')) showScreen('landing')
+  }
+}, 4000)
 
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
@@ -860,9 +997,47 @@ function showScreen(name) {
       if (currentUser) {
         document.getElementById('current-username-display').innerText = currentUser.username
         document.getElementById('current-email-display').innerText = currentUser.email || 'TAP TO UPDATE'
+        updateMembershipUI()
       }
-      loadMyChannels()
+      loadMyChannelsSettings()
     }
+  }
+}
+
+function updateMembershipUI() {
+  const statusText = document.getElementById('membership-status-text')
+  const subText = document.getElementById('membership-sub-text')
+  const actionBtn = document.getElementById('membership-action-btn')
+  if (currentUser.is_pro) {
+    statusText.innerText = 'ROXLY Pro ✦'
+    statusText.className = 'membership-status pro'
+    subText.innerText = 'UNLIMITED TALK · 5MI RANGE · ALL FEATURES UNLOCKED'
+    actionBtn.innerText = 'Cancel Membership'
+    actionBtn.onclick = () => document.getElementById('cancel-membership-modal').classList.add('active')
+  } else {
+    statusText.innerText = 'Free Account'
+    statusText.className = 'membership-status free'
+    subText.innerText = 'UPGRADE FOR UNLIMITED TALK TIME + MORE'
+    actionBtn.innerText = 'Upgrade to Pro ✦'
+    actionBtn.onclick = openUpgradeModal
+  }
+}
+
+async function confirmCancelMembership() {
+  try {
+    await fetch(`${API}/payments/cancel-subscription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser.username })
+    })
+    currentUser.is_pro = false
+    currentUser.dot_color = '#39FF14'
+    localStorage.setItem('roxly_user', JSON.stringify(currentUser))
+    closeModal('cancel-membership-modal')
+    updateMembershipUI()
+    initApp()
+  } catch(e) {
+    alert('Error canceling membership. Please try again or contact hello@roxlyfive.com')
   }
 }
 
@@ -886,13 +1061,19 @@ function enterGuestMode() {
   loadChatMessages()
   chatPollInterval = setInterval(loadChatMessages, 5000)
 }
-
+</script>
+<script>
 async function handleSignup() {
   const username = document.getElementById('signup-username').value.trim()
   const email    = document.getElementById('signup-email').value.trim()
   const password = document.getElementById('signup-password').value
+  const agreed   = document.getElementById('agree-checkbox').checked
   const errBox   = document.getElementById('signup-error')
   errBox.style.display = 'none'
+  if (!agreed) {
+    errBox.innerText = 'YOU MUST AGREE TO THE TERMS TO CONTINUE'
+    errBox.style.display = 'block'; return
+  }
   if (!username || !email || !password) {
     errBox.innerText = 'PLEASE FILL IN ALL FIELDS'
     errBox.style.display = 'block'; return
@@ -967,9 +1148,9 @@ function initApp() {
     document.getElementById('talk-stat').innerText = 'UNLIMITED'
     document.getElementById('create-private-btn').style.display = 'block'
     document.getElementById('bg-color-item').style.display = 'flex'
+    document.getElementById('bg-photo-item').style.display = 'flex'
     document.getElementById('dot-color-item').style.display = 'flex'
     document.getElementById('ptt-color-item').style.display = 'flex'
-    document.getElementById('upgrade-section').style.display = 'none'
     document.getElementById('my-channels-section').style.display = 'block'
     const yourDot = document.getElementById('your-dot')
     if (yourDot && currentUser.dot_color) {
@@ -981,9 +1162,9 @@ function initApp() {
     document.getElementById('talk-stat').innerText = 'FREE LIMIT'
     document.getElementById('create-private-btn').style.display = 'none'
     document.getElementById('bg-color-item').style.display = 'none'
+    document.getElementById('bg-photo-item').style.display = 'none'
     document.getElementById('dot-color-item').style.display = 'none'
     document.getElementById('ptt-color-item').style.display = 'none'
-    document.getElementById('upgrade-section').style.display = 'block'
     document.getElementById('my-channels-section').style.display = 'none'
   }
   const savedPtt = localStorage.getItem('roxly_ptt_color')
@@ -1024,21 +1205,15 @@ function updateClock() {
 }
 
 function getLocation() {
-  // fallback: if location never responds within 6 seconds, use default
   const fallbackTimer = setTimeout(() => {
-    if (!userLat) {
-      userLat = 42.8142; userLon = -73.9396
-      updateLocation(); scanNearby()
-    }
+    if (!userLat) { userLat = 42.8142; userLon = -73.9396; updateLocation(); scanNearby() }
   }, 6000)
-
   if (!navigator.geolocation) {
     clearTimeout(fallbackTimer)
     userLat = 42.8142; userLon = -73.9396
     updateLocation(); scanNearby()
     return
   }
-
   navigator.geolocation.getCurrentPosition(pos => {
     clearTimeout(fallbackTimer)
     userLat = pos.coords.latitude
@@ -1078,6 +1253,24 @@ async function scanNearby() {
   loadChannels()
 }
 
+// Your own dot drifts gently to simulate following your live position
+function updateYourDotPosition() {
+  const yourDot = document.getElementById('your-dot')
+  const label = document.querySelector('.you-map-label')
+  if (!yourDot) return
+  const jitter = () => (Math.random() - 0.5) * 6
+  let top = 50 + jitter()
+  let left = 50 + jitter()
+  top = Math.max(15, Math.min(85, top))
+  left = Math.max(15, Math.min(85, left))
+  yourDot.style.top = top + '%'
+  yourDot.style.left = left + '%'
+  if (label) {
+    label.style.top = `calc(${top}% + 12px)`
+    label.style.left = left + '%'
+  }
+}
+
 function updateMapDots(users) {
   document.querySelectorAll('.nearby-dot').forEach(d => d.remove())
   const map = document.getElementById('main-map')
@@ -1097,30 +1290,35 @@ function updateMapDots(users) {
     dot.title = user.username
     dot.dataset.username = user.username
     dot.dataset.color = color
+    if (activeSpeakerUsernames.has(user.username)) {
+      dot.style.background = '#FF10F0'
+      dot.style.boxShadow = '0 0 14px #FF10F0, 0 0 28px rgba(255,16,240,0.5)'
+    }
     map.appendChild(dot)
   })
+  updateYourDotPosition()
 }
 </script>
-   <script>
+<script>
 async function loadChannels() {
   try {
     const res = await fetch(`${API}/channels/list`)
     const data = await res.json()
     allChannelsCache = data.channels || []
-    const list = document.getElementById('channels-list')
-
-    if (allChannelsCache.length === 0) {
-      list.innerHTML = `<div class="empty-state">LOADING CHANNELS...</div>`
-      return
-    }
 
     const general = allChannelsCache.find(c => c.name === 'General')
-    const privates = allChannelsCache.filter(c => c.is_private)
+    const isMemberOrOwner = (ch) => currentUser && !isGuest &&
+      ((ch.members || []).includes(currentUser.username) || ch.created_by === currentUser.username)
 
-    let html = ''
+    const myPrivates = allChannelsCache.filter(c => c.is_private && isMemberOrOwner(c))
+    const nearbyPrivates = allChannelsCache.filter(c => c.is_private && !isMemberOrOwner(c))
+
+    // MY CHANNELS section — General + any private channels I own/joined
+    const myList = document.getElementById('my-channels-list-app')
+    let myHtml = ''
     if (general) {
       const isActive = currentChannelName === general.name
-      html += `
+      myHtml += `
         <div class="channel-card general-card ${isActive ? 'active-channel' : ''}" onclick="switchToGeneral(${general.id})">
           <div>
             <div class="ch-name">🌐 General ${isActive ? '🔊' : ''}</div>
@@ -1129,20 +1327,52 @@ async function loadChannels() {
           ${!isActive ? '<div class="ch-toggle-hint">TAP TO JOIN</div>' : ''}
         </div>`
     }
-
-    privates.forEach(ch => {
+    myPrivates.forEach(ch => {
       const isActive = currentChannelName === ch.name
-      html += `
-        <div class="channel-card private-card ${isActive ? 'active-channel' : ''}" onclick="handlePrivateChannelTap(${ch.id}, '${ch.name}')">
+      myHtml += `
+        <div class="channel-card private-card ${isActive ? 'active-channel' : ''}" onclick="switchToPrivate(${ch.id}, '${ch.name}')">
           <div>
             <div class="ch-name"><span class="lock-badge">🔒</span> ${ch.name} ${isActive ? '🔊' : ''}</div>
-            <div class="ch-meta">BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
+            <div class="ch-meta">${ch.created_by === currentUser.username ? 'CREATED BY YOU' : 'BY ' + ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
           </div>
           ${!isActive ? '<div class="ch-toggle-hint">TAP TO JOIN</div>' : ''}
         </div>`
     })
+    myList.innerHTML = myHtml || '<div class="empty-state">LOADING...</div>'
 
-    list.innerHTML = html
+    // NEARBY CHANNELS section — private channels I haven't joined yet
+    const nearbyList = document.getElementById('nearby-channels-list')
+    if (nearbyPrivates.length === 0) {
+      nearbyList.innerHTML = '<div class="empty-state">NO OTHER PRIVATE CHANNELS NEARBY</div>'
+    } else {
+      nearbyList.innerHTML = nearbyPrivates.map(ch => `
+        <div class="channel-card private-card" onclick="handlePrivateChannelTap(${ch.id}, '${ch.name}')">
+          <div>
+            <div class="ch-name"><span class="lock-badge">🔒</span> ${ch.name}</div>
+            <div class="ch-meta">BY ${ch.created_by.toUpperCase()} · ${ch.member_count || 0} MEMBER${ch.member_count !== 1 ? 'S' : ''}</div>
+          </div>
+          <div class="ch-toggle-hint">TAP TO JOIN</div>
+        </div>`).join('')
+    }
+  } catch(e) {}
+}
+
+async function loadMyChannelsSettings() {
+  if (!currentUser || !currentUser.is_pro || isGuest) return
+  try {
+    const res = await fetch(`${API}/channels/list`)
+    const data = await res.json()
+    const mine = (data.channels || []).filter(c => c.created_by === currentUser.username && c.name !== 'General')
+    const list = document.getElementById('my-channels-list')
+    if (mine.length === 0) {
+      list.innerHTML = '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);padding:8px 0;">NO PRIVATE CHANNELS YET</div>'
+      return
+    }
+    list.innerHTML = mine.map(c => `
+      <div class="my-channel-row">
+        <div class="my-channel-name">🔒 ${c.name}</div>
+        <button class="my-channel-del" onclick="deleteMyChannel(${c.id}, '${c.name}')">DELETE</button>
+      </div>`).join('')
   } catch(e) {}
 }
 
@@ -1231,22 +1461,17 @@ function openCreatePrivate() {
 async function createChannel() {
   const name     = document.getElementById('channel-name-input').value.trim()
   const password = document.getElementById('channel-password-input').value
-
   if (!name) { alert('Please enter a channel name'); return }
   if (!password) { alert('Please set a password'); return }
   if (!currentUser || !currentUser.is_pro) { openUpgradeModal(); return }
-
   try {
     const res = await fetch(`${API}/channels/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name,
-        username: currentUser.username,
-        latitude: userLat || 42.8142,
-        longitude: userLon || -73.9396,
-        is_private: true,
-        password
+        name, username: currentUser.username,
+        latitude: userLat || 42.8142, longitude: userLon || -73.9396,
+        is_private: true, password
       })
     })
     const data = await res.json()
@@ -1261,36 +1486,14 @@ async function createChannel() {
   } catch(e) { alert('Connection error — please try again') }
 }
 
-async function loadMyChannels() {
-  if (!currentUser || !currentUser.is_pro || isGuest) return
-  try {
-    const res = await fetch(`${API}/channels/list`)
-    const data = await res.json()
-    const mine = (data.channels || []).filter(c => c.created_by === currentUser.username && c.name !== 'General')
-    const list = document.getElementById('my-channels-list')
-    if (mine.length === 0) {
-      list.innerHTML = '<div style="font-family:Share Tech Mono,monospace;font-size:11px;color:var(--muted);padding:8px 0;">NO PRIVATE CHANNELS YET</div>'
-      return
-    }
-    list.innerHTML = mine.map(c => `
-      <div class="my-channel-row">
-        <div class="my-channel-name">🔒 ${c.name}</div>
-        <button class="my-channel-del" onclick="deleteMyChannel(${c.id}, '${c.name}')">DELETE</button>
-      </div>`).join('')
-  } catch(e) {}
-}
-
 async function deleteMyChannel(id, name) {
   if (!confirm(`Delete "${name}"? This removes it for everyone.`)) return
   try {
     const res = await fetch(`${API}/channels/delete/${id}?username=${currentUser.username}`, { method: 'DELETE' })
     if (res.ok) {
-      if (currentChannelName === name) {
-        await disconnectFromVoice()
-        await connectToVoice('General')
-      }
+      if (currentChannelName === name) { await disconnectFromVoice(); await connectToVoice('General') }
       joinedPrivateChannels.delete(id)
-      loadMyChannels()
+      loadMyChannelsSettings()
       loadChannels()
     } else {
       const data = await res.json()
@@ -1374,9 +1577,7 @@ function renderNotifications() {
     area.innerHTML = '<div class="notif-empty">NO NOTIFICATIONS YET<br>ENABLE ALERTS ABOVE</div>'
     return
   }
-  area.innerHTML = notifItems.map(n => `
-    <div class="notif-item">${n.text}<div class="notif-item-time">${n.time}</div></div>
-  `).join('')
+  area.innerHTML = notifItems.map(n => `<div class="notif-item">${n.text}<div class="notif-item-time">${n.time}</div></div>`).join('')
 }
 
 function closeModal(id) { document.getElementById(id).classList.remove('active') }
@@ -1453,10 +1654,7 @@ function savePassword() {
   setTimeout(() => closeModal('change-password-modal'), 1500)
 }
 
-function openNotifications() {
-  document.getElementById('notif-panel').classList.add('open')
-  document.getElementById('notif-badge').style.display = 'none'
-}
+function openNotifications() { document.getElementById('notif-panel').classList.add('open'); document.getElementById('notif-badge').style.display = 'none' }
 function closeNotifications() { document.getElementById('notif-panel').classList.remove('open') }
 
 function toggleNotifications() {
@@ -1505,6 +1703,9 @@ function applyBgColor() {
   const wheel = document.getElementById('bg-color-wheel')
   const color = pendingBgColor || (wheel ? wheel.value : null)
   if (!color) return
+  document.body.classList.remove('custom-bg-photo')
+  document.getElementById('screen-app').style.backgroundImage = ''
+  localStorage.removeItem('roxly_bg_photo')
   document.documentElement.style.setProperty('--bg', color)
   document.documentElement.style.setProperty('--card', adjustColor(color, 12))
   localStorage.setItem('roxly_bg', color)
@@ -1521,6 +1722,32 @@ function resetBgColor() {
   if (pb) pb.style.background = 'transparent'
   const wheel = document.getElementById('bg-color-wheel')
   if (wheel) wheel.value = '#0a0a0a'
+}
+
+function handleBgPhotoUpload(event) {
+  const file = event.target.files[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = function(e) {
+    const dataUrl = e.target.result
+    document.body.classList.add('custom-bg-photo')
+    document.getElementById('screen-app').style.backgroundImage = `url(${dataUrl})`
+    localStorage.setItem('roxly_bg_photo', dataUrl)
+    localStorage.removeItem('roxly_bg')
+    const thumb = document.getElementById('bg-photo-thumb')
+    thumb.src = dataUrl
+    thumb.style.display = 'block'
+  }
+  reader.readAsDataURL(file)
+}
+
+function resetBgPhoto() {
+  document.body.classList.remove('custom-bg-photo')
+  document.getElementById('screen-app').style.backgroundImage = ''
+  localStorage.removeItem('roxly_bg_photo')
+  const thumb = document.getElementById('bg-photo-thumb')
+  thumb.style.display = 'none'
+  thumb.src = ''
 }
 
 function adjustColor(hex, amount) {
@@ -1565,17 +1792,9 @@ let talkSeconds = 0
 
 async function togglePTT() {
   if (isGuest) { showScreen('signup'); return }
-  if (!isConnectedToVoice) {
-    await connectToVoice(currentChannelName || 'General')
-  }
-  if (!isTalking) {
-    await startTalkingTrack()
-  } else {
-    await stopTalkingTrack()
-  }
+  if (!isConnectedToVoice) { await connectToVoice(currentChannelName || 'General') }
+  if (!isTalking) { await startTalkingTrack() } else { await stopTalkingTrack() }
 }
-
-let audioIsPublished = false
 
 async function startTalkingTrack() {
   const btn = document.getElementById('ptt-btn')
@@ -1589,11 +1808,9 @@ async function startTalkingTrack() {
   if (localAudioTrack && livekitRoom) {
     try {
       if (!audioIsPublished) {
-        // publish once per channel session, never unpublish again
         await livekitRoom.localParticipant.publishTrack(localAudioTrack)
         audioIsPublished = true
       }
-      // just unmute the existing published track
       localAudioTrack.mediaStreamTrack.enabled = true
       await livekitRoom.localParticipant.setMicrophoneEnabled(true)
     } catch(e) { console.error('PTT unmute error:', e) }
@@ -1620,7 +1837,6 @@ async function stopTalkingTrack() {
 
   if (localAudioTrack && livekitRoom) {
     try {
-      // mute only — keep track alive and published
       localAudioTrack.mediaStreamTrack.enabled = false
       await livekitRoom.localParticipant.setMicrophoneEnabled(false)
     } catch(e) {}
@@ -1651,4 +1867,3 @@ function showCooldown() {
 </script>
 </body>
 </html>
-  
