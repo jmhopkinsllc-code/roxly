@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from database import get_db, Base
+from datetime import datetime, timedelta, timezone
 
 router = APIRouter(prefix="/chat", tags=["chat"])
 
@@ -30,7 +31,8 @@ def send_message(form: SendMessageForm, db: Session = Depends(get_db)):
 
 @router.get("/messages")
 def get_messages(db: Session = Depends(get_db)):
-    messages = db.query(ChatMessage).order_by(ChatMessage.id.desc()).limit(50).all()
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+    messages = db.query(ChatMessage).filter(ChatMessage.created_at >= cutoff).order_by(ChatMessage.id.desc()).limit(100).all()
     messages.reverse()
     return {
         "messages": [

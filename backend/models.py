@@ -40,3 +40,6 @@ class User(Base):
 
     # When did they sign up?
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+     stripe_subscription_id = Column(String, nullable=True)
+    stripe_customer_id = Column(String, nullable=True)  

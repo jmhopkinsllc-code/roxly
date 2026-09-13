@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from pydantic import BaseModel
 from database import get_db, Base
 from models import User
+from datetime import datetime, timedelta, timezone
 import math
 
 router = APIRouter(prefix="/channels", tags=["channels"])
@@ -58,6 +59,17 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
     return R * 2 * math.asin(math.sqrt(a))
 
+def is_expired(channel):
+    if channel.name == "General":
+        return False
+    if not channel.created_at:
+        return False
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=24)
+    created = channel.created_at
+    if created.tzinfo is None:
+        created = created.replace(tzinfo=timezone.utc)
+    return created < cutoff
+
 @router.post("/create")
 def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == form.username).first()
@@ -73,8 +85,12 @@ def create_channel(form: CreateChannelForm, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="'General' is a reserved channel name")
 
     existing = db.query(Channel).filter(Channel.name == clean_name).first()
-    if existing:
+    if existing and not is_expired(existing):
         raise HTTPException(status_code=400, detail=f"A channel named '{clean_name}' already exists")
+    if existing and is_expired(existing):
+        db.query(ChannelMember).filter(ChannelMember.channel_id == existing.id).delete()
+        db.delete(existing)
+        db.commit()
 
     try:
         new_channel = Channel(
@@ -112,6 +128,10 @@ def list_channels(db: Session = Depends(get_db)):
     channels = db.query(Channel).filter(Channel.is_active == True).all()
     result = []
     for c in channels:
+        if is_expired(c):
+            db.query(ChannelMember).filter(ChannelMember.channel_id == c.id).delete()
+            db.delete(c)
+            continue
         members = db.query(ChannelMember).filter(ChannelMember.channel_id == c.id).all()
         result.append({
             "id": c.id,
@@ -121,6 +141,7 @@ def list_channels(db: Session = Depends(get_db)):
             "member_count": len(members),
             "members": [m.username for m in members]
         })
+    db.commit()
     return {"total": len(result), "channels": result}
 
 @router.post("/verify-password")
@@ -177,6 +198,8 @@ def nearby_channels(data: NearbyChannelsRequest, db: Session = Depends(get_db)):
     all_channels = db.query(Channel).filter(Channel.is_active == True).all()
     nearby = []
     for channel in all_channels:
+        if is_expired(channel):
+            continue
         distance = calculate_distance(data.latitude, data.longitude, channel.latitude, channel.longitude)
         if distance <= data.range_miles:
             nearby.append({
