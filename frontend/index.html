@@ -466,6 +466,20 @@ body.custom-bg-photo #screen-app > * { position: relative; z-index: 1; }
       </div>
     </div>
   </div>
+
+  <div class="section-label" style="margin-top:8px;display:none" id="private-chat-label">
+    <div class="section-title">🔒 <span id="private-chat-channel-name">CHANNEL</span> CHAT</div>
+  </div>
+  <div class="chat-hub" id="private-chat-hub" style="display:none">
+    <div class="chat-box">
+      <div class="chat-messages" id="private-chat-messages"></div>
+      <div class="chat-reset-note">RESETS WHEN THE CHANNEL EXPIRES (24 HOURS)</div>
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="private-chat-input" placeholder="Message this channel..." onkeypress="if(event.key==='Enter')sendPrivateChatMessage()">
+        <button class="chat-send-btn" onclick="sendPrivateChatMessage()">➤</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="screen" id="screen-settings">
   <div class="settings-header">
@@ -780,6 +794,7 @@ let darkMode = false
 let pttColor = '#39FF14'
 let pendingBgColor = null
 let chatPollInterval = null
+let privateChatPollInterval = null
 let notifPollInterval = null
 let notifItems = []
 let pendingJoinChannel = null
@@ -1432,6 +1447,7 @@ async function switchToGeneral(channelId) {
     })
   } catch(e) {}
   loadChannels()
+  hidePrivateChat()
 }
 
 async function switchToPrivate(channelId, name) {
@@ -1449,6 +1465,54 @@ async function switchToPrivate(channelId, name) {
     })
   } catch(e) {}
   loadChannels()
+  showPrivateChat(channelId, name)
+}
+
+function showPrivateChat(channelId, name) {
+  document.getElementById('private-chat-label').style.display = 'flex'
+  document.getElementById('private-chat-hub').style.display = 'block'
+  document.getElementById('private-chat-channel-name').innerText = name.toUpperCase()
+  loadPrivateChatMessages()
+  if (privateChatPollInterval) clearInterval(privateChatPollInterval)
+  privateChatPollInterval = setInterval(loadPrivateChatMessages, 5000)
+}
+
+function hidePrivateChat() {
+  document.getElementById('private-chat-label').style.display = 'none'
+  document.getElementById('private-chat-hub').style.display = 'none'
+  if (privateChatPollInterval) { clearInterval(privateChatPollInterval); privateChatPollInterval = null }
+}
+
+async function loadPrivateChatMessages() {
+  if (!currentChannelId) return
+  try {
+    const res = await fetch(`${API}/chat/messages?channel_id=${currentChannelId}`)
+    const data = await res.json()
+    const box = document.getElementById('private-chat-messages')
+    const wasAtBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 30
+    box.innerHTML = (data.messages || []).map(m => `
+      <div class="chat-msg ${currentUser && m.username === currentUser.username ? 'own' : ''}">
+        <div class="chat-msg-user">${m.username}</div>
+        <div class="chat-msg-bubble">${escapeHtml(m.message)}</div>
+      </div>`).join('')
+    if (wasAtBottom) box.scrollTop = box.scrollHeight
+  } catch(e) {}
+}
+
+async function sendPrivateChatMessage() {
+  if (isGuest || !currentChannelId) return
+  const input = document.getElementById('private-chat-input')
+  const message = input.value.trim()
+  if (!message) return
+  input.value = ''
+  try {
+    await fetch(`${API}/chat/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser.username, message, channel_id: currentChannelId })
+    })
+    loadPrivateChatMessages()
+  } catch(e) {}
 }
 
 function openCreatePrivate() {
