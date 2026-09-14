@@ -78,9 +78,12 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
     data_object = event["data"]["object"] if isinstance(event, dict) else event.data.object
 
     if event_type == "checkout.session.completed":
-        username = data_object.get("client_reference_id") or (data_object.get("metadata") or {}).get("username")
-        subscription_id = data_object.get("subscription")
-        customer_id = data_object.get("customer")
+        username = getattr(data_object, "client_reference_id", None)
+        if not username:
+            metadata = getattr(data_object, "metadata", None) or {}
+            username = metadata.get("username") if hasattr(metadata, "get") else metadata["username"] if "username" in metadata else None
+        subscription_id = getattr(data_object, "subscription", None)
+        customer_id = getattr(data_object, "customer", None)
         if username:
             user = db.query(User).filter(User.username == username).first()
             if user:
@@ -93,8 +96,8 @@ async def stripe_webhook(request: Request, db: Session = Depends(get_db)):
                 db.commit()
 
     elif event_type in ("customer.subscription.deleted", "customer.subscription.updated"):
-        status = data_object.get("status")
-        subscription_id = data_object.get("id")
+        status = getattr(data_object, "status", None)
+        subscription_id = getattr(data_object, "id", None)
         if status in ("canceled", "unpaid", "incomplete_expired"):
             user = db.query(User).filter(User.stripe_subscription_id == subscription_id).first() if hasattr(User, "stripe_subscription_id") else None
             if user:
